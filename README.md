@@ -1,2 +1,3 @@
-RecipeApp
+# RecipeApp
+
 Приложение с рецептами.
