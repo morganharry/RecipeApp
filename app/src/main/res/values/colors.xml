@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="MainBackgroundColor">#FFFFFFFF</color>
+    <color name="TextNavButtonColor">#FFFFFFFF</color>
+    <color name="ButtonCategoriesColor">#525DC0</color>
+    <color name="ButtonFavoritesColor">#E13E3E</color>
+    <color name="StatusBarColor">#F4FAFF</color>
+
 </resources>
