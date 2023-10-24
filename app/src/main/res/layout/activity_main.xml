@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/Main_Layout_Margin"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,26 +18,27 @@
 
         <Button
             android:id="@+id/button_categories"
+            style="@style/StyleNavButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/Main_Button_Margin"
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
             android:backgroundTint="@color/ButtonCategoriesColor"
-            android:text="@string/button_categories"
-            android:theme="@style/StyleNavButton" />
+            android:text="@string/button_categories" />
 
         <Button
             android:id="@+id/button_favorites"
+            style="@style/StyleNavButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="@dimen/Main_Button_Margin"
             android:layout_weight="1"
             android:backgroundTint="@color/ButtonFavoritesColor"
             android:text="@string/button_favorites"
-            android:theme="@style/StyleNavButton"
             app:icon="@drawable/ic_heart"
             app:iconGravity="textEnd" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

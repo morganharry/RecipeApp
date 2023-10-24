@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="Main_Layout_Margin">8dp</dimen>
+    <dimen name="Main_Button_Margin">8dp</dimen>
+
+</resources>
