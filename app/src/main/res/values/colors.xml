@@ -3,10 +3,10 @@
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="MainBackgroundColor">#FFFFFFFF</color>
-    <color name="TextNavButtonColor">#FFFFFFFF</color>
-    <color name="ButtonCategoriesColor">#525DC0</color>
-    <color name="ButtonFavoritesColor">#E13E3E</color>
-    <color name="StatusBarColor">#F4FAFF</color>
+    <color name="main_background_color">#F4FAFF</color>
+    <color name="text_nav_button_color">#FFFFFFFF</color>
+    <color name="button_categories_color">#525DC0</color>
+    <color name="button_favorites_color">#E13E3E</color>
+    <color name="status_bar_color">#F4FAFF</color>
 
 </resources>

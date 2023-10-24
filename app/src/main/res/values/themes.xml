@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.RecipeApp" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">@color/StatusBarColor</item>
+        <item name="android:statusBarColor">@color/status_bar_color</item>
     </style>
 
     <style name="Theme.RecipeApp" parent="Base.Theme.RecipeApp">
