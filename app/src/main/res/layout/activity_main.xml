@@ -40,5 +40,4 @@
             app:iconGravity="textEnd" />
 
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
