@@ -9,15 +9,14 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/mainContainer"
+        android:name="com.example.recipeapp.CategoriesListFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginHorizontal="@dimen/space_standard"
-        android:layout_marginVertical="@dimen/space_half"
+        android:layout_marginBottom="@dimen/space_half"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:name="com.example.recipeapp.CategoriesListFragment"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
