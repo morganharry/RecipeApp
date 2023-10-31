@@ -9,14 +9,17 @@ import com.example.recipeapp.databinding.FragmentListCategoriesBinding
 
 class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
 
-    private lateinit var binding: FragmentListCategoriesBinding
+    private var _binding: FragmentListCategoriesBinding? = null
+    private val binding
+        get() = _binding
+            ?: throw IllegalStateException("Binding for FragmentListCategoriesBinding must not be null")
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentListCategoriesBinding.inflate(layoutInflater)
+        _binding = FragmentListCategoriesBinding.inflate(layoutInflater)
         return inflater.inflate(R.layout.fragment_list_categories, container, false)
     }
 }
