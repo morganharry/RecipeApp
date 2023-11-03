@@ -2,11 +2,6 @@ package com.example.recipeapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.view.View.OnClickListener
-import android.view.View.OnContextClickListener
-import android.widget.Toast
-import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.recipeapp.databinding.ActivityMainBinding
@@ -22,6 +17,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        supportFragmentManager.commit {
+            replace<CategoriesListFragment>(R.id.mainContainer)
+            setReorderingAllowed(true)
+            addToBackStack("name")
+        }
 
         with(binding) {
             buttonCategories.setOnClickListener {
@@ -41,3 +42,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+

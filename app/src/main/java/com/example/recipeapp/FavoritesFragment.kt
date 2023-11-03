@@ -20,6 +20,8 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentFavoritesBinding.inflate(layoutInflater)
-        return inflater.inflate(R.layout.fragment_favorites, container, false)
+        return (binding.root)
     }
 }
+
+
