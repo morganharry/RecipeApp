@@ -20,6 +20,6 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentListCategoriesBinding.inflate(layoutInflater)
-        return inflater.inflate(R.layout.fragment_list_categories, container, false)
+        return (binding.root)
     }
 }
