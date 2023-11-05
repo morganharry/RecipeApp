@@ -2,7 +2,6 @@ package com.example.recipeapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.recipeapp.databinding.ActivityMainBinding
@@ -19,13 +18,28 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        with(binding) {
-        }
-
         supportFragmentManager.commit {
             replace<CategoriesListFragment>(R.id.mainContainer)
             setReorderingAllowed(true)
-            addToBackStack("name") // Name can be null
+            addToBackStack("name")
+        }
+
+        with(binding) {
+            buttonCategories.setOnClickListener {
+                supportFragmentManager.commit {
+                    replace<CategoriesListFragment>(R.id.mainContainer)
+                    setReorderingAllowed(true)
+                    addToBackStack("name")
+                }
+            }
+            buttonFavorites.setOnClickListener {
+                supportFragmentManager.commit {
+                    replace<FavoritesFragment>(R.id.mainContainer)
+                    setReorderingAllowed(true)
+                    addToBackStack("name")
+                }
+            }
         }
     }
 }
+

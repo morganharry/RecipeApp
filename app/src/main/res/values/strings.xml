@@ -4,5 +4,6 @@
     <string name="button_favorites">Избранное</string>
     <string name="button_categories">Категории</string>
     <string name="fragment_list_categories">CategoriesListFragment</string>
+    <string name="fragment_favorites">FavoritesFragment</string>
 
 </resources>

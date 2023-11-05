@@ -9,7 +9,6 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/mainContainer"
-        android:name="com.example.recipeapp.CategoriesListFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/space_half"
@@ -30,17 +29,18 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/button_categories"
+            android:id="@+id/buttonCategories"
             style="@style/StyleNavButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
             android:backgroundTint="@color/button_categories_color"
-            android:text="@string/button_categories" />
+            android:text="@string/button_categories"
+            android:onClick="toastMe"/>
 
         <Button
-            android:id="@+id/button_favorites"
+            android:id="@+id/buttonFavorites"
             style="@style/StyleNavButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
