@@ -13,6 +13,7 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
     private val binding
         get() = _binding
             ?: throw IllegalStateException("Binding for FragmentListCategoriesBinding must not be null")
+
     private val listCategories = mutableListOf<Category>(
         Category(0, "Бургеры", "Рецепты всех популярных видов бургеров", "burger.png"),
         Category(1, "Десерты", "Самые вкусные рецепты десертов специально для вас", "dessert.png"),
@@ -26,7 +27,7 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentListCategoriesBinding.inflate(layoutInflater)
         return (binding.root)
     }
