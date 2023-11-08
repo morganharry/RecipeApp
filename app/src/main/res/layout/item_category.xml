@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="156dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_margin="@dimen/space_standard">
 
     <ImageView
         android:id="@+id/imageCategoryView"
         android:layout_width="156dp"
         android:layout_height="130dp"
+        android:background="@color/black"
         />
 
     <TextView
@@ -17,13 +20,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/space_half"
-        android:layout_marginTop="@dimen/space_half" />
+        android:layout_marginTop="@dimen/space_half"
+        tools:text="Заголовок"/>
 
     <TextView
         android:id="@+id/textCategoryView"
         style="@style/StyleText12"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/space_half"/>
+        android:layout_margin="@dimen/space_half"
+        tools:text="Текст для описания категории элементов списка"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
