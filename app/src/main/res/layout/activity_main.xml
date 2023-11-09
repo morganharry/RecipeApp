@@ -36,8 +36,8 @@
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
             android:backgroundTint="@color/button_categories_color"
-            android:text="@string/button_categories"
-            android:onClick="toastMe"/>
+            android:onClick="toastMe"
+            android:text="@string/title_categories" />
 
         <Button
             android:id="@+id/buttonFavorites"

@@ -2,29 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_favorites"
+    android:id="@+id/fragment_list_categories"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_background_color"
-    tools:context=".FavoritesFragment"
     android:orientation="vertical"
-
-    >
+    tools:context=".CategoriesListFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_gravity="center"
-
-        >
+        android:layout_height="224dp"
+        android:layout_gravity="center">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scaleType="centerCrop"
             android:src="@drawable/bcg_categories"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -32,11 +30,10 @@
             style="@style/StyleTitle20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_margin="@dimen/space_standard"
             android:background="@drawable/shape_rounded_variants"
-            android:padding="10dp"
-            android:text="@string/button_categories"
+            android:padding="@dimen/space_for_text"
+            android:text="@string/title_categories"
             app:layout_constraintBottom_toBottomOf="@id/imageView"
             app:layout_constraintStart_toStartOf="@id/imageView" />
 
@@ -45,14 +42,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCategories"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-
-        tools:itemCount="6"
-        android:layout_weight="2"
+        android:layout_height="match_parent"
+        android:gravity="center"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
-        tools:listitem="@layout/item_category"
-        android:gravity="center"
-        />
+        tools:itemCount="6"
+        tools:listitem="@layout/item_category" />
 
 </LinearLayout>
