@@ -3,5 +3,6 @@
 
     <dimen name="space_standard">16dp</dimen>
     <dimen name="space_half">8dp</dimen>
+    <dimen name="space_for_text">10dp</dimen>
 
 </resources>
