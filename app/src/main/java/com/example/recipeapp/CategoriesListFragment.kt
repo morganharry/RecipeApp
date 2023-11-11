@@ -37,16 +37,16 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val categoriesListAdapter = initRecycler(listCategories, this)
-
-        val recyclerView: RecyclerView = view.findViewById(R.id.rvCategories)
-        recyclerView.adapter = categoriesListAdapter
+        initRecycler(listCategories, this, view)
     }
 }
 
 private fun initRecycler(
     listCategories: MutableList<Category>,
-    categoriesListFragment: CategoriesListFragment
-): CategoriesListAdapter {
-    return CategoriesListAdapter(listCategories, categoriesListFragment)
+    categoriesListFragment: CategoriesListFragment,
+    view: View,
+) {
+    val categoriesListAdapter = CategoriesListAdapter(listCategories, categoriesListFragment)
+    val recyclerView: RecyclerView = view.findViewById(R.id.rvCategories)
+    recyclerView.adapter = categoriesListAdapter
 }

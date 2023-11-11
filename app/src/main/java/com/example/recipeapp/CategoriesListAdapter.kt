@@ -1,6 +1,7 @@
 package com.example.recipeapp
 
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,18 +14,20 @@ import java.io.InputStream
 
 class CategoriesListAdapter(
     private val dataSet: MutableList<Category>,
-    private val context: CategoriesListFragment
-) :
-    RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
+    private val context: CategoriesListFragment,
+) : RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val cvCategoryItem: CardView
-        val tvCategoryName: TextView = view.findViewById(R.id.tvCategoryName)
-        val tvCategoryText: TextView = view.findViewById(R.id.tvCategoryText)
-        val ivCategoryImage: ImageView = view.findViewById(R.id.ivCategoryImage)
+        val tvCategoryName: TextView
+        val tvCategoryText: TextView
+        val ivCategoryImage: ImageView
 
         init {
             cvCategoryItem = view.findViewById(R.id.cvCategoryItem)
+            tvCategoryName = view.findViewById(R.id.tvCategoryName)
+            tvCategoryText = view.findViewById(R.id.tvCategoryText)
+            ivCategoryImage = view.findViewById(R.id.ivCategoryImage)
         }
     }
 
@@ -45,7 +48,7 @@ class CategoriesListAdapter(
             val drawable = Drawable.createFromStream(inputStream, null)
             viewHolder.ivCategoryImage.setImageDrawable(drawable)
         } catch (ex: IOException) {
-            println("Stack Trace")
+            Log.e(this.javaClass.simpleName, ex.stackTraceToString())
             return
         }
     }
