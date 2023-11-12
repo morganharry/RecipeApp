@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.delay
 import java.io.IOException
 import java.io.InputStream
 
@@ -51,7 +52,19 @@ class CategoriesListAdapter(
             Log.e(this.javaClass.simpleName, ex.stackTraceToString())
             return
         }
+
+        viewHolder.cvCategoryItem.setOnClickListener { itemClickListener?.onItemClick() }
+    }
+
+    var itemClickListener: OnItemClickListener? = null
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        itemClickListener = listener
     }
 
     override fun getItemCount() = dataSet.size
+}
+
+interface OnItemClickListener {
+    fun onItemClick()
 }
