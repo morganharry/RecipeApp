@@ -15,12 +15,13 @@ import java.io.InputStream
 
 class CategoriesListAdapter(
     private val dataSet: MutableList<Category>,
-    private val context: CategoriesListFragment,
+    private val fragment: CategoriesListFragment,
 ) : RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
 
-    var itemClickListener: OnItemClickListener? = null
+    private var itemClickListener: OnItemClickListener? = null
 
     interface OnItemClickListener {
+
         fun onItemClick()
     }
 
@@ -51,7 +52,7 @@ class CategoriesListAdapter(
 
         try {
             val inputStream: InputStream? =
-                context.activity?.assets?.open(dataSet[position].imageUrl)
+                fragment.context?.assets?.open(dataSet[position].imageUrl)
             val drawable = Drawable.createFromStream(inputStream, null)
             viewHolder.ivCategoryImage.setImageDrawable(drawable)
         } catch (ex: IOException) {
