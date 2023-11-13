@@ -18,6 +18,12 @@ class CategoriesListAdapter(
     private val context: CategoriesListFragment,
 ) : RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
 
+    var itemClickListener: OnItemClickListener? = null
+
+    interface OnItemClickListener {
+        fun onItemClick()
+    }
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val cvCategoryItem: CardView
         val tvCategoryName: TextView
@@ -56,8 +62,6 @@ class CategoriesListAdapter(
         viewHolder.cvCategoryItem.setOnClickListener { itemClickListener?.onItemClick() }
     }
 
-    var itemClickListener: OnItemClickListener? = null
-
     fun setOnItemClickListener(listener: OnItemClickListener) {
         itemClickListener = listener
     }
@@ -65,6 +69,3 @@ class CategoriesListAdapter(
     override fun getItemCount() = dataSet.size
 }
 
-interface OnItemClickListener {
-    fun onItemClick()
-}
