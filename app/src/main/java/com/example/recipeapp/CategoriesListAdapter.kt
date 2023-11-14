@@ -21,7 +21,11 @@ class CategoriesListAdapter(
 
     interface OnItemClickListener {
 
-        fun onItemClick()
+        fun onItemClick(categoryId: Int)
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        itemClickListener = listener
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -48,6 +52,7 @@ class CategoriesListAdapter(
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.tvCategoryName.text = dataSet[position].title
         viewHolder.tvCategoryDescription.text = dataSet[position].description
+        val categoryId = dataSet[position].id
 
         try {
             val inputStream: InputStream? =
@@ -59,13 +64,8 @@ class CategoriesListAdapter(
             return
         }
 
-        viewHolder.cvCategoryItem.setOnClickListener { itemClickListener?.onItemClick() }
-    }
-
-    fun setOnItemClickListener(listener: OnItemClickListener) {
-        itemClickListener = listener
+        viewHolder.cvCategoryItem.setOnClickListener { itemClickListener?.onItemClick(categoryId) }
     }
 
     override fun getItemCount() = dataSet.size
 }
-

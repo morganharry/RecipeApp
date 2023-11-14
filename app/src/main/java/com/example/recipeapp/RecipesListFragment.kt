@@ -9,6 +9,9 @@ import com.example.recipeapp.R
 import com.example.recipeapp.databinding.FragmentListRecipesBinding
 
 class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
+    private var categoryId: Int? = null
+    private var categoryName: String? = null
+    private var categoryImageUrl: String? = null
 
     private var _binding: FragmentListRecipesBinding? = null
     private val binding
@@ -22,5 +25,11 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     ): View {
         _binding = FragmentListRecipesBinding.inflate(layoutInflater)
         return (binding.root)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        categoryId = requireArguments().getInt(ARG_CATEGORY_ID)
+        categoryName = requireArguments().getString(ARG_CATEGORY_NAME)
+        categoryImageUrl = requireArguments().getString(ARG_CATEGORY_IMAGE_URL)
     }
 }
