@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.delay
 import java.io.IOException
 import java.io.InputStream
 
@@ -28,13 +27,13 @@ class CategoriesListAdapter(
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val cvCategoryItem: CardView
         val tvCategoryName: TextView
-        val tvCategoryText: TextView
+        val tvCategoryDescription: TextView
         val ivCategoryImage: ImageView
 
         init {
             cvCategoryItem = view.findViewById(R.id.cvCategoryItem)
             tvCategoryName = view.findViewById(R.id.tvCategoryName)
-            tvCategoryText = view.findViewById(R.id.tvCategoryText)
+            tvCategoryDescription = view.findViewById(R.id.tvCategoryText)
             ivCategoryImage = view.findViewById(R.id.ivCategoryImage)
         }
     }
@@ -48,7 +47,7 @@ class CategoriesListAdapter(
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.tvCategoryName.text = dataSet[position].title
-        viewHolder.tvCategoryText.text = dataSet[position].description
+        viewHolder.tvCategoryDescription.text = dataSet[position].description
 
         try {
             val inputStream: InputStream? =
