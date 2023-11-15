@@ -12,10 +12,6 @@ import androidx.fragment.app.replace
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.databinding.FragmentListCategoriesBinding
 
-const val ARG_CATEGORY_ID: String = ""
-const val ARG_CATEGORY_NAME: String = ""
-const val ARG_CATEGORY_IMAGE_URL: String = ""
-
 class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
 
     private var _binding: FragmentListCategoriesBinding? = null
