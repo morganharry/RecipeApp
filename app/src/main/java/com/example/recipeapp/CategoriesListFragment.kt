@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.recyclerview.widget.RecyclerView
@@ -48,15 +50,23 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
 
         categoriesAdapter.setOnItemClickListener(object :
             CategoriesListAdapter.OnItemClickListener {
-            override fun onItemClick() {
-                openRecipesByCategoryId()
+            override fun onItemClick(categoryId: Int) {
+                openRecipesByCategoryId(categoryId)
             }
         })
     }
 
-    private fun openRecipesByCategoryId() {
+    private fun openRecipesByCategoryId(categoryId: Int) {
+        val categoryName = listCategories.find { it.id == categoryId }?.title
+        val categoryImageUrl = listCategories.find { it.id == categoryId }?.imageUrl
+        val bundle = bundleOf(
+            ARG_CATEGORY_ID to categoryId,
+            ARG_CATEGORY_NAME to categoryName,
+            ARG_CATEGORY_IMAGE_URL to categoryImageUrl,
+        )
+
         parentFragmentManager.commit {
-            replace<RecipesListFragment>(R.id.mainContainer)
+            add<RecipesListFragment>(R.id.mainContainer, args = bundle)
             setReorderingAllowed(true)
             addToBackStack("name")
         }
