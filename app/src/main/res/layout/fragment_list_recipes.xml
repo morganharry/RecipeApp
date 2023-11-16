@@ -1,15 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_recipes"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/main_background_color"
-    tools:context=".RecipesListFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/fragment_list_categories"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@color/main_background_color"
+android:orientation="vertical"
+tools:context=".RecipesListFragment">
 
-    <TextView
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="224dp"
+    android:layout_gravity="center">
+
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/fragment_recipes" />
+        android:scaleType="centerCrop"
+        android:src="@drawable/bcg_recipes_list"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        style="@style/StyleTitle20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_standard"
+        android:background="@drawable/shape_rounded_variants"
+        android:padding="@dimen/space_for_text"
+        android:text="@string/title_burgers"
+        app:layout_constraintBottom_toBottomOf="@id/imageView"
+        app:layout_constraintStart_toStartOf="@id/imageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/rvBurgerRecipes"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+    tools:itemCount="6"
+    tools:listitem="@layout/fragment_recipe"
+    android:layout_marginHorizontal="@dimen/space_half"/>
+
+</LinearLayout>
