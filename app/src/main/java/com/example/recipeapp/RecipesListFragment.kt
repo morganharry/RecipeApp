@@ -8,6 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.R
 import com.example.recipeapp.databinding.FragmentListRecipesBinding
@@ -65,9 +66,8 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
             ARG_RECIPE_IMAGE_URL to recipeImageUrl,
         )
 
-
         parentFragmentManager.commit {
-            add<RecipesListFragment>(R.id.mainContainer, args = bundle)
+            replace<RecipeFragment>(R.id.mainContainer, args = bundle)
             setReorderingAllowed(true)
             addToBackStack("name")
         }

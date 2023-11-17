@@ -34,7 +34,7 @@ class RecipesListAdapter (
         val ivRecipeImage: ImageView
 
         init {
-            cvRecipeFragment = view.findViewById(R.id.cvRecipeFragment)
+            cvRecipeFragment = view.findViewById(R.id.cvRecipeItem)
             tvRecipeName = view.findViewById(R.id.tvRecipeName)
             ivRecipeImage = view.findViewById(R.id.ivRecipeImage)
         }
@@ -42,7 +42,7 @@ class RecipesListAdapter (
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.fragment_recipe, viewGroup, false)
+            .inflate(R.layout.item_recipe, viewGroup, false)
 
         return ViewHolder(view)
     }
