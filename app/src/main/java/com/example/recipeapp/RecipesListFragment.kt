@@ -34,6 +34,7 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         arguments?.let {
             recipeId = it.getInt(ARG_RECIPE_ID)
             recipeName = it.getString(ARG_RECIPE_NAME)
