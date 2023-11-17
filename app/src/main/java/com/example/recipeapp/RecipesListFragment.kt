@@ -65,7 +65,6 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
             ARG_RECIPE_IMAGE_URL to recipeImageUrl,
         )
 
-
         parentFragmentManager.commit {
             add<RecipesListFragment>(R.id.mainContainer, args = bundle)
             setReorderingAllowed(true)
