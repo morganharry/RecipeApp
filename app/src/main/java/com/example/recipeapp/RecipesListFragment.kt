@@ -70,7 +70,7 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
         parentFragmentManager.commit {
             replace<RecipeFragment>(R.id.mainContainer, args = bundle)
             setReorderingAllowed(true)
-            addToBackStack("name")
+            addToBackStack(null)
         }
     }
 }

@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             add<CategoriesListFragment>(R.id.mainContainer)
-            addToBackStack("name")
+            addToBackStack(null)
         }
 
         with(binding) {
@@ -30,14 +30,14 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager.commit {
                     replace<CategoriesListFragment>(R.id.mainContainer)
                     setReorderingAllowed(true)
-                    addToBackStack("name")
+                    addToBackStack(null)
                 }
             }
             buttonFavorites.setOnClickListener {
                 supportFragmentManager.commit {
                     replace<FavoritesFragment>(R.id.mainContainer)
                     setReorderingAllowed(true)
-                    addToBackStack("name")
+                    addToBackStack(null)
                 }
             }
         }
