@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.recyclerview.widget.RecyclerView
+import com.example.recipeapp.data.ARG_CATEGORY_ID
+import com.example.recipeapp.data.ARG_CATEGORY_IMAGE_URL
+import com.example.recipeapp.data.ARG_CATEGORY_NAME
 import com.example.recipeapp.databinding.FragmentListCategoriesBinding
 
 class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
