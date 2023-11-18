@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.recipeapp.databinding.FragmentFavoritesBinding
 import com.example.recipeapp.databinding.FragmentRecipeBinding
 
 class RecipeFragment : Fragment(R.layout.fragment_recipe) {

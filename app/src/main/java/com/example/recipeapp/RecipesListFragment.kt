@@ -9,15 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.recyclerview.widget.RecyclerView
-import com.example.recipeapp.data.ARG_RECIPE_ID
-import com.example.recipeapp.data.ARG_RECIPE_IMAGE_URL
-import com.example.recipeapp.data.ARG_RECIPE_NAME
 import com.example.recipeapp.databinding.FragmentListRecipesBinding
 
 class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     private var recipeId: Int? = null
-    private var recipeName: String? = null
-    private var recipeImageUrl: String? = null
 
     private var _binding: FragmentListRecipesBinding? = null
     private val binding
@@ -37,11 +32,6 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        arguments?.let {
-            recipeId = it.getInt(ARG_RECIPE_ID)
-            recipeName = it.getString(ARG_RECIPE_NAME)
-            recipeImageUrl = it.getString(ARG_RECIPE_IMAGE_URL)
-        }
         initRecycler()
     }
 
@@ -59,13 +49,7 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     }
 
     private fun openRecipeByRecipeId(recipeId: Int) {
-        val recipeName = listRecipes.find { it.id == recipeId }?.title
-        val recipeImageUrl = listRecipes.find { it.id == recipeId }?.imageUrl
-        val bundle = bundleOf(
-            ARG_RECIPE_ID to recipeId,
-            ARG_RECIPE_NAME to recipeName,
-            ARG_RECIPE_IMAGE_URL to recipeImageUrl,
-        )
+        val bundle = bundleOf()
 
         parentFragmentManager.commit {
             replace<RecipeFragment>(R.id.mainContainer, args = bundle)

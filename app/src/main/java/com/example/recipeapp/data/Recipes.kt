@@ -222,5 +222,4 @@ object STUB_RECIPES {
             imageUrl = "burger-chili.png"
         )
     )
-
 }

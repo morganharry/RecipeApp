@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import java.io.IOException
 import java.io.InputStream
 
-class RecipesListAdapter (
+class RecipesListAdapter(
     private val dataSet: List<Recipe>,
     private val fragment: RecipesListFragment,
 ) : RecyclerView.Adapter<RecipesListAdapter.ViewHolder>() {
