@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.data.ARG_CATEGORY_ID
 import com.example.recipeapp.data.ARG_CATEGORY_IMAGE_URL
 import com.example.recipeapp.data.ARG_CATEGORY_NAME
+import com.example.recipeapp.data.STUB_RECIPES
 import com.example.recipeapp.databinding.FragmentListRecipesBinding
 
 class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {

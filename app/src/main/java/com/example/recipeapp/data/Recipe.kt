@@ -1,4 +1,4 @@
-package com.example.recipeapp
+package com.example.recipeapp.data
 
 data class Recipe(
     val id: Int,

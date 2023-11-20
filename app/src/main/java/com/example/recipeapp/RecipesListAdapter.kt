@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.recipeapp.data.Recipe
 import java.io.IOException
 import java.io.InputStream
 

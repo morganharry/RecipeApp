@@ -1,4 +1,4 @@
-package com.example.recipeapp
+package com.example.recipeapp.data
 
 object STUB_RECIPES {
     val burgerRecipes = listOf(
