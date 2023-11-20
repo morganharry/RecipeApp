@@ -1,9 +1,9 @@
-package com.example.recipeapp
+package com.example.recipeapp.data
 
 data class Recipe(
     val id: Int,
     val title: String,
-    val ingredient: List<Ingredient>,
+    val ingredients: List<Ingredient>,
     val method: List<String>,
     val imageUrl: String,
 )
