@@ -2,7 +2,6 @@ package com.example.recipeapp
 
 import android.os.Build
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import androidx.fragment.app.Fragment
 import com.example.recipeapp.data.ARG_RECIPE
 import com.example.recipeapp.data.Ingredient
 import com.example.recipeapp.data.Recipe
-import com.example.recipeapp.data.STUB_RECIPES
 import com.example.recipeapp.databinding.FragmentRecipeBinding
 
 class RecipeFragment : Fragment(R.layout.fragment_recipe) {
@@ -22,8 +20,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     private var recipeIngredients: List<Ingredient>? = null
     private var recipeMethod: List<String>? = null
     private var recipeImageUrl: String? = null
-
-    private val listRecipes = STUB_RECIPES.burgerRecipes
 
     private var _binding: FragmentRecipeBinding? = null
     private val binding
@@ -37,9 +33,10 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         savedInstanceState: Bundle?
     ): View {
 
-        arguments?.let {
-            it.classLoader = Recipe::class.java.classLoader
-            recipe = it.getParcelable(ARG_RECIPE)
+        recipe = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelable(ARG_RECIPE, Recipe::class.java)
+        } else {
+            arguments?.getParcelable(ARG_RECIPE)
         }
 
         recipeTitle = recipe?.title
