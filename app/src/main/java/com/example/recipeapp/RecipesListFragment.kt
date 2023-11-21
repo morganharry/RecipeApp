@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.data.ARG_CATEGORY_ID
 import com.example.recipeapp.data.ARG_CATEGORY_IMAGE_URL
 import com.example.recipeapp.data.ARG_CATEGORY_NAME
+import com.example.recipeapp.data.ARG_RECIPE
+import com.example.recipeapp.data.Recipe
 import com.example.recipeapp.data.STUB_RECIPES
 import com.example.recipeapp.databinding.FragmentListRecipesBinding
 
 class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
-    private var recipeId: Int? = null
-
     private var categoryId: Int? = null
     private var categoryName: String? = null
     private var categoryImageUrl: String? = null
@@ -62,7 +62,10 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     }
 
     private fun openRecipeByRecipeId(recipeId: Int) {
-        val bundle = bundleOf()
+        val recipe: Recipe? = listRecipes.find { it.id == recipeId }
+        val bundle = bundleOf(
+            ARG_RECIPE to recipe,
+        )
 
         parentFragmentManager.commit {
             replace<RecipeFragment>(R.id.mainContainer, args = bundle)

@@ -7,10 +7,20 @@
     tools:context=".RecipeFragment">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="@dimen/space_half"
         android:text="RecipeFragment" />
+
+    <TextView
+        android:id="@+id/tvTitleRecipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_half"
+        android:text="TitleRecipe"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvFragment" />
 </androidx.constraintlayout.widget.ConstraintLayout>
