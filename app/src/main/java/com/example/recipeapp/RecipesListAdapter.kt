@@ -36,8 +36,8 @@ class RecipesListAdapter(
 
         init {
             cvRecipeFragment = view.findViewById(R.id.cvRecipeItem)
-            tvRecipeName = view.findViewById(R.id.tvRecipeName)
-            ivRecipeImage = view.findViewById(R.id.ivRecipeImage)
+            tvRecipeName = view.findViewById(R.id.tvRecipeNameItem)
+            ivRecipeImage = view.findViewById(R.id.ivRecipeItem)
         }
     }
 
