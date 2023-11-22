@@ -11,5 +11,6 @@
     <color name="text_color">#666666</color>
     <color name="portion_color">#000000</color>
     <color name="recipe_color">#422952</color>
+    <color name="line_color">#CBCBCB</color>
 
 </resources>

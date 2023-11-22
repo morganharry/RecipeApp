@@ -42,12 +42,18 @@
         <item name="android:alpha">0.60</item>
     </style>
 
-    <style name="StyleTitle20black" parent="TextAppearance.AppCompat">
+    <style name="StyleTitle20Black" parent="TextAppearance.AppCompat">
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/recipe_color</item>
         <item name="android:fontFamily">@font/montserrat_alternates_semibold</item>
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="StyleTitle14Black" parent="TextAppearance.AppCompat">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/portion_color</item>
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 
 </resources>
