@@ -1,7 +1,9 @@
 package com.example.recipeapp
 
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +14,8 @@ import com.example.recipeapp.data.ARG_RECIPE
 import com.example.recipeapp.data.Ingredient
 import com.example.recipeapp.data.Recipe
 import com.example.recipeapp.databinding.FragmentRecipeBinding
+import java.io.IOException
+import java.io.InputStream
 
 class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
@@ -51,6 +55,17 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.tvRecipe.text = recipeTitle
+
+        try {
+            val inputStream: InputStream? =
+                recipeImageUrl?.let { this.context?.assets?.open(it) }
+            val drawable = Drawable.createFromStream(inputStream, null)
+            binding.ivRecipe.setImageDrawable(drawable)
+        } catch (ex: IOException) {
+            Log.e(this.javaClass.simpleName, ex.stackTraceToString())
+            return
+        }
 
         initRecycler()
     }
