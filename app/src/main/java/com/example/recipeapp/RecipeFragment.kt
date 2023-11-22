@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.data.ARG_RECIPE
 import com.example.recipeapp.data.Ingredient
 import com.example.recipeapp.data.Recipe
@@ -51,5 +52,18 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.tvRecipe.text = recipeTitle
+
+        initRecycler()
+    }
+
+    private fun initRecycler() {
+        val ingredientsAdapter = recipeIngredients?.let { IngredientsAdapter(it, this) }
+        val methodAdapter = recipeMethod?.let { MethodAdapter(it, this) }
+
+        val recyclerIngredientsView: RecyclerView = binding.rvIngredients
+        val recyclerMethodView: RecyclerView = binding.rvMethod
+
+        recyclerIngredientsView.adapter = ingredientsAdapter
+        recyclerMethodView.adapter = methodAdapter
     }
 }
