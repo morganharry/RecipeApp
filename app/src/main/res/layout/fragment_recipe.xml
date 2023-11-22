@@ -2,11 +2,11 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_recipe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     android:background="@color/main_background_color"
-    android:id="@+id/fragment_recipe"
+    android:fillViewport="true"
 
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
 
@@ -47,74 +47,61 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/space_standard">
+
             <TextView
-                style="@style/StyleTitle14"
+                style="@style/StyleTitle20black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/space_half"
-                android:layout_marginTop="@dimen/space_half"
-                android:text="@string/ingredients"/>
+                android:layout_marginBottom="6dp"
+                android:text="@string/ingredients" />
+
             <TextView
                 style="@style/StyleTitle16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/space_half"
-                android:layout_marginTop="@dimen/space_half"
-                android:text="@string/portion"/>
+                android:layout_marginBottom="6dp"
+                android:text="@string/portion" />
 
             <SeekBar
-                android:id="@+id/seekBar"
+                android:id="@+id/sbPortion"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-
+                android:layout_height="wrap_content"
+                android:max="5"
+                android:min="1" />
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="@string/test_text"
-            android:textSize="22sp" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvIngredients"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginHorizontal="@dimen/space_half"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                tools:itemCount="6"
+                tools:listitem="" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_marginTop="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <TextView
+                style="@style/StyleTitle20black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/space_standard"
+                android:text="@string/method" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMethod"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginHorizontal="@dimen/space_half"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                tools:itemCount="6"
+                tools:listitem="" />
+
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
-
-
-
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".RecipeFragment">
-
-<TextView
-    android:id="@+id/tvFragment"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    android:layout_margin="@dimen/space_half"
-    android:text="RecipeFragment" />
-
-<TextView
-    android:id="@+id/tvTitleRecipe"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/space_half"
-    android:text="TitleRecipe"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/tvFragment" />
-</androidx.constraintlayout.widget.ConstraintLayout>
