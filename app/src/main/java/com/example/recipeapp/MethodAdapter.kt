@@ -28,7 +28,7 @@ class MethodAdapter(
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
-        viewHolder.textView.text = dataSet[position]
+        viewHolder.textView.text = "${(position.plus(1)).toString()}. ${dataSet[position]}"
     }
 
     override fun getItemCount() = dataSet.size
