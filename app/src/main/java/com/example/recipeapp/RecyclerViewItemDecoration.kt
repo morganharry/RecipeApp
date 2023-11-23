@@ -1,25 +1,27 @@
 package com.example.recipeapp
 
-import android.content.Context
+import android.content.res.Resources.getSystem
 import android.graphics.Canvas
-import android.graphics.drawable.Drawable
+import android.graphics.Paint
+import android.graphics.Rect
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
+private val Int.px: Int get() = (this * getSystem().displayMetrics.density).toInt()
+
 class RecyclerViewItemDecoration(
-    context: Context,
-    resId: Int
+    lineColor: Int
 ) : RecyclerView.ItemDecoration() {
 
-    private var mDivider: Drawable = ContextCompat.getDrawable(context, resId)!!
+    private val paint = Paint().apply {
+        color = lineColor
+    }
 
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         super.onDraw(c, parent, state)
 
-        val dividerLeft: Int = 32
-
-        val dividerRight: Int = parent.width - 32
+        val dividerLeft = 8.px
+        val dividerRight = parent.width - 8.px
 
         for (i in 0 until parent.childCount) {
 
@@ -29,10 +31,9 @@ class RecyclerViewItemDecoration(
                 val params = child.layoutParams as RecyclerView.LayoutParams
 
                 val dividerTop: Int = child.bottom + params.bottomMargin
-                val dividerBottom: Int = dividerTop + mDivider.intrinsicHeight
-
-                mDivider.setBounds(dividerLeft, dividerTop, dividerRight, dividerBottom)
-                mDivider.draw(c)
+                val dividerBottom = dividerTop + 1.px
+                val rect = Rect(dividerLeft, dividerTop, dividerRight, dividerBottom)
+                c.drawRect(rect, paint)
             }
         }
     }
