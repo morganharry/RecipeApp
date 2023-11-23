@@ -75,11 +75,11 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         val methodAdapter = recipeMethod?.let { MethodAdapter(it, this) }
 
         val recyclerIngredientsView: RecyclerView = binding.rvIngredients
-        getContext()?.let { RecyclerViewItemDecoration(R.color.line_color) }
+        getContext()?.let { RecyclerViewItemDecoration(R.color.line_list_color) }
             ?.let { recyclerIngredientsView.addItemDecoration(it) }
 
         val recyclerMethodView: RecyclerView = binding.rvMethod
-        getContext()?.let { RecyclerViewItemDecoration(R.color.line_color) }
+        getContext()?.let { RecyclerViewItemDecoration(R.color.line_list_color) }
             ?.let { recyclerMethodView.addItemDecoration(it) }
 
         recyclerIngredientsView.adapter = ingredientsAdapter
