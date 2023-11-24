@@ -38,6 +38,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         savedInstanceState: Bundle?
     ): View {
 
+
         recipe = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             arguments?.getParcelable(ARG_RECIPE, Recipe::class.java)
         } else {
