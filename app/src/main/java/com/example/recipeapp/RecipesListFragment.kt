@@ -34,23 +34,27 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentListRecipesBinding.inflate(layoutInflater)
-        return (binding.root)
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         arguments?.let {
             categoryId = it.getInt(ARG_CATEGORY_ID)
             categoryName = it.getString(ARG_CATEGORY_NAME)
             categoryImageUrl = it.getString(ARG_CATEGORY_IMAGE_URL)
         }
 
+        _binding = FragmentListRecipesBinding.inflate(layoutInflater)
+        return (binding.root)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.tvCategory.text = categoryName
+
         initRecycler()
     }
 
     private fun initRecycler() {
         val recipesAdapter = RecipesListAdapter(listRecipes, this)
-        val recyclerView: RecyclerView = binding.rvBurgerRecipes
+        val recyclerView: RecyclerView = binding.rvRecipes
         recyclerView.adapter = recipesAdapter
 
         recipesAdapter.setOnItemClickListener(object :

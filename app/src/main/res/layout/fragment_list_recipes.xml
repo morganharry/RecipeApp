@@ -15,7 +15,7 @@ tools:context=".RecipesListFragment">
     android:layout_gravity="center">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/ivCategory"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
@@ -26,7 +26,7 @@ tools:context=".RecipesListFragment">
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvCategory"
         style="@style/StyleTitle20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,13 +34,13 @@ tools:context=".RecipesListFragment">
         android:background="@drawable/shape_rounded_variants"
         android:padding="@dimen/space_for_text"
         android:text="@string/title_burgers"
-        app:layout_constraintBottom_toBottomOf="@id/imageView"
-        app:layout_constraintStart_toStartOf="@id/imageView" />
+        app:layout_constraintBottom_toBottomOf="@id/ivCategory"
+        app:layout_constraintStart_toStartOf="@id/ivCategory" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 <androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/rvBurgerRecipes"
+    android:id="@+id/rvRecipes"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"

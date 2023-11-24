@@ -4,10 +4,12 @@
     <string name="button_favorites">Избранное</string>
     <string name="title_categories">Категории</string>
     <string name="title_burgers">Бургеры</string>
+    <string name="title_burger_avacado">Бургер с курицей и авокадо</string>
+    <string name="ingredients">Ингредиенты</string>
+    <string name="method">Способ приготовления</string>
+    <string name="portion">Порция: 1</string>
     <string name="fragment_list_categories">CategoriesListFragment</string>
     <string name="fragment_favorites">FavoritesFragment</string>
     <string name="fragment_recipes">RecipesFragment</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

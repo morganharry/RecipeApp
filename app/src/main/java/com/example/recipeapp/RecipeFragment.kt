@@ -1,16 +1,21 @@
 package com.example.recipeapp
 
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.data.ARG_RECIPE
 import com.example.recipeapp.data.Ingredient
 import com.example.recipeapp.data.Recipe
 import com.example.recipeapp.databinding.FragmentRecipeBinding
+import java.io.IOException
+import java.io.InputStream
 
 class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
@@ -50,6 +55,40 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.tvTitleRecipe.text = recipeTitle
+        binding.tvRecipe.text = recipeTitle
+
+        try {
+            val inputStream: InputStream? =
+                recipeImageUrl?.let { this.context?.assets?.open(it) }
+            val drawable = Drawable.createFromStream(inputStream, null)
+            binding.ivRecipe.setImageDrawable(drawable)
+        } catch (ex: IOException) {
+            Log.e(this.javaClass.simpleName, ex.stackTraceToString())
+            return
+        }
+
+        initRecycler()
+    }
+
+    private fun initRecycler() {
+        val ingredientsAdapter = recipeIngredients?.let { IngredientsAdapter(it, this) }
+        val methodAdapter = recipeMethod?.let { MethodAdapter(it, this) }
+
+        val recyclerIngredientsView: RecyclerView = binding.rvIngredients
+        context?.let { it ->
+            it.getColor(R.color.line_list_color)
+                ?.let { RecyclerViewItemDecoration(it) }
+        }
+            ?.let { recyclerIngredientsView.addItemDecoration(it) }
+
+        val recyclerMethodView: RecyclerView = binding.rvMethod
+        context?.let { it ->
+            it.getColor(R.color.line_list_color)
+                ?.let { RecyclerViewItemDecoration(it) }
+        }
+            ?.let { recyclerMethodView.addItemDecoration(it) }
+
+        recyclerIngredientsView.adapter = ingredientsAdapter
+        recyclerMethodView.adapter = methodAdapter
     }
 }

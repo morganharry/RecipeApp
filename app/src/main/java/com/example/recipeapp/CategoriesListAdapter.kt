@@ -37,9 +37,9 @@ class CategoriesListAdapter(
 
         init {
             cvCategoryItem = view.findViewById(R.id.cvCategoryItem)
-            tvCategoryName = view.findViewById(R.id.tvCategoryName)
-            tvCategoryDescription = view.findViewById(R.id.tvCategoryText)
-            ivCategoryImage = view.findViewById(R.id.ivCategoryImage)
+            tvCategoryName = view.findViewById(R.id.tvCategoryNameItem)
+            tvCategoryDescription = view.findViewById(R.id.tvCategoryTextItem)
+            ivCategoryImage = view.findViewById(R.id.ivCategoryItem)
         }
     }
 

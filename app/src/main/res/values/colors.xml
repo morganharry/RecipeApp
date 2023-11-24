@@ -9,5 +9,9 @@
     <color name="status_bar_color">#F4FAFF</color>
     <color name="title_color">#5F3678</color>
     <color name="text_color">#666666</color>
+    <color name="portion_color">#000000</color>
+    <color name="recipe_color">#422952</color>
+    <color name="line_list_color">#CBCBCB</color>
+    <color name="line_divider_color">#000000</color>
 
 </resources>
