@@ -46,9 +46,11 @@ class IngredientsAdapter(
         quantity = progress
     }
 
-    fun checkNumberType(quantityForOnePortion: String): String {
-        return if (quantityForOnePortion.contains(".") || quantityForOnePortion.contains(","))
-            (quantityForOnePortion.toDouble() * quantity).toString()
-        else (quantityForOnePortion.toInt() * quantity).toString()
+    private fun checkNumberType(quantityForOnePortion: String): String {
+        val num = quantityForOnePortion.toDouble() * quantity
+        return if (Regex("^[0-9]*[.,]0").matches(num.toString()))
+            String.format("%.0f", num)
+        else
+            String.format("%.1f", num)
     }
 }
