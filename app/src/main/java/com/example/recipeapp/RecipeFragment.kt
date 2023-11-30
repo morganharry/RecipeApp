@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -91,5 +92,20 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
         recyclerIngredientsView.adapter = ingredientsAdapter
         recyclerMethodView.adapter = methodAdapter
+
+        binding.sbPortion.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                binding.tvPortion.text = progress.toString()
+                if (ingredientsAdapter != null) {
+                    ingredientsAdapter.updateIngredients(progress)
+                }
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            }
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            }
+
+        })
     }
 }

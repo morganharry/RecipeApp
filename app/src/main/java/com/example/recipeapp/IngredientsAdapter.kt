@@ -12,6 +12,8 @@ class IngredientsAdapter(
     private val fragment: RecipeFragment
 ) : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
 
+    private var quantity = 1
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvDescription: TextView
         val tvQuantity: TextView
@@ -39,4 +41,8 @@ class IngredientsAdapter(
     }
 
     override fun getItemCount() = dataSet.size
+
+    fun updateIngredients(progress: Int) {
+        quantity = progress
+    }
 }
