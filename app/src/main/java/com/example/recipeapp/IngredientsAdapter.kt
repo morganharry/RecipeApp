@@ -36,7 +36,7 @@ class IngredientsAdapter(
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
         viewHolder.tvDescription.text = dataSet[position].description
-        viewHolder.tvQuantity.text = dataSet[position].quantity
+        viewHolder.tvQuantity.text = checkNumberType(dataSet[position].quantity)
         viewHolder.tvUnitOfMeasure.text = dataSet[position].unitOfMeasure
     }
 
@@ -44,5 +44,11 @@ class IngredientsAdapter(
 
     fun updateIngredients(progress: Int) {
         quantity = progress
+    }
+
+    fun checkNumberType(quantityForOnePortion: String): String {
+        return if (quantityForOnePortion.contains(".") || quantityForOnePortion.contains(","))
+            (quantityForOnePortion.toDouble() * quantity).toString()
+        else (quantityForOnePortion.toInt() * quantity).toString()
     }
 }

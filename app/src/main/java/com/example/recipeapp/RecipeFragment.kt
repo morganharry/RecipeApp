@@ -98,14 +98,15 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
                 binding.tvPortion.text = progress.toString()
                 if (ingredientsAdapter != null) {
                     ingredientsAdapter.updateIngredients(progress)
+                    recyclerIngredientsView.adapter = ingredientsAdapter
                 }
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
             }
+
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
             }
-
         })
     }
 }
