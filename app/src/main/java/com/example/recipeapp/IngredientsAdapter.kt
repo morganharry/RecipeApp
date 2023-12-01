@@ -12,6 +12,8 @@ class IngredientsAdapter(
     private val fragment: RecipeFragment
 ) : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
 
+    private var quantity = 1
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvDescription: TextView
         val tvQuantity: TextView
@@ -34,9 +36,21 @@ class IngredientsAdapter(
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
         viewHolder.tvDescription.text = dataSet[position].description
-        viewHolder.tvQuantity.text = dataSet[position].quantity
+        viewHolder.tvQuantity.text = checkNumberType(dataSet[position].quantity)
         viewHolder.tvUnitOfMeasure.text = dataSet[position].unitOfMeasure
     }
 
     override fun getItemCount() = dataSet.size
+
+    fun updateIngredients(progress: Int) {
+        quantity = progress
+    }
+
+    private fun checkNumberType(quantityForOnePortion: String): String {
+        val num = quantityForOnePortion.toDouble() * quantity
+        return if (Regex("^[0-9]*[.,]0").matches(num.toString()))
+            String.format("%.0f", num)
+        else
+            String.format("%.1f", num)
+    }
 }
