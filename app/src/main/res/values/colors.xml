@@ -13,5 +13,6 @@
     <color name="recipe_color">#422952</color>
     <color name="line_list_color">#CBCBCB</color>
     <color name="line_divider_color">#000000</color>
-
+    <color name="thumb_color">#525DC0</color>
+    <color name="progress_color">#A1A9F9</color>
 </resources>

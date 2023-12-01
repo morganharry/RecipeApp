@@ -7,7 +7,7 @@
     <string name="title_burger_avacado">Бургер с курицей и авокадо</string>
     <string name="ingredients">Ингредиенты</string>
     <string name="method">Способ приготовления</string>
-    <string name="portion">Порций:</string>
+    <string name="portion">Порции:</string>
     <string name="num_portion">1</string>
     <string name="fragment_list_categories">CategoriesListFragment</string>
     <string name="fragment_favorites">FavoritesFragment</string>
