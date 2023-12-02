@@ -47,8 +47,9 @@
             android:layout_weight="1"
             android:backgroundTint="@color/button_favorites_color"
             android:text="@string/button_favorites"
-            app:icon="@drawable/ic_heart_but"
-            app:iconGravity="textEnd" />
+            app:icon="@drawable/ic_heart_empty"
+            app:iconGravity="textEnd"
+            />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
