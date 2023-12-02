@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/space_half"
-            tools:text="@string/title_burgers" />
+            tools:text="@string/title_recipe_for_tools" />
 
     </LinearLayout>
 

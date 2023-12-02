@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="styleSeekBar">
+        <item name="android:thumb">@drawable/shape_seekbar_thumb</item>
+        <item name="android:progressDrawable">@drawable/shape_seekbar_progress</item>
+    </style>
+
     <style name="StyleButtonTitle14" parent="TextAppearance.AppCompat">
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/white</item>

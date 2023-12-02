@@ -14,11 +14,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_half"
-        android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Булочка для гамбургера" />
+        tools:text="@string/text_description_for_tools" />
 
     <TextView
         android:id="@+id/tvQuantity"
@@ -27,11 +26,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_half"
         android:gravity="end"
-        android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tvUnitOfMeasure"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="1" />
+        tools:text="@string/text_quantity_for_tools" />
 
     <TextView
         android:id="@+id/tvUnitOfMeasure"
@@ -39,10 +37,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_half"
-        android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="шт." />
+        tools:text="@string/text_unit_of_measure_for_tools" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

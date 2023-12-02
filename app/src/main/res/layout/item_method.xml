@@ -10,10 +10,9 @@
         android:id="@+id/tvMethod"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
         style="@style/StyleTitle16"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_margin="@dimen/space_half"
-        tools:text="Лук нарежьте кольцами и добавьте к фаршу. Обжаривайте вместе до золотистой корки."/>
+        tools:text="@string/text_method_for_tools" />
 </FrameLayout>

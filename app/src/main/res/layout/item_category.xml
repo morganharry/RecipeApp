@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_half"
             android:layout_marginTop="@dimen/space_half"
-            tools:text="Бургеры" />
+            tools:text="@string/title_category_for_tools" />
 
         <TextView
             android:id="@+id/tvCategoryTextItem"
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/space_half"
-            tools:text="Рецепты всех популярных видов бургеров" />
+            tools:text="@string/text_category_for_tools" />
 
     </LinearLayout>
 

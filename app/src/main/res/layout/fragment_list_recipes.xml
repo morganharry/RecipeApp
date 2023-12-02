@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/fragment_list_categories"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:background="@color/main_background_color"
-android:orientation="vertical"
-tools:context=".RecipesListFragment">
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="224dp"
-    android:layout_gravity="center">
-
-    <ImageView
-        android:id="@+id/ivCategory"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/burger"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvCategory"
-        style="@style/StyleTitle20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/space_standard"
-        android:background="@drawable/shape_rounded_variants"
-        android:padding="@dimen/space_for_text"
-        android:text="@string/title_burgers"
-        app:layout_constraintBottom_toBottomOf="@id/ivCategory"
-        app:layout_constraintStart_toStartOf="@id/ivCategory" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/rvRecipes"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_list_categories"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-    tools:itemCount="6"
-    tools:listitem="@layout/item_recipe"
-    android:layout_marginHorizontal="@dimen/space_half"/>
+    android:background="@color/main_background_color"
+    android:orientation="vertical"
+    tools:context=".RecipesListFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="224dp"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/ivCategory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/burger"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvCategory"
+            style="@style/StyleTitle20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_standard"
+            android:background="@drawable/shape_rounded_variants"
+            android:padding="@dimen/space_for_text"
+            app:layout_constraintBottom_toBottomOf="@id/ivCategory"
+            app:layout_constraintStart_toStartOf="@id/ivCategory"
+            tools:text="@string/title_recipe_for_tools" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRecipes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/space_half"
+        android:gravity="center"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        tools:itemCount="6"
+        tools:listitem="@layout/item_recipe" />
 
 </LinearLayout>
