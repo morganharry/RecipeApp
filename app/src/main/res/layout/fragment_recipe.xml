@@ -32,6 +32,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <ImageButton
+                android:id="@+id/ibFavorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/space_standard"
+                android:background="@null"
+                app:layout_constraintEnd_toEndOf="@+id/ivRecipe"
+                app:layout_constraintTop_toTopOf="@+id/ivRecipe"
+                tools:src="@drawable/ic_heart_empty" />
+
             <TextView
                 android:id="@+id/tvRecipe"
                 style="@style/StyleTitle20"
@@ -40,9 +50,9 @@
                 android:layout_margin="@dimen/space_standard"
                 android:background="@drawable/shape_rounded_variants"
                 android:padding="@dimen/space_for_text"
-                android:text="@string/title_burger_avacado"
                 app:layout_constraintBottom_toBottomOf="@id/ivRecipe"
-                app:layout_constraintStart_toStartOf="@id/ivRecipe" />
+                app:layout_constraintStart_toStartOf="@id/ivRecipe"
+                tools:text="@string/title_recipe_for_tools" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

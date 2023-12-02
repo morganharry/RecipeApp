@@ -11,15 +11,13 @@
     <string name="fragment_favorites">FavoritesFragment</string>
     <string name="fragment_recipes">RecipesFragment</string>
 
-    <string name="title_recipe_for_tools">Бургеры</string>
+    <string name="title_recipes_for_tools">Бургеры</string>
     <string name="text_method_for_tools">Лук нарежьте кольцами и добавьте к фаршу. Обжаривайте вместе до золотистой корки.</string>
+    <string name="title_recipe_for_tools">Бургер с курицей и авокадо</string>
     <string name="text_description_for_tools">Булочка для гамбургера</string>
     <string name="text_quantity_for_tools">1</string>
     <string name="text_unit_of_measure_for_tools">шт.</string>
     <string name="title_category_for_tools">Бургеры</string>
     <string name="text_category_for_tools">Рецепты всех популярных видов бургеров</string>
-
-
-    <string name="title_burger_avacado">Бургер с курицей и авокадо</string>
 
 </resources>

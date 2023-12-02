@@ -35,7 +35,7 @@
             android:padding="@dimen/space_for_text"
             app:layout_constraintBottom_toBottomOf="@id/ivCategory"
             app:layout_constraintStart_toStartOf="@id/ivCategory"
-            tools:text="@string/title_recipe_for_tools" />
+            tools:text="@string/title_recipes_for_tools" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
