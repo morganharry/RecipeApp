@@ -36,7 +36,6 @@
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
             android:backgroundTint="@color/button_categories_color"
-            android:onClick="toastMe"
             android:text="@string/title_categories" />
 
         <Button
@@ -48,7 +47,7 @@
             android:layout_weight="1"
             android:backgroundTint="@color/button_favorites_color"
             android:text="@string/button_favorites"
-            app:icon="@drawable/ic_heart"
+            app:icon="@drawable/ic_heart_but"
             app:iconGravity="textEnd" />
 
     </LinearLayout>

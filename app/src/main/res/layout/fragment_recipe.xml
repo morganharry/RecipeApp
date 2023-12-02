@@ -38,6 +38,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/space_standard"
                 android:background="@null"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
                 app:layout_constraintEnd_toEndOf="@+id/ivRecipe"
                 app:layout_constraintTop_toTopOf="@+id/ivRecipe"
                 tools:src="@drawable/ic_heart_empty" />
@@ -53,6 +56,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/ivRecipe"
                 app:layout_constraintStart_toStartOf="@id/ivRecipe"
                 tools:text="@string/title_recipe_for_tools" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

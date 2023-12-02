@@ -58,6 +58,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.tvRecipe.text = recipeTitle
+        binding.ibFavorite.setBackgroundResource(R.drawable.ic_heart_empty)
 
         try {
             val inputStream: InputStream? =
@@ -67,6 +68,10 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         } catch (ex: IOException) {
             Log.e(this.javaClass.simpleName, ex.stackTraceToString())
             return
+        }
+
+        binding.ibFavorite.setOnClickListener {
+            it.setBackgroundResource(R.drawable.ic_heart)
         }
 
         initRecycler()
