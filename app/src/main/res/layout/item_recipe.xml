@@ -23,7 +23,8 @@
             android:id="@+id/ivRecipeItem"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/content_of_recipe_button"/>
 
         <TextView
             android:id="@+id/tvRecipeNameItem"

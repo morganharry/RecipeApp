@@ -23,7 +23,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/content_of_category_image"/>
 
         <TextView
             android:id="@+id/tvCategory"
@@ -36,6 +37,7 @@
             app:layout_constraintBottom_toBottomOf="@id/ivCategory"
             app:layout_constraintStart_toStartOf="@id/ivCategory"
             tools:text="@string/title_recipes_for_tools" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

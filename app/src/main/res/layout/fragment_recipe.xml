@@ -30,7 +30,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/content_of_recipe_image"/>
 
             <ImageButton
                 android:id="@+id/ibFavorite"
@@ -42,7 +43,8 @@
                 android:foreground="?android:attr/selectableItemBackground"
                 app:layout_constraintEnd_toEndOf="@+id/ivRecipe"
                 app:layout_constraintTop_toTopOf="@+id/ivRecipe"
-                tools:background="@drawable/ic_heart_empty" />
+                tools:background="@drawable/ic_heart_empty"
+                android:contentDescription="@string/content_of_favorites_button"/>
 
             <TextView
                 android:id="@+id/tvRecipe"

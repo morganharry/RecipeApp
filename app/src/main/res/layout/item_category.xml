@@ -23,6 +23,7 @@
             android:id="@+id/ivCategoryItem"
             android:layout_width="match_parent"
             android:layout_height="130dp"
+            android:contentDescription="@string/content_of_category_button"
             android:scaleType="centerCrop"
             android:src="@drawable/burger" />
 
