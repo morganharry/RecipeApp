@@ -1,5 +1,6 @@
 package com.example.recipeapp
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.data.ARG_RECIPE
 import com.example.recipeapp.data.Ingredient
 import com.example.recipeapp.data.Recipe
+import com.example.recipeapp.data.STUB_RECIPES
 import com.example.recipeapp.databinding.FragmentRecipeBinding
 import java.io.IOException
 import java.io.InputStream
@@ -21,6 +23,8 @@ import java.io.InputStream
 class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
     private var recipe: Recipe? = null
+
+    var sharedPrefs = saveFavorites(STUB_RECIPES.burgerRecipes.map { it.id }.toSet())
 
     private var recipeTitle: String? = null
     private var recipeIngredients: List<Ingredient>? = null
@@ -79,7 +83,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
                 flagFavorite = true
                 it.setBackgroundResource(R.drawable.ic_heart)
             }
-
         }
 
         initRecycler()
@@ -121,5 +124,8 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
             }
         })
+    }
+    private fun saveFavorites(seiOfId: Set<Int>): Any {
+        return 1
     }
 }
