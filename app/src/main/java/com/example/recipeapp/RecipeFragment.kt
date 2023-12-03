@@ -39,7 +39,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         savedInstanceState: Bundle?
     ): View {
 
-
         recipe = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             arguments?.getParcelable(ARG_RECIPE, Recipe::class.java)
         } else {
@@ -57,7 +56,10 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.tvRecipe.text = recipeTitle
+        binding.ibFavorite.setBackgroundResource(R.drawable.ic_heart_empty)
+        var flagFavorite = false
 
         try {
             val inputStream: InputStream? =
@@ -67,6 +69,17 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         } catch (ex: IOException) {
             Log.e(this.javaClass.simpleName, ex.stackTraceToString())
             return
+        }
+
+        binding.ibFavorite.setOnClickListener {
+            if (flagFavorite) {
+                flagFavorite = false
+                it.setBackgroundResource(R.drawable.ic_heart_empty)
+            } else {
+                flagFavorite = true
+                it.setBackgroundResource(R.drawable.ic_heart)
+            }
+
         }
 
         initRecycler()

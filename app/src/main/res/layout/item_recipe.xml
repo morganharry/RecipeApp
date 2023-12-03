@@ -23,7 +23,8 @@
             android:id="@+id/ivRecipeItem"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/content_of_recipe_button"/>
 
         <TextView
             android:id="@+id/tvRecipeNameItem"
@@ -31,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/space_half"
-            tools:text="@string/title_recipe_for_tools" />
+            tools:text="@string/title_recipes_for_tools" />
 
     </LinearLayout>
 
