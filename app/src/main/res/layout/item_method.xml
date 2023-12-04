@@ -8,11 +8,10 @@
 
     <TextView
         android:id="@+id/tvMethod"
+        style="@style/StyleTitle16"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/StyleTitle16"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="@dimen/space_half"
         tools:text="@string/text_method_for_tools" />
 </FrameLayout>
