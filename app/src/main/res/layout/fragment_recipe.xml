@@ -10,7 +10,6 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".RecipeFragment">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,13 +24,13 @@
                 android:id="@+id/ivRecipe"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/content_of_recipe_image"
                 android:scaleType="centerCrop"
                 android:src="@drawable/burger"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/content_of_recipe_image"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
                 android:id="@+id/ibFavorite"
@@ -39,12 +38,12 @@
                 android:layout_height="40dp"
                 android:layout_margin="@dimen/space_standard"
                 android:clickable="true"
+                android:contentDescription="@string/content_of_favorites_button"
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"
                 app:layout_constraintEnd_toEndOf="@+id/ivRecipe"
                 app:layout_constraintTop_toTopOf="@+id/ivRecipe"
-                tools:background="@drawable/ic_heart_empty"
-                android:contentDescription="@string/content_of_favorites_button"/>
+                tools:background="@drawable/ic_heart_empty" />
 
             <TextView
                 android:id="@+id/tvRecipe"
@@ -52,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/space_standard"
-                android:background="@drawable/shape_rounded_variants"
+                android:background="@drawable/shape_rounded_title"
                 android:padding="@dimen/space_for_text"
                 app:layout_constraintBottom_toBottomOf="@id/ivRecipe"
                 app:layout_constraintStart_toStartOf="@id/ivRecipe"
@@ -106,7 +105,6 @@
                 android:max="5"
                 android:min="1" />
 
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvIngredients"
                 android:layout_width="match_parent"
@@ -114,7 +112,8 @@
                 android:layout_margin="@dimen/space_half"
                 android:background="@drawable/shape_rounded_list"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                tools:listitem="" />
+                tools:itemCount="3"
+                tools:listitem="@layout/item_ingredient" />
 
             <TextView
                 style="@style/StyleTitle20Black"
@@ -130,9 +129,9 @@
                 android:layout_marginHorizontal="@dimen/space_half"
                 android:background="@drawable/shape_rounded_list"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                tools:listitem="" />
+                tools:itemCount="3"
+                tools:listitem="@layout/item_method" />
 
         </LinearLayout>
     </LinearLayout>
-
 </androidx.core.widget.NestedScrollView>

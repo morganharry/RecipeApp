@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/space_half"
-    android:orientation="horizontal"
-    android:weightSum="5">
+    android:layout_marginHorizontal="@dimen/space_half"
+    android:layout_marginTop="@dimen/space_half">
 
     <TextView
         android:id="@+id/tvDescription"
@@ -29,7 +28,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tvUnitOfMeasure"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/text_quantity_for_tools" />
+        tools:text="1" />
 
     <TextView
         android:id="@+id/tvUnitOfMeasure"
