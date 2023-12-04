@@ -1,6 +1,7 @@
 package com.example.recipeapp
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.widget.SeekBar
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.example.recipeapp.data.APP_RECIPES
 import com.example.recipeapp.data.ARG_RECIPE
 import com.example.recipeapp.data.Ingredient
 import com.example.recipeapp.data.Recipe
@@ -24,7 +26,8 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
     private var recipe: Recipe? = null
 
-    var sharedPrefs = saveFavorites(STUB_RECIPES.burgerRecipes.map { it.id }.toSet())
+    var sP = saveFavorites(STUB_RECIPES.burgerRecipes.map { it.id }.toSet())
+
 
     private var recipeTitle: String? = null
     private var recipeIngredients: List<Ingredient>? = null
@@ -125,7 +128,9 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
             }
         })
     }
-    private fun saveFavorites(seiOfId: Set<Int>): Any {
+    private fun saveFavorites(setOfId: Set<Int>): Any {
+        var sharedPrefs: SharedPreferences? = context?.getSharedPreferences(APP_RECIPES, Context.MODE_PRIVATE)
+
         return 1
     }
 }
