@@ -55,9 +55,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         recipeMethod = recipe?.method
         recipeImageUrl = recipe?.imageUrl
 
-
-
-
         _binding = FragmentRecipeBinding.inflate(layoutInflater)
         return (binding.root)
     }
