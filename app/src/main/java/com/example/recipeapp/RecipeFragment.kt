@@ -132,13 +132,13 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         editor?.clear()
 
         if (sharedPrefs != null) {
-            if (setOfId.contains(recipeId.toString())) setOfId?.remove(recipeId.toString())
-            else setOfId?.add(recipeId.toString())
+            if (setOfId.contains(recipeId.toString())) setOfId.remove(recipeId.toString())
+            else setOfId.add(recipeId.toString())
         }
 
         if (editor != null) {
             editor.putStringSet(APP_RECIPES_SET_STRING, setOfId)
-            editor.commit()
+            editor.apply()
         }
     }
 
