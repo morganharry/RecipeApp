@@ -6,5 +6,4 @@ const val ARG_CATEGORY_IMAGE_URL: String = "categoryImageUrl"
 const val ARG_RECIPE: String = "recipe"
 
 const val APP_RECIPES = "mysettings"
-const val APP_RECIPES_ID = "id"
-const val APP_RECIPES_IS_FAVORITE = "isFavorite"
+const val APP_RECIPES_SET_STRING = "setstring"

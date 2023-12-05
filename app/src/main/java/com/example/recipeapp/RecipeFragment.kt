@@ -14,10 +14,10 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.data.APP_RECIPES
+import com.example.recipeapp.data.APP_RECIPES_SET_STRING
 import com.example.recipeapp.data.ARG_RECIPE
 import com.example.recipeapp.data.Ingredient
 import com.example.recipeapp.data.Recipe
-import com.example.recipeapp.data.STUB_RECIPES
 import com.example.recipeapp.databinding.FragmentRecipeBinding
 import java.io.IOException
 import java.io.InputStream
@@ -26,9 +26,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
     private var recipe: Recipe? = null
 
-    var sP = saveFavorites(STUB_RECIPES.burgerRecipes.map { it.id }.toSet())
-
-
+    private var recipeId: Int? = null
     private var recipeTitle: String? = null
     private var recipeIngredients: List<Ingredient>? = null
     private var recipeMethod: List<String>? = null
@@ -52,6 +50,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
             arguments?.getParcelable(ARG_RECIPE)
         }
 
+        recipeId = recipe?.id
         recipeTitle = recipe?.title
         recipeIngredients = recipe?.ingredients
         recipeMethod = recipe?.method
@@ -64,9 +63,11 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var flagFavorite = getFavorites()?.contains(recipeId.toString()) ?: false
+        if (flagFavorite) binding.ibFavorite.setBackgroundResource(R.drawable.ic_heart)
+        else binding.ibFavorite.setBackgroundResource(R.drawable.ic_heart_empty)
+
         binding.tvRecipe.text = recipeTitle
-        binding.ibFavorite.setBackgroundResource(R.drawable.ic_heart_empty)
-        var flagFavorite = false
 
         try {
             val inputStream: InputStream? =
@@ -79,13 +80,9 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         }
 
         binding.ibFavorite.setOnClickListener {
-            if (flagFavorite) {
-                flagFavorite = false
-                it.setBackgroundResource(R.drawable.ic_heart_empty)
-            } else {
-                flagFavorite = true
-                it.setBackgroundResource(R.drawable.ic_heart)
-            }
+            getFavorites()?.let { it1 -> saveFavorites(it1) }
+            if (flagFavorite) it.setBackgroundResource(R.drawable.ic_heart_empty)
+            else it.setBackgroundResource(R.drawable.ic_heart)
         }
 
         initRecycler()
@@ -128,9 +125,28 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
             }
         })
     }
-    private fun saveFavorites(setOfId: Set<Int>): Any {
-        var sharedPrefs: SharedPreferences? = context?.getSharedPreferences(APP_RECIPES, Context.MODE_PRIVATE)
 
-        return 1
+    private fun saveFavorites(setOfId: Set<String>) {
+        val sP = context?.getSharedPreferences(APP_RECIPES, Context.MODE_PRIVATE)
+        val sharedPrefs = sP?.getStringSet(APP_RECIPES_SET_STRING, null)
+
+        val editor = sP?.edit()
+        editor?.clear()
+
+        if (sharedPrefs != null) {
+            if (sharedPrefs.contains(recipeId.toString())) sharedPrefs?.remove(recipeId.toString())
+            else sharedPrefs?.add(recipeId.toString())
+        }
+
+        if (editor != null) {
+            editor.putStringSet(APP_RECIPES_SET_STRING, sharedPrefs)
+            editor.commit()
+        }
+    }
+
+    private fun getFavorites(): MutableSet<String>? {
+        val sharedPrefs = context?.getSharedPreferences(APP_RECIPES, Context.MODE_PRIVATE)
+        val setOfId = sharedPrefs?.getStringSet(APP_RECIPES_SET_STRING, null)
+        return setOfId
     }
 }
