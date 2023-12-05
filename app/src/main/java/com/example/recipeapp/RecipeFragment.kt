@@ -55,16 +55,15 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         recipeMethod = recipe?.method
         recipeImageUrl = recipe?.imageUrl
 
+
+
+
         _binding = FragmentRecipeBinding.inflate(layoutInflater)
         return (binding.root)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        var flagFavorite = getFavorites()?.contains(recipeId.toString()) ?: false
-        if (flagFavorite) binding.ibFavorite.setBackgroundResource(R.drawable.ic_heart)
-        else binding.ibFavorite.setBackgroundResource(R.drawable.ic_heart_empty)
 
         binding.tvRecipe.text = recipeTitle
 
@@ -78,10 +77,15 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
             return
         }
 
+        if (getFavorites()?.contains(recipeId.toString()) == true) binding.ibFavorite.setBackgroundResource(
+            R.drawable.ic_heart
+        )
+        else binding.ibFavorite.setBackgroundResource(R.drawable.ic_heart_empty)
+
         binding.ibFavorite.setOnClickListener {
-            getFavorites()?.let { it1 -> saveFavorites(it1) }
-            if (flagFavorite) it.setBackgroundResource(R.drawable.ic_heart_empty)
+            if (getFavorites()?.contains(recipeId.toString()) == true) it.setBackgroundResource(R.drawable.ic_heart_empty)
             else it.setBackgroundResource(R.drawable.ic_heart)
+            getFavorites()?.let { it1 -> saveFavorites(it1) }
         }
 
         initRecycler()
@@ -131,10 +135,8 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         val editor = sharedPrefs?.edit()
         editor?.clear()
 
-        if (sharedPrefs != null) {
-            if (setOfId.contains(recipeId.toString())) setOfId.remove(recipeId.toString())
-            else setOfId.add(recipeId.toString())
-        }
+        if (setOfId.contains(recipeId.toString())) setOfId.remove(recipeId.toString())
+        else setOfId.add(recipeId.toString())
 
         if (editor != null) {
             editor.putStringSet(APP_RECIPES_SET_STRING, setOfId)
