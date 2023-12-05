@@ -1,7 +1,6 @@
 package com.example.recipeapp
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
@@ -126,27 +125,25 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         })
     }
 
-    private fun saveFavorites(setOfId: Set<String>) {
-        val sP = context?.getSharedPreferences(APP_RECIPES, Context.MODE_PRIVATE)
-        val sharedPrefs = sP?.getStringSet(APP_RECIPES_SET_STRING, null)
+    private fun saveFavorites(setOfId: MutableSet<String>) {
+        val sharedPrefs = context?.getSharedPreferences(APP_RECIPES, Context.MODE_PRIVATE)
 
-        val editor = sP?.edit()
+        val editor = sharedPrefs?.edit()
         editor?.clear()
 
         if (sharedPrefs != null) {
-            if (sharedPrefs.contains(recipeId.toString())) sharedPrefs?.remove(recipeId.toString())
-            else sharedPrefs?.add(recipeId.toString())
+            if (setOfId.contains(recipeId.toString())) setOfId?.remove(recipeId.toString())
+            else setOfId?.add(recipeId.toString())
         }
 
         if (editor != null) {
-            editor.putStringSet(APP_RECIPES_SET_STRING, sharedPrefs)
+            editor.putStringSet(APP_RECIPES_SET_STRING, setOfId)
             editor.commit()
         }
     }
 
     private fun getFavorites(): MutableSet<String>? {
         val sharedPrefs = context?.getSharedPreferences(APP_RECIPES, Context.MODE_PRIVATE)
-        val setOfId = sharedPrefs?.getStringSet(APP_RECIPES_SET_STRING, null)
-        return setOfId
+        return sharedPrefs?.getStringSet(APP_RECIPES_SET_STRING, null)
     }
 }
