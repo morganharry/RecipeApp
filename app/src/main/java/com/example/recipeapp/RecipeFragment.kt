@@ -65,8 +65,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         binding.tvRecipe.text = recipeTitle
 
         try {
-            val inputStream: InputStream? =
-                recipeImageUrl?.let { this.context?.assets?.open(it) }
+            val inputStream: InputStream? = recipeImageUrl?.let { this.context?.assets?.open(it) }
             val drawable = Drawable.createFromStream(inputStream, null)
             binding.ivRecipe.setImageDrawable(drawable)
         } catch (ex: IOException) {
@@ -74,15 +73,29 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
             return
         }
 
-        if (getFavorites()?.contains(recipeId.toString()) == true) binding.ibFavorite.setBackgroundResource(
-            R.drawable.ic_heart
-        )
-        else binding.ibFavorite.setBackgroundResource(R.drawable.ic_heart_empty)
+        binding.ibFavorite.apply {
+            if (getFavorites().contains(recipeId.toString())) {
+                setBackgroundResource(R.drawable.ic_heart)
+            } else {
+                setBackgroundResource(R.drawable.ic_heart_empty)
+            }
 
-        binding.ibFavorite.setOnClickListener {
-            if (getFavorites()?.contains(recipeId.toString()) == true) it.setBackgroundResource(R.drawable.ic_heart_empty)
-            else it.setBackgroundResource(R.drawable.ic_heart)
-            getFavorites()?.let { it1 -> saveFavorites(it1) }
+            setOnClickListener {
+                if (getFavorites().contains(recipeId.toString())) {
+                    it.setBackgroundResource(R.drawable.ic_heart_empty)
+                } else {
+                    it.setBackgroundResource(R.drawable.ic_heart)
+                }
+
+                val fav = getFavorites()
+
+                if (fav.contains(recipeId.toString())) {
+                    fav.remove(recipeId.toString())
+                } else {
+                    fav.add(recipeId.toString())
+                }
+                saveFavorites(fav)
+            }
         }
 
         initRecycler()
@@ -91,19 +104,15 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     private fun initRecycler() {
         val ingredientsAdapter = recipeIngredients?.let { IngredientsAdapter(it, this) }
         val methodAdapter = recipeMethod?.let { MethodAdapter(it, this) }
-
         val recyclerIngredientsView: RecyclerView = binding.rvIngredients
-        context?.let { it ->
-            it.getColor(R.color.line_list_color)
-                ?.let { RecyclerViewItemDecoration(it) }
-        }
+
+        context?.getColor(R.color.line_list_color)
+            ?.let { RecyclerViewItemDecoration(it) }
             ?.let { recyclerIngredientsView.addItemDecoration(it) }
 
         val recyclerMethodView: RecyclerView = binding.rvMethod
-        context?.let { it ->
-            it.getColor(R.color.line_list_color)
-                ?.let { RecyclerViewItemDecoration(it) }
-        }
+        context?.getColor(R.color.line_list_color)
+            ?.let { RecyclerViewItemDecoration(it) }
             ?.let { recyclerMethodView.addItemDecoration(it) }
 
         recyclerIngredientsView.adapter = ingredientsAdapter
@@ -126,23 +135,17 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         })
     }
 
-    private fun saveFavorites(setOfId: MutableSet<String>) {
-        val sharedPrefs = context?.getSharedPreferences(APP_RECIPES, Context.MODE_PRIVATE)
-
-        val editor = sharedPrefs?.edit()
-        editor?.clear()
-
-        if (setOfId.contains(recipeId.toString())) setOfId.remove(recipeId.toString())
-        else setOfId.add(recipeId.toString())
-
-        if (editor != null) {
-            editor.putStringSet(APP_RECIPES_SET_STRING, setOfId)
-            editor.apply()
-        }
+    private fun saveFavorites(setOfId: Set<String>) {
+        context?.getSharedPreferences(APP_RECIPES, Context.MODE_PRIVATE)
+            ?.edit()
+            ?.putStringSet(APP_RECIPES_SET_STRING, setOfId)
+            ?.apply()
     }
 
-    private fun getFavorites(): MutableSet<String>? {
-        val sharedPrefs = context?.getSharedPreferences(APP_RECIPES, Context.MODE_PRIVATE)
-        return sharedPrefs?.getStringSet(APP_RECIPES_SET_STRING, null)
+    private fun getFavorites(): HashSet<String> {
+        val sharedPrefs = requireContext().getSharedPreferences(APP_RECIPES, Context.MODE_PRIVATE)
+        val fav: Set<String> =
+            sharedPrefs.getStringSet(APP_RECIPES_SET_STRING, emptySet()) ?: emptySet()
+        return HashSet(fav)
     }
 }
