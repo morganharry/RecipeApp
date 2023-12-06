@@ -15,7 +15,7 @@
         android:layout_gravity="center">
 
         <ImageView
-            android:id="@+id/ivCategories"
+            android:id="@+id/ivFavorites"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/title_categories"
@@ -27,7 +27,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvCategories"
+            android:id="@+id/tvFavorites"
             style="@style/StyleTitle20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,13 +35,13 @@
             android:background="@drawable/shape_rounded_title"
             android:padding="@dimen/space_for_text"
             android:text="@string/title_categories"
-            app:layout_constraintBottom_toBottomOf="@id/ivCategories"
-            app:layout_constraintStart_toStartOf="@id/ivCategories" />
+            app:layout_constraintBottom_toBottomOf="@id/ivFavorites"
+            app:layout_constraintStart_toStartOf="@id/ivFavorites" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCategories"
+        android:id="@+id/rvFavorites"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="@dimen/space_half"
