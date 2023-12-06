@@ -48,7 +48,7 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
 
     private fun initRecycler() {
         val categoriesAdapter = CategoriesListAdapter(listCategories, this)
-        val recyclerView: RecyclerView = binding.rvCategories
+        val recyclerView: RecyclerView = binding.rvFavorites
         recyclerView.adapter = categoriesAdapter
 
         categoriesAdapter.setOnItemClickListener(object :

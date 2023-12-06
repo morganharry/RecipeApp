@@ -18,7 +18,7 @@
             android:id="@+id/ivFavorites"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/title_categories"
+            android:contentDescription="@string/title_favorites"
             android:scaleType="centerCrop"
             android:src="@drawable/bcg_favorites"
             app:layout_constraintBottom_toBottomOf="parent"
