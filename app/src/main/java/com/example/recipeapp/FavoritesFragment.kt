@@ -23,9 +23,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     private val binding
         get() = _binding
             ?: throw IllegalStateException("Binding for FragmentFavoritesBinding must not be null")
-
-    private val fav = getFavorites()
-    private val listRecipes = STUB_RECIPES.burgerRecipes.filter { fav.contains(it.id.toString()) }
+    private var listRecipes: List<Recipe> = listOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +37,9 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        listRecipes =
+            STUB_RECIPES.burgerRecipes.filter { getFavorites().contains(it.id.toString()) }
 
         initRecycler()
     }
