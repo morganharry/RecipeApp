@@ -1,5 +1,8 @@
 package com.example.recipeapp.data
 
+import com.example.recipeapp.model.Ingredient
+import com.example.recipeapp.model.Recipe
+
 object STUB_RECIPES {
     val burgerRecipes = listOf(
         Recipe(

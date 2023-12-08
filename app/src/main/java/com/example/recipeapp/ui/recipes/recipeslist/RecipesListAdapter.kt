@@ -1,4 +1,4 @@
-package com.example.recipeapp
+package com.example.recipeapp.ui.recipes.recipeslist
 
 import android.graphics.drawable.Drawable
 import android.util.Log
@@ -10,7 +10,8 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.example.recipeapp.data.Recipe
+import com.example.recipeapp.R
+import com.example.recipeapp.model.Recipe
 import java.io.IOException
 import java.io.InputStream
 

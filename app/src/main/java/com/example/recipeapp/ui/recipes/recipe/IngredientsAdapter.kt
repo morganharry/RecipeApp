@@ -1,11 +1,12 @@
-package com.example.recipeapp
+package com.example.recipeapp.ui.recipes.recipe
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.recipeapp.data.Ingredient
+import com.example.recipeapp.R
+import com.example.recipeapp.model.Ingredient
 
 class IngredientsAdapter(
     private val dataSet: List<Ingredient>,
