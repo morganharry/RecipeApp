@@ -1,7 +1,7 @@
 <resources>
 
     <string name="app_name">RecipeApp</string>
-    <string name="button_favorites">Избранное</string>
+    <string name="title_favorites">Избранное</string>
     <string name="title_categories">Категории</string>
     <string name="ingredients">Ингредиенты</string>
     <string name="method">Способ приготовления</string>
