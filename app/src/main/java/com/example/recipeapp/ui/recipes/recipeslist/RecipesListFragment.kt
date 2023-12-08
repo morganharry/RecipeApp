@@ -1,4 +1,4 @@
-package com.example.recipeapp.ui.recipes
+package com.example.recipeapp.ui.recipes.recipeslist
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,6 +17,7 @@ import com.example.recipeapp.model.ARG_CATEGORY_IMAGE_URL
 import com.example.recipeapp.model.ARG_CATEGORY_NAME
 import com.example.recipeapp.model.ARG_RECIPE
 import com.example.recipeapp.model.Recipe
+import com.example.recipeapp.ui.recipes.recipe.RecipeFragment
 
 class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     private var categoryId: Int? = null

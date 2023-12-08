@@ -1,4 +1,4 @@
-package com.example.recipeapp.ui.recipes
+package com.example.recipeapp.ui.recipes.recipeslist
 
 import android.content.Context
 import android.os.Bundle
@@ -17,6 +17,7 @@ import com.example.recipeapp.model.ARG_RECIPE
 import com.example.recipeapp.model.Recipe
 import com.example.recipeapp.data.STUB_RECIPES
 import com.example.recipeapp.databinding.FragmentFavoritesBinding
+import com.example.recipeapp.ui.recipes.recipe.RecipeFragment
 
 class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 

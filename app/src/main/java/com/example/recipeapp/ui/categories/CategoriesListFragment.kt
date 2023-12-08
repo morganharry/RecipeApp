@@ -15,7 +15,7 @@ import com.example.recipeapp.model.ARG_CATEGORY_IMAGE_URL
 import com.example.recipeapp.model.ARG_CATEGORY_NAME
 import com.example.recipeapp.model.Category
 import com.example.recipeapp.databinding.FragmentListCategoriesBinding
-import com.example.recipeapp.ui.recipes.RecipesListFragment
+import com.example.recipeapp.ui.recipes.recipeslist.RecipesListFragment
 
 class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
 
