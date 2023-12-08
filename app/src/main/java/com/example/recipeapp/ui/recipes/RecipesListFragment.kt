@@ -1,6 +1,5 @@
-package com.example.recipeapp
+package com.example.recipeapp.ui.recipes
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,20 +9,26 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.recyclerview.widget.RecyclerView
-import com.example.recipeapp.data.APP_RECIPES
-import com.example.recipeapp.data.APP_RECIPES_SET_STRING
-import com.example.recipeapp.data.ARG_RECIPE
-import com.example.recipeapp.data.Recipe
+import com.example.recipeapp.R
 import com.example.recipeapp.data.STUB_RECIPES
-import com.example.recipeapp.databinding.FragmentFavoritesBinding
+import com.example.recipeapp.databinding.FragmentListRecipesBinding
+import com.example.recipeapp.model.ARG_CATEGORY_ID
+import com.example.recipeapp.model.ARG_CATEGORY_IMAGE_URL
+import com.example.recipeapp.model.ARG_CATEGORY_NAME
+import com.example.recipeapp.model.ARG_RECIPE
+import com.example.recipeapp.model.Recipe
 
-class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
+class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
+    private var categoryId: Int? = null
+    private var categoryName: String? = null
+    private var categoryImageUrl: String? = null
 
-    private var _binding: FragmentFavoritesBinding? = null
+    private var _binding: FragmentListRecipesBinding? = null
     private val binding
         get() = _binding
-            ?: throw IllegalStateException("Binding for FragmentFavoritesBinding must not be null")
-    private var listRecipes: List<Recipe> = listOf()
+            ?: throw IllegalStateException("Binding for FragmentListRecipesBinding must not be null")
+
+    private val listRecipes = STUB_RECIPES.burgerRecipes
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,22 +36,26 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentFavoritesBinding.inflate(layoutInflater)
+        arguments?.let {
+            categoryId = it.getInt(ARG_CATEGORY_ID)
+            categoryName = it.getString(ARG_CATEGORY_NAME)
+            categoryImageUrl = it.getString(ARG_CATEGORY_IMAGE_URL)
+        }
+
+        _binding = FragmentListRecipesBinding.inflate(layoutInflater)
         return (binding.root)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        listRecipes =
-            STUB_RECIPES.burgerRecipes.filter { getFavorites().contains(it.id.toString()) }
+        binding.tvCategory.text = categoryName
 
         initRecycler()
     }
 
     private fun initRecycler() {
         val recipesAdapter = RecipesListAdapter(listRecipes, this)
-        val recyclerView: RecyclerView = binding.rvFavorites
+        val recyclerView: RecyclerView = binding.rvRecipes
         recyclerView.adapter = recipesAdapter
 
         recipesAdapter.setOnItemClickListener(object :
@@ -68,12 +77,5 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
             setReorderingAllowed(true)
             addToBackStack(null)
         }
-    }
-
-    private fun getFavorites(): HashSet<String> {
-        val sharedPrefs = requireContext().getSharedPreferences(APP_RECIPES, Context.MODE_PRIVATE)
-        val fav: Set<String> =
-            sharedPrefs.getStringSet(APP_RECIPES_SET_STRING, emptySet()) ?: emptySet()
-        return HashSet(fav)
     }
 }

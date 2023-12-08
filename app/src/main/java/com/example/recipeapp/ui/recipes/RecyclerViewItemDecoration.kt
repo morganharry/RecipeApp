@@ -1,4 +1,4 @@
-package com.example.recipeapp
+package com.example.recipeapp.ui.recipes
 
 import android.content.res.Resources.getSystem
 import android.graphics.Canvas

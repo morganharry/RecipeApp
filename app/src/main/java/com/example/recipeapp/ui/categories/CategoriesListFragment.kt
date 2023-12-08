@@ -1,4 +1,4 @@
-package com.example.recipeapp
+package com.example.recipeapp.ui.categories
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,11 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.recyclerview.widget.RecyclerView
-import com.example.recipeapp.data.ARG_CATEGORY_ID
-import com.example.recipeapp.data.ARG_CATEGORY_IMAGE_URL
-import com.example.recipeapp.data.ARG_CATEGORY_NAME
-import com.example.recipeapp.data.Category
+import com.example.recipeapp.R
+import com.example.recipeapp.model.ARG_CATEGORY_ID
+import com.example.recipeapp.model.ARG_CATEGORY_IMAGE_URL
+import com.example.recipeapp.model.ARG_CATEGORY_NAME
+import com.example.recipeapp.model.Category
 import com.example.recipeapp.databinding.FragmentListCategoriesBinding
+import com.example.recipeapp.ui.recipes.RecipesListFragment
 
 class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
 

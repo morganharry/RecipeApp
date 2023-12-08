@@ -8,7 +8,7 @@
     android:background="@color/main_background_color"
     android:fillViewport="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".RecipeFragment">
+    tools:context=".ui.recipes.RecipeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

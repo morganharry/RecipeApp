@@ -1,4 +1,4 @@
-package com.example.recipeapp
+package com.example.recipeapp.ui.recipes
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -12,12 +12,13 @@ import android.widget.SeekBar
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.example.recipeapp.data.APP_RECIPES
-import com.example.recipeapp.data.APP_RECIPES_SET_STRING
-import com.example.recipeapp.data.ARG_RECIPE
-import com.example.recipeapp.data.Ingredient
-import com.example.recipeapp.data.Recipe
+import com.example.recipeapp.R
 import com.example.recipeapp.databinding.FragmentRecipeBinding
+import com.example.recipeapp.model.APP_RECIPES
+import com.example.recipeapp.model.APP_RECIPES_SET_STRING
+import com.example.recipeapp.model.ARG_RECIPE
+import com.example.recipeapp.model.Ingredient
+import com.example.recipeapp.model.Recipe
 import java.io.IOException
 import java.io.InputStream
 
