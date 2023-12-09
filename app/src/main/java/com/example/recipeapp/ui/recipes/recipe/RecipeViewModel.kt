@@ -13,7 +13,7 @@ data class RecipeUiState(
 class RecipeViewModel : ViewModel() {
 
     init {
-        Log.e("RecipeVM","VM created")
+        Log.e("recipevm","VM created")
     }
 
     override fun onCleared() {

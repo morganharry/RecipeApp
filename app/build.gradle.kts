@@ -54,6 +54,7 @@ dependencies {
     implementation("androidx.fragment:fragment:$fragment_version")
     implementation("androidx.fragment:fragment-ktx:$fragment_version")
 
-    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
-    implementation ("androidx.lifecycle:lifecycle-view-model-ktx:$lifecycle_version")
+
+    implementation("androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
 }
