@@ -15,7 +15,7 @@ data class RecipeUiState(
 class RecipeViewModel : ViewModel() {
 
     init {
-        Log.e("кecipevm","VM created")
+        Log.e("recipevm","VM created")
     }
 
     private val _recipeLiveData = MutableLiveData<RecipeUiState>()
@@ -23,8 +23,7 @@ class RecipeViewModel : ViewModel() {
         get() = _recipeLiveData
 
     override fun onCleared() {
-        Log.e("кecipevm","VM cleared")
+        Log.e("recipevm","VM cleared")
         super.onCleared()
     }
 }
-
