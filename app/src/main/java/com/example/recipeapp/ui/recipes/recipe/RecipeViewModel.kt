@@ -1,6 +1,8 @@
 package com.example.recipeapp.ui.recipes.recipe
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.recipeapp.model.Recipe
 
@@ -16,8 +18,14 @@ class RecipeViewModel : ViewModel() {
         Log.e("recipevm","VM created")
     }
 
+    private val _recipeLiveData = MutableLiveData<String>()
+    private val  recipeLiveData: LiveData<String>
+        get() = _recipeLiveData
+
     override fun onCleared() {
         Log.e("RecipeVM","VM cleared")
         super.onCleared()
     }
 }
+
+
