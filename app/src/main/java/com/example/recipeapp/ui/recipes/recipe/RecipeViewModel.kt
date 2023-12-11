@@ -23,7 +23,7 @@ class RecipeViewModel : ViewModel() {
         get() = _recipeLiveData
 
     override fun onCleared() {
-        Log.e("RecipeVM","VM cleared")
+        Log.e("recipevm","VM cleared")
         super.onCleared()
     }
 }
