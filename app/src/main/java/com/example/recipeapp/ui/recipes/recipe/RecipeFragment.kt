@@ -25,7 +25,7 @@ import java.io.InputStream
 
 class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
-    private val viewModel : RecipeViewModel by viewModels()
+    private val viewModel: RecipeViewModel by viewModels()
 
     private var recipe: Recipe? = null
     private var recipeId: Int? = null
@@ -45,7 +45,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel
+
         recipe = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             arguments?.getParcelable(ARG_RECIPE, Recipe::class.java)
         } else {
@@ -64,8 +64,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.tvRecipe.text = recipeTitle
 
         try {
             val inputStream: InputStream? = recipeImageUrl?.let { this.context?.assets?.open(it) }
@@ -102,6 +100,10 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         }
 
         initRecycler()
+
+        viewModel._recipeLiveData.observe(viewLifecycleOwner) {
+            Log.i("recipevm", "${it.isFavorite}")
+        }
     }
 
     private fun initRecycler() {
