@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.recipeapp.model.Recipe
 
-data class RecipeUiState(
+data class RecipeState(
     var recipe: Recipe? = null,
     var progressSeekBar: Int = 1,
     var isFavorite: Boolean = false,
@@ -14,8 +14,8 @@ data class RecipeUiState(
 
 class RecipeViewModel : ViewModel() {
 
-    var _recipeLiveData = MutableLiveData<RecipeUiState>()
-    private val recipeLiveData: LiveData<RecipeUiState>
+    var _recipeLiveData = MutableLiveData<RecipeState>()
+    private val recipeLiveData: LiveData<RecipeState>
         get() = _recipeLiveData
 
     init {
