@@ -101,7 +101,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
         initRecycler()
 
-        viewModel._recipeLiveData.observe(viewLifecycleOwner) {
+        viewModel.recipeLiveData.observe(viewLifecycleOwner) {
             Log.i("recipevm", "${it.isFavorite}")
         }
     }

@@ -14,13 +14,13 @@ data class RecipeState(
 
 class RecipeViewModel : ViewModel() {
 
-    var _recipeLiveData = MutableLiveData<RecipeState>()
-    private val recipeLiveData: LiveData<RecipeState>
+    val recipeLiveData: LiveData<RecipeState>
         get() = _recipeLiveData
+    private val _recipeLiveData = MutableLiveData<RecipeState>()
 
     init {
         Log.i("recipevm", "VM created")
-        recipeLiveData.value
+        _recipeLiveData.value = RecipeState(null, 1, false)
     }
 
     override fun onCleared() {
