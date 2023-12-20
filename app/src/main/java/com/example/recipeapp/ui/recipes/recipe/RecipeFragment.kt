@@ -1,6 +1,5 @@
 package com.example.recipeapp.ui.recipes.recipe
 
-import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
@@ -16,11 +15,8 @@ import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.R
 import com.example.recipeapp.databinding.FragmentRecipeBinding
-import com.example.recipeapp.model.APP_RECIPES
-import com.example.recipeapp.model.APP_RECIPES_SET_STRING
 import com.example.recipeapp.model.ARG_RECIPE_ID
 import com.example.recipeapp.model.Ingredient
-import com.example.recipeapp.model.Recipe
 import java.io.IOException
 import java.io.InputStream
 
@@ -28,7 +24,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
     private val viewModel: RecipeViewModel by viewModels()
 
-    private var recipe: Recipe? = null
     private var recipeId: Int? = null
     private var recipeTitle: String? = null
     private var recipeIngredients: List<Ingredient>? = null
@@ -46,25 +41,9 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        recipeId = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelable(ARG_RECIPE_ID, Int::class.java)
-        } else {
-            arguments?.getParcelable(ARG_RECIPE_ID)
-        }
+        recipeId = arguments?.getInt(ARG_RECIPE_ID)
 
         recipeId?.let { viewModel.loadRecipe(it) }
-
-        /*        recipe = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    arguments?.getParcelable(ARG_RECIPE_ID, Recipe::class.java)
-                } else {
-                    arguments?.getParcelable(ARG_RECIPE_ID)
-                }*/
-
-        recipeId = recipe?.id
-        recipeTitle = recipe?.title
-        recipeIngredients = recipe?.ingredients
-        recipeMethod = recipe?.method
-        recipeImageUrl = recipe?.imageUrl
 
         _binding = FragmentRecipeBinding.inflate(layoutInflater)
         return (binding.root)
@@ -74,41 +53,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         super.onViewCreated(view, savedInstanceState)
 
         initObserver()
-
-        try {
-            val inputStream: InputStream? = recipeImageUrl?.let { this.context?.assets?.open(it) }
-            val drawable = Drawable.createFromStream(inputStream, null)
-            binding.ivRecipe.setImageDrawable(drawable)
-        } catch (ex: IOException) {
-            Log.e(this.javaClass.simpleName, ex.stackTraceToString())
-            return
-        }
-
-        binding.ibFavorite.apply {
-            if (getFavorites().contains(recipeId.toString())) {
-                setBackgroundResource(R.drawable.ic_heart)
-            } else {
-                setBackgroundResource(R.drawable.ic_heart_empty)
-            }
-
-            setOnClickListener {
-                if (getFavorites().contains(recipeId.toString())) {
-                    it.setBackgroundResource(R.drawable.ic_heart_empty)
-                } else {
-                    it.setBackgroundResource(R.drawable.ic_heart)
-                }
-
-                val fav = getFavorites()
-
-                if (fav.contains(recipeId.toString())) {
-                    fav.remove(recipeId.toString())
-                } else {
-                    fav.add(recipeId.toString())
-                }
-                saveFavorites(fav)
-            }
-        }
-
         initRecycler()
     }
 
@@ -153,21 +97,33 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         })
     }
 
-    private fun saveFavorites(setOfId: Set<String>) {
-        context?.getSharedPreferences(APP_RECIPES, Context.MODE_PRIVATE)
-            ?.edit()
-            ?.putStringSet(APP_RECIPES_SET_STRING, setOfId)
-            ?.apply()
-    }
+    private fun initUI(recipeState: LiveData<RecipeState>) {
+        recipeTitle = recipeState.value?.recipe?.title
+        recipeImageUrl = recipeState.value?.recipe?.imageUrl
+        recipeIngredients = recipeState.value?.recipe?.ingredients
+        recipeMethod = recipeState.value?.recipe?.method
 
-    private fun getFavorites(): HashSet<String> {
-            val sharedPrefs = requireContext().getSharedPreferences(APP_RECIPES, Context.MODE_PRIVATE)
-            val fav: Set<String> =
-                sharedPrefs.getStringSet(APP_RECIPES_SET_STRING, emptySet()) ?: emptySet()
-            return HashSet(fav)
+        binding.tvRecipe.text = recipeTitle
+
+        try {
+            val inputStream: InputStream? = recipeImageUrl?.let { this.context?.assets?.open(it) }
+            val drawable = Drawable.createFromStream(inputStream, null)
+            binding.ivRecipe.setImageDrawable(drawable)
+        } catch (ex: IOException) {
+            Log.e(this.javaClass.simpleName, ex.stackTraceToString())
+            return
         }
 
-    private fun initUI(recipeLiveData: LiveData<RecipeState>) {
+        binding.ibFavorite.apply {
+            if (recipeState.value?.isFavorite == true) {
+                setBackgroundResource(R.drawable.ic_heart)
+            } else {
+                setBackgroundResource(R.drawable.ic_heart_empty)
+            }
 
+            setOnClickListener {
+                viewModel.onFavoritesClicked()
+            }
+        }
     }
 }
