@@ -119,7 +119,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         }
     }
 
-
     private fun initRecycler() {
         val ingredientsAdapter = recipeIngredients?.let { IngredientsAdapter(it, this) }
         val methodAdapter = recipeMethod?.let { MethodAdapter(it, this) }
