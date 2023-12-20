@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.R
 import com.example.recipeapp.model.APP_RECIPES
 import com.example.recipeapp.model.APP_RECIPES_SET_STRING
-import com.example.recipeapp.model.ARG_RECIPE
+import com.example.recipeapp.model.ARG_RECIPE_ID
 import com.example.recipeapp.model.Recipe
 import com.example.recipeapp.data.STUB_RECIPES
 import com.example.recipeapp.databinding.FragmentFavoritesBinding
@@ -62,7 +62,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     private fun openRecipeByRecipeId(recipeId: Int) {
         val recipe: Recipe? = listRecipes.find { it.id == recipeId }
         val bundle = bundleOf(
-            ARG_RECIPE to recipe,
+            ARG_RECIPE_ID to recipe,
         )
 
         parentFragmentManager.commit {

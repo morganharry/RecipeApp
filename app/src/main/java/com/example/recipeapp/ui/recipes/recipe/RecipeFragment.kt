@@ -12,12 +12,13 @@ import android.widget.SeekBar
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.R
 import com.example.recipeapp.databinding.FragmentRecipeBinding
 import com.example.recipeapp.model.APP_RECIPES
 import com.example.recipeapp.model.APP_RECIPES_SET_STRING
-import com.example.recipeapp.model.ARG_RECIPE
+import com.example.recipeapp.model.ARG_RECIPE_ID
 import com.example.recipeapp.model.Ingredient
 import com.example.recipeapp.model.Recipe
 import java.io.IOException
@@ -45,12 +46,19 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        recipe = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelable(ARG_RECIPE, Recipe::class.java)
+        recipeId = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelable(ARG_RECIPE_ID, Int::class.java)
         } else {
-            arguments?.getParcelable(ARG_RECIPE)
+            arguments?.getParcelable(ARG_RECIPE_ID)
         }
+
+        recipeId?.let { viewModel.loadRecipe(it) }
+
+        /*        recipe = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    arguments?.getParcelable(ARG_RECIPE_ID, Recipe::class.java)
+                } else {
+                    arguments?.getParcelable(ARG_RECIPE_ID)
+                }*/
 
         recipeId = recipe?.id
         recipeTitle = recipe?.title
@@ -64,6 +72,8 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initObserver()
 
         try {
             val inputStream: InputStream? = recipeImageUrl?.let { this.context?.assets?.open(it) }
@@ -100,11 +110,15 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         }
 
         initRecycler()
+    }
 
+    private fun initObserver() {
         viewModel.recipeLiveData.observe(viewLifecycleOwner) {
             Log.i("recipevm", "${it.isFavorite}")
+            initUI(viewModel.recipeLiveData)
         }
     }
+
 
     private fun initRecycler() {
         val ingredientsAdapter = recipeIngredients?.let { IngredientsAdapter(it, this) }
@@ -148,9 +162,13 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     }
 
     private fun getFavorites(): HashSet<String> {
-        val sharedPrefs = requireContext().getSharedPreferences(APP_RECIPES, Context.MODE_PRIVATE)
-        val fav: Set<String> =
-            sharedPrefs.getStringSet(APP_RECIPES_SET_STRING, emptySet()) ?: emptySet()
-        return HashSet(fav)
+            val sharedPrefs = requireContext().getSharedPreferences(APP_RECIPES, Context.MODE_PRIVATE)
+            val fav: Set<String> =
+                sharedPrefs.getStringSet(APP_RECIPES_SET_STRING, emptySet()) ?: emptySet()
+            return HashSet(fav)
+        }
+
+    private fun initUI(recipeLiveData: LiveData<RecipeState>) {
+
     }
 }

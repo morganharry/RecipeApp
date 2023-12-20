@@ -15,7 +15,7 @@ import com.example.recipeapp.databinding.FragmentListRecipesBinding
 import com.example.recipeapp.model.ARG_CATEGORY_ID
 import com.example.recipeapp.model.ARG_CATEGORY_IMAGE_URL
 import com.example.recipeapp.model.ARG_CATEGORY_NAME
-import com.example.recipeapp.model.ARG_RECIPE
+import com.example.recipeapp.model.ARG_RECIPE_ID
 import com.example.recipeapp.model.Recipe
 import com.example.recipeapp.ui.recipes.recipe.RecipeFragment
 
@@ -68,9 +68,9 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     }
 
     private fun openRecipeByRecipeId(recipeId: Int) {
-        val recipe: Recipe? = listRecipes.find { it.id == recipeId }
+        //val recipe: Recipe? = listRecipes.find { it.id == recipeId }
         val bundle = bundleOf(
-            ARG_RECIPE to recipe,
+            ARG_RECIPE_ID to recipeId,
         )
 
         parentFragmentManager.commit {
