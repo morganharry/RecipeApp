@@ -1,9 +1,11 @@
 package com.example.recipeapp.ui.recipes.recipe
 
+import android.app.Application
 import android.content.Context
 import android.os.Build
 import android.util.Log
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,10 +17,10 @@ import com.example.recipeapp.model.Recipe
 data class RecipeState(
     var recipe: Recipe? = null,
     var progressSeekBar: Int = 1,
-    var isFavorite: Boolean = getFavorites().contains(recipe?.id.toString()),
+    var isFavorite: Boolean = false,
 )
 
-class RecipeViewModel : ViewModel() {
+class RecipeViewModel (val application: Application) : AndroidViewModel(application)  {
 
     val recipeLiveData: LiveData<RecipeState>
         get() = _recipeLiveData
@@ -36,15 +38,15 @@ class RecipeViewModel : ViewModel() {
 
     fun loadRecipe(recipeId: Int) {
         val recipe: Recipe? = STUB_RECIPES.burgerRecipes.find { it.id == recipeId }
+        val isFavorite = getFavorites().contains(recipe?.id.toString())
 
-        _recipeLiveData.value = RecipeState(recipe)
+        _recipeLiveData.value = RecipeState(recipe, isFavorite = isFavorite)
         TODO("load from network")
     }
-    fun getFavorites(): HashSet<String> {
-        val sharedPrefs = requireContext()?.getSharedPreferences(APP_RECIPES, Context.MODE_PRIVATE)
+    private fun getFavorites(): HashSet<String> {
+        val sharedPrefs = application.getSharedPreferences(APP_RECIPES, Context.MODE_PRIVATE)
         val fav: Set<String> =
             sharedPrefs.getStringSet(APP_RECIPES_SET_STRING, emptySet()) ?: emptySet()
         return HashSet(fav)
     }
 }
-
