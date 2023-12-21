@@ -53,17 +53,21 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         super.onViewCreated(view, savedInstanceState)
 
         initObserver()
-        initRecycler()
+
     }
 
     private fun initObserver() {
         viewModel.recipeLiveData.observe(viewLifecycleOwner) {
             Log.i("recipevm", "${it.isFavorite}")
             initUI(viewModel.recipeLiveData)
+            initRecycler(viewModel.recipeLiveData)
         }
     }
 
-    private fun initRecycler() {
+    private fun initRecycler(recipeState: LiveData<RecipeState>)  {
+        recipeIngredients = recipeState.value?.recipe?.ingredients
+        recipeMethod = recipeState.value?.recipe?.method
+
         val ingredientsAdapter = recipeIngredients?.let { IngredientsAdapter(it, this) }
         val methodAdapter = recipeMethod?.let { MethodAdapter(it, this) }
         val recyclerIngredientsView: RecyclerView = binding.rvIngredients
@@ -100,8 +104,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     private fun initUI(recipeState: LiveData<RecipeState>) {
         recipeTitle = recipeState.value?.recipe?.title
         recipeImageUrl = recipeState.value?.recipe?.imageUrl
-        recipeIngredients = recipeState.value?.recipe?.ingredients
-        recipeMethod = recipeState.value?.recipe?.method
 
         binding.tvRecipe.text = recipeTitle
 
