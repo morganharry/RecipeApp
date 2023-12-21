@@ -51,13 +51,19 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
             ?.apply()
     }
 
-    fun onFavoritesClicked() {
-        if (_recipeLiveData.value?.isFavorite == true) {
-            _recipeLiveData.value?.copy(isFavorite = false)
+    fun onFavoritesClicked(recipeId: Int) {
+        val isFavRecipe = getFavorites().contains(recipeId.toString())
+        _recipeLiveData.value = _recipeLiveData.value?.copy(isFavorite = !isFavRecipe)
+
+        val favSet = getFavorites()
+
+        if (favSet.contains(recipeId.toString())) {
+            favSet.remove(recipeId.toString())
         } else {
-            _recipeLiveData.value?.copy(isFavorite = true)
+            favSet.add(recipeId.toString())
         }
-        saveFavorites(getFavorites())
+
+        saveFavorites(favSet)
     }
 
     override fun onCleared() {

@@ -64,7 +64,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         }
     }
 
-    private fun initRecycler(recipeState: LiveData<RecipeState>)  {
+    private fun initRecycler(recipeState: LiveData<RecipeState>) {
         recipeIngredients = recipeState.value?.recipe?.ingredients
         recipeMethod = recipeState.value?.recipe?.method
 
@@ -117,6 +117,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         }
 
         binding.ibFavorite.apply {
+
             if (recipeState.value?.isFavorite == true) {
                 setBackgroundResource(R.drawable.ic_heart)
             } else {
@@ -124,7 +125,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
             }
 
             setOnClickListener {
-                viewModel.onFavoritesClicked()
+                recipeId?.let { it1 -> viewModel.onFavoritesClicked(it1) }
             }
         }
     }
