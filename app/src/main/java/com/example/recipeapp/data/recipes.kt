@@ -6,10 +6,8 @@ import com.example.recipeapp.model.Recipe
 
 object STUB {
 
-    // получть все категории
     fun getCategories(): List<Category> = burgerCategories
 
-    // получить список рецептов по id категории
     fun getRecipesByCategoryId(categoryId: Int): List<Recipe> =
         if (categoryId == 0) burgerRecipes
         else listOf()

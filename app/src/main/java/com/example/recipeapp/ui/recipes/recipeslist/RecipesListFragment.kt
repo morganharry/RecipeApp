@@ -10,12 +10,13 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.R
-import com.example.recipeapp.data.STUB_RECIPES
+import com.example.recipeapp.data.STUB
 import com.example.recipeapp.databinding.FragmentListRecipesBinding
 import com.example.recipeapp.model.ARG_CATEGORY_ID
 import com.example.recipeapp.model.ARG_CATEGORY_IMAGE_URL
 import com.example.recipeapp.model.ARG_CATEGORY_NAME
 import com.example.recipeapp.model.ARG_RECIPE_ID
+import com.example.recipeapp.model.Recipe
 import com.example.recipeapp.ui.recipes.recipe.RecipeFragment
 
 class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
@@ -28,7 +29,7 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
         get() = _binding
             ?: throw IllegalStateException("Binding for FragmentListRecipesBinding must not be null")
 
-    private val listRecipes = STUB_RECIPES.burgerRecipes
+    private var listRecipes: List<Recipe> = listOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,6 +42,7 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
             categoryName = it.getString(ARG_CATEGORY_NAME)
             categoryImageUrl = it.getString(ARG_CATEGORY_IMAGE_URL)
         }
+        listRecipes = categoryId?.let { STUB.getRecipesByCategoryId(it) }!!
 
         _binding = FragmentListRecipesBinding.inflate(layoutInflater)
         return (binding.root)
@@ -54,16 +56,18 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     }
 
     private fun initRecycler() {
-        val recipesAdapter = RecipesListAdapter(listRecipes, this)
+        val recipesAdapter = listRecipes?.let { RecipesListAdapter(it, this) }
         val recyclerView: RecyclerView = binding.rvRecipes
         recyclerView.adapter = recipesAdapter
 
-        recipesAdapter.setOnItemClickListener(object :
-            RecipesListAdapter.OnItemClickListener {
-            override fun onItemClick(recipeId: Int) {
-                openRecipeByRecipeId(recipeId)
-            }
-        })
+        if (recipesAdapter != null) {
+            recipesAdapter.setOnItemClickListener(object :
+                RecipesListAdapter.OnItemClickListener {
+                override fun onItemClick(recipeId: Int) {
+                    openRecipeByRecipeId(recipeId)
+                }
+            })
+        }
     }
 
     private fun openRecipeByRecipeId(recipeId: Int) {

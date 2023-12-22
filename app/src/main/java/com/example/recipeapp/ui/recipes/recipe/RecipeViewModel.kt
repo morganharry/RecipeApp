@@ -6,7 +6,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.recipeapp.data.STUB_RECIPES
+import com.example.recipeapp.data.STUB
 import com.example.recipeapp.model.APP_RECIPES
 import com.example.recipeapp.model.APP_RECIPES_SET_STRING
 import com.example.recipeapp.model.Recipe
@@ -29,7 +29,7 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
     }
 
     fun loadRecipe(recipeId: Int) {
-        val recipe: Recipe? = STUB_RECIPES.burgerRecipes.find { it.id == recipeId }
+        val recipe: Recipe? = STUB.getRecipeById(recipeId)
         val portionsCount: Int = _recipeLiveData.value?.portionsCount ?: 1
         val isFavorite = getFavorites().contains(recipe?.id.toString())
 
