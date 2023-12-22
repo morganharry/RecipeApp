@@ -28,7 +28,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     private var recipeTitle: String? = null
     private var recipeIngredients: List<Ingredient>? = null
     private var recipeMethod: List<String>? = null
-    private var recipeImageUrl: String? = null
+    private var recipeImageUrl: Drawable? = null
 
     private var _binding: FragmentRecipeBinding? = null
     private val binding
@@ -103,18 +103,10 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
     private fun initUI(recipeState: LiveData<RecipeState>) {
         recipeTitle = recipeState.value?.recipe?.title
-        recipeImageUrl = recipeState.value?.recipe?.imageUrl
-
         binding.tvRecipe.text = recipeTitle
 
-        try {
-            val inputStream: InputStream? = recipeImageUrl?.let { this.context?.assets?.open(it) }
-            val drawable = Drawable.createFromStream(inputStream, null)
-            binding.ivRecipe.setImageDrawable(drawable)
-        } catch (ex: IOException) {
-            Log.e(this.javaClass.simpleName, ex.stackTraceToString())
-            return
-        }
+        recipeImageUrl = recipeState.value?.recipeDrawable
+        binding.ivRecipe.setImageDrawable(recipeImageUrl)
 
         binding.ibFavorite.apply {
 
