@@ -42,7 +42,7 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
             categoryName = it.getString(ARG_CATEGORY_NAME)
             categoryImageUrl = it.getString(ARG_CATEGORY_IMAGE_URL)
         }
-        listRecipes = categoryId?.let { STUB.getRecipesByCategoryId(it) }!!
+        listRecipes = categoryId?.let { STUB.getRecipesByCategoryId(it) } ?: listOf()
 
         _binding = FragmentListRecipesBinding.inflate(layoutInflater)
         return (binding.root)

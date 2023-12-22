@@ -11,11 +11,11 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.R
+import com.example.recipeapp.data.STUB
 import com.example.recipeapp.model.APP_RECIPES
 import com.example.recipeapp.model.APP_RECIPES_SET_STRING
 import com.example.recipeapp.model.ARG_RECIPE_ID
 import com.example.recipeapp.model.Recipe
-import com.example.recipeapp.data.STUB_RECIPES
 import com.example.recipeapp.databinding.FragmentFavoritesBinding
 import com.example.recipeapp.ui.recipes.recipe.RecipeFragment
 
@@ -41,7 +41,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
         super.onViewCreated(view, savedInstanceState)
 
         listRecipes =
-            STUB_RECIPES.burgerRecipes.filter { getFavorites().contains(it.id.toString()) }
+            STUB.getRecipesByIds (getFavorites())
 
         initRecycler()
     }

@@ -12,11 +12,9 @@ object STUB {
         if (categoryId == 0) burgerRecipes
         else listOf()
 
-    // получить рецепт по id рецепта
     fun getRecipeById(recipeId: Int): Recipe = burgerRecipes.find { it.id == recipeId } ?: burgerRecipes[0]
 
-    // получить список рецептов по списку id рецептов
-    fun getRecipesByIds(ids: Set<Int>): List<Recipe> = burgerRecipes.filter { ids.contains(it.id) }
+    fun getRecipesByIds(ids: HashSet<String>): List<Recipe> = burgerRecipes.filter { ids.contains(it.id.toString()) }
 
     private val burgerCategories = listOf(
         Category(0, "Бургеры", "Рецепты всех популярных видов бургеров", "burger.png"),
