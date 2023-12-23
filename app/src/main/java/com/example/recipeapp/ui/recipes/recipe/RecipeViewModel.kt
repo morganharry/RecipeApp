@@ -29,7 +29,6 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
 
     init {
         Log.i("recipevm", "VM created")
-        _recipeLiveData.value = RecipeState(null, null, false)
     }
 
     fun loadRecipe(recipeId: Int) {
@@ -46,9 +45,7 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
             Log.e(this.javaClass.simpleName, ex.stackTraceToString())
             return
         }
-
-        _recipeLiveData.value = RecipeState(recipe, portionsCount, isFavorite, recipeDrawable)
-
+        _recipeLiveData.value = RecipeState(recipe, portionsCount, isFavorite)
         //TODO("load from network")
     }
 
