@@ -19,7 +19,7 @@
     <TextView
         android:id="@+id/tvQuantity"
         style="@style/StyleTitle14Black"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_half"
         android:gravity="end"
@@ -31,7 +31,7 @@
     <TextView
         android:id="@+id/tvUnitOfMeasure"
         style="@style/StyleTitle14Black"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_half"
         app:layout_constraintBottom_toBottomOf="parent"

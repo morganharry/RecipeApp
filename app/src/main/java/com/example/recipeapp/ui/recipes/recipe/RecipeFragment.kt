@@ -17,8 +17,6 @@ import com.example.recipeapp.R
 import com.example.recipeapp.databinding.FragmentRecipeBinding
 import com.example.recipeapp.model.ARG_RECIPE_ID
 import com.example.recipeapp.model.Ingredient
-import java.io.IOException
-import java.io.InputStream
 
 class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
@@ -27,7 +25,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     private var recipeTitle: String? = null
     private var recipeIngredients: List<Ingredient>? = null
     private var recipeMethod: List<String>? = null
-    private var recipeImageUrl: String? = null
+    private var recipeImageDrawable: Drawable? = null
     private var _binding: FragmentRecipeBinding? = null
     private val binding
         get() = _binding
@@ -99,20 +97,10 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         recipeTitle = recipeState.value?.recipe?.title
         binding.tvRecipe.text = recipeTitle
 
-        recipeImageUrl = recipeState.value?.recipeDrawable
-        binding.ivRecipe.setImageDrawable(recipeImageUrl)
-
-        try {
-            val inputStream: InputStream? = recipeImageUrl?.let { this.context?.assets?.open(it) }
-            val drawable = Drawable.createFromStream(inputStream, null)
-            binding.ivRecipe.setImageDrawable(drawable)
-        } catch (ex: IOException) {
-            Log.e(this.javaClass.simpleName, ex.stackTraceToString())
-            return
-        }
+        recipeImageDrawable = recipeState.value?.recipeDrawable
+        binding.ivRecipe.setImageDrawable(recipeImageDrawable)
 
         binding.ibFavorite.apply {
-
             if (recipeState.value?.isFavorite == true) {
                 setBackgroundResource(R.drawable.ic_heart)
             } else {
