@@ -83,7 +83,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 binding.tvPortion.text = progress.toString()
                 ingredientsAdapter?.updateIngredients(progress)
-                recyclerIngredientsView.adapter = ingredientsAdapter
+                val notifyDataSetChanged = recyclerIngredientsView.adapter?.notifyDataSetChanged()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -91,6 +91,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
             }
+
         })
     }
 
