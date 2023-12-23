@@ -33,13 +33,14 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
     }
 
     fun loadRecipe(recipeId: Int) {
-        val recipe: Recipe? = STUB.getRecipeById(recipeId)
+        val recipe: Recipe = STUB.getRecipeById(recipeId)
         val portionsCount: Int = _recipeLiveData.value?.portionsCount ?: 1
-        val isFavorite = getFavorites().contains(recipe?.id.toString())
+        val isFavorite = getFavorites().contains(recipe.id.toString())
         val recipeDrawable: Drawable?
 
         try {
-            val inputStream: InputStream? = recipe?.imageUrl?.let { this.application?.assets?.open(it) }
+            val inputStream: InputStream? =
+                recipe.imageUrl.let { this.application.assets?.open(it) }
             recipeDrawable = Drawable.createFromStream(inputStream, null)
         } catch (ex: IOException) {
             Log.e(this.javaClass.simpleName, ex.stackTraceToString())
