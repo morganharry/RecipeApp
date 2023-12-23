@@ -56,18 +56,16 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     }
 
     private fun initRecycler() {
-        val recipesAdapter = listRecipes?.let { RecipesListAdapter(it, this) }
+        val recipesAdapter = RecipesListAdapter(listRecipes, this)
         val recyclerView: RecyclerView = binding.rvRecipes
         recyclerView.adapter = recipesAdapter
 
-        if (recipesAdapter != null) {
-            recipesAdapter.setOnItemClickListener(object :
-                RecipesListAdapter.OnItemClickListener {
-                override fun onItemClick(recipeId: Int) {
-                    openRecipeByRecipeId(recipeId)
-                }
-            })
-        }
+        recipesAdapter.setOnItemClickListener(object :
+            RecipesListAdapter.OnItemClickListener {
+            override fun onItemClick(recipeId: Int) {
+                openRecipeByRecipeId(recipeId)
+            }
+        })
     }
 
     private fun openRecipeByRecipeId(recipeId: Int) {

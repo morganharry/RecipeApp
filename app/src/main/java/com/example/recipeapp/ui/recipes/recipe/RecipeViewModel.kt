@@ -25,7 +25,6 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
 
     init {
         Log.i("recipevm", "VM created")
-        _recipeLiveData.value = RecipeState(null, null, false)
     }
 
     fun loadRecipe(recipeId: Int) {

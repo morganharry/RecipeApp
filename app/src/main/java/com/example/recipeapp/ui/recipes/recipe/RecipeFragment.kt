@@ -23,13 +23,11 @@ import java.io.InputStream
 class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
     private val viewModel: RecipeViewModel by viewModels()
-
     private var recipeId: Int? = null
     private var recipeTitle: String? = null
     private var recipeIngredients: List<Ingredient>? = null
     private var recipeMethod: List<String>? = null
     private var recipeImageUrl: String? = null
-
     private var _binding: FragmentRecipeBinding? = null
     private val binding
         get() = _binding
@@ -42,7 +40,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         savedInstanceState: Bundle?
     ): View {
         recipeId = arguments?.getInt(ARG_RECIPE_ID)
-
         recipeId?.let { viewModel.loadRecipe(it) }
 
         _binding = FragmentRecipeBinding.inflate(layoutInflater)
@@ -51,9 +48,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initObserver()
-
     }
 
     private fun initObserver() {
@@ -87,10 +82,8 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         binding.sbPortion.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 binding.tvPortion.text = progress.toString()
-                if (ingredientsAdapter != null) {
-                    ingredientsAdapter.updateIngredients(progress)
-                    recyclerIngredientsView.adapter = ingredientsAdapter
-                }
+                ingredientsAdapter?.updateIngredients(progress)
+                recyclerIngredientsView.adapter = ingredientsAdapter
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
