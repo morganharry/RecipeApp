@@ -60,9 +60,8 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     }
 
     private fun openRecipeByRecipeId(recipeId: Int) {
-        val recipe: Recipe? = listRecipes.find { it.id == recipeId }
         val bundle = bundleOf(
-            ARG_RECIPE_ID to recipe,
+            ARG_RECIPE_ID to recipeId,
         )
 
         parentFragmentManager.commit {
