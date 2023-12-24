@@ -11,7 +11,6 @@ import android.widget.SeekBar
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.R
 import com.example.recipeapp.databinding.FragmentRecipeBinding
@@ -52,14 +51,14 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     private fun initObserver() {
         viewModel.recipeLiveData.observe(viewLifecycleOwner) {
             Log.i("recipevm", "${it.isFavorite}")
-            initUI(viewModel.recipeLiveData)
-            initRecycler(viewModel.recipeLiveData)
+            initUI(it)
+            initRecycler(it)
         }
     }
 
-    private fun initRecycler(recipeState: LiveData<RecipeState>) {
-        recipeIngredients = recipeState.value?.recipe?.ingredients
-        recipeMethod = recipeState.value?.recipe?.method
+    private fun initRecycler(recipeState: RecipeState) {
+        recipeIngredients = recipeState.recipe?.ingredients
+        recipeMethod = recipeState.recipe?.method
 
         val ingredientsAdapter = recipeIngredients?.let { IngredientsAdapter(it, this) }
         val methodAdapter = recipeMethod?.let { MethodAdapter(it, this) }
@@ -93,15 +92,15 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         })
     }
 
-    private fun initUI(recipeState: LiveData<RecipeState>) {
-        recipeTitle = recipeState.value?.recipe?.title
+    private fun initUI(recipeState: RecipeState) {
+        recipeTitle = recipeState.recipe?.title
         binding.tvRecipe.text = recipeTitle
 
-        recipeImageDrawable = recipeState.value?.recipeDrawable
+        recipeImageDrawable = recipeState.recipeDrawable
         binding.ivRecipe.setImageDrawable(recipeImageDrawable)
 
         binding.ibFavorite.apply {
-            if (recipeState.value?.isFavorite == true) {
+            if (recipeState.isFavorite == true) {
                 setBackgroundResource(R.drawable.ic_heart)
             } else {
                 setBackgroundResource(R.drawable.ic_heart_empty)
