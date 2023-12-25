@@ -60,7 +60,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         recipeIngredients = recipeState.recipe?.ingredients
         recipeMethod = recipeState.recipe?.method
 
-        val ingredientsAdapter = recipeIngredients?.let { IngredientsAdapter(it, this) }
+        val ingredientsAdapter = recipeIngredients?.let { IngredientsAdapter(it) }
         val methodAdapter = recipeMethod?.let { MethodAdapter(it, this) }
         val recyclerIngredientsView: RecyclerView = binding.rvIngredients
 
@@ -80,7 +80,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 binding.tvPortion.text = progress.toString()
                 ingredientsAdapter?.updateIngredients(progress)
-                recyclerIngredientsView.adapter?.notifyDataSetChanged()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
