@@ -35,6 +35,7 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
         val recipe: Recipe = STUB.getRecipeById(recipeId)
         val portionsCount: Int = _recipeLiveData.value?.portionsCount ?: 1
         val isFavorite = getFavorites().contains(recipe.id.toString())
+
         val recipeDrawable: Drawable?
 
         try {
@@ -46,6 +47,7 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
             return
         }
         _recipeLiveData.value = RecipeState(recipe, portionsCount, isFavorite, recipeDrawable)
+
 
         //TODO("load from network")
     }
