@@ -2,6 +2,7 @@ package com.example.recipeapp.ui.recipes.recipe
 
 import android.app.Application
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -10,11 +11,14 @@ import com.example.recipeapp.data.STUB
 import com.example.recipeapp.model.APP_RECIPES
 import com.example.recipeapp.model.APP_RECIPES_SET_STRING
 import com.example.recipeapp.model.Recipe
+import java.io.IOException
+import java.io.InputStream
 
 data class RecipeState(
     var recipe: Recipe? = null,
     var portionsCount: Int? = null,
     var isFavorite: Boolean = false,
+    var recipeDrawable: Drawable? = null,
 )
 
 class RecipeViewModel(private val application: Application) : AndroidViewModel(application) {
@@ -32,7 +36,19 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
         val portionsCount: Int = _recipeLiveData.value?.portionsCount ?: 1
         val isFavorite = getFavorites().contains(recipe.id.toString())
 
-        _recipeLiveData.value = RecipeState(recipe, portionsCount, isFavorite)
+        val recipeDrawable: Drawable?
+
+        try {
+            val inputStream: InputStream? =
+                recipe.imageUrl.let { this.application.assets?.open(it) }
+            recipeDrawable = Drawable.createFromStream(inputStream, null)
+        } catch (ex: IOException) {
+            Log.e(this.javaClass.simpleName, ex.stackTraceToString())
+            return
+        }
+        _recipeLiveData.value = RecipeState(recipe, portionsCount, isFavorite, recipeDrawable)
+
+
         //TODO("load from network")
     }
 
