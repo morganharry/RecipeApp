@@ -10,12 +10,12 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.R
-import com.example.recipeapp.data.STUB_RECIPES
+import com.example.recipeapp.data.STUB
 import com.example.recipeapp.databinding.FragmentListRecipesBinding
 import com.example.recipeapp.model.ARG_CATEGORY_ID
 import com.example.recipeapp.model.ARG_CATEGORY_IMAGE_URL
 import com.example.recipeapp.model.ARG_CATEGORY_NAME
-import com.example.recipeapp.model.ARG_RECIPE
+import com.example.recipeapp.model.ARG_RECIPE_ID
 import com.example.recipeapp.model.Recipe
 import com.example.recipeapp.ui.recipes.recipe.RecipeFragment
 
@@ -29,7 +29,7 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
         get() = _binding
             ?: throw IllegalStateException("Binding for FragmentListRecipesBinding must not be null")
 
-    private val listRecipes = STUB_RECIPES.burgerRecipes
+    private var listRecipes: List<Recipe> = listOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +42,7 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
             categoryName = it.getString(ARG_CATEGORY_NAME)
             categoryImageUrl = it.getString(ARG_CATEGORY_IMAGE_URL)
         }
+        listRecipes = categoryId?.let { STUB.getRecipesByCategoryId(it) } ?: listOf()
 
         _binding = FragmentListRecipesBinding.inflate(layoutInflater)
         return (binding.root)
@@ -68,9 +69,8 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     }
 
     private fun openRecipeByRecipeId(recipeId: Int) {
-        val recipe: Recipe? = listRecipes.find { it.id == recipeId }
         val bundle = bundleOf(
-            ARG_RECIPE to recipe,
+            ARG_RECIPE_ID to recipeId,
         )
 
         parentFragmentManager.commit {

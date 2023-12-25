@@ -1,10 +1,31 @@
 package com.example.recipeapp.data
 
+import com.example.recipeapp.model.Category
 import com.example.recipeapp.model.Ingredient
 import com.example.recipeapp.model.Recipe
 
-object STUB_RECIPES {
-    val burgerRecipes = listOf(
+object STUB {
+
+    fun getCategories(): List<Category> = burgerCategories
+
+    fun getRecipesByCategoryId(categoryId: Int): List<Recipe> =
+        if (categoryId == 0) burgerRecipes
+        else listOf()
+
+    fun getRecipeById(recipeId: Int): Recipe = burgerRecipes.find { it.id == recipeId } ?: burgerRecipes[0]
+
+    fun getRecipesByIds(ids: HashSet<String>): List<Recipe> = burgerRecipes.filter { ids.contains(it.id.toString()) }
+
+    private val burgerCategories = listOf(
+        Category(0, "Бургеры", "Рецепты всех популярных видов бургеров", "burger.png"),
+        Category(1, "Десерты", "Самые вкусные рецепты десертов специально для вас", "dessert.png"),
+        Category(2, "Пицца", "Пицца на любой вкус и цвет. Лучшая подборка для тебя", "pizza.png"),
+        Category(3, "Рыба", "Печеная, жареная, сушеная, любая рыба на твой вкус", "fish.png"),
+        Category(4, "Супы", "От классики до экзотики: мир в одной тарелке", "soup.png"),
+        Category(5, "Салаты", "Хрустящий калейдоскоп под соусом вдохновения", "salad.png"),
+    )
+
+    private val burgerRecipes = listOf(
         Recipe(
             id = 0,
             title = "Классический гамбургер",
@@ -225,4 +246,5 @@ object STUB_RECIPES {
             imageUrl = "burger-chili.png"
         )
     )
+
 }
