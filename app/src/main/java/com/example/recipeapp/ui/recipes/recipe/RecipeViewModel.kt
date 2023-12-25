@@ -83,4 +83,8 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
         Log.i("recipevm", "VM cleared")
         super.onCleared()
     }
+
+    fun onChangePortions(progress: Int) {
+        _recipeLiveData.value = _recipeLiveData.value?.copy(portionsCount = progress)
+    }
 }

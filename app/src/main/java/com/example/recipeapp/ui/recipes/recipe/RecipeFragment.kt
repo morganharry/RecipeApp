@@ -22,6 +22,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     private val viewModel: RecipeViewModel by viewModels()
     private var recipeId: Int? = null
     private var recipeTitle: String? = null
+    private var portionsCount: Int = 1
     private var recipeIngredients: List<Ingredient>? = null
     private var recipeMethod: List<String>? = null
     private var recipeImageDrawable: Drawable? = null
@@ -57,46 +58,35 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     }
 
     private fun initRecycler(recipeState: RecipeState) {
-        recipeIngredients = recipeState.recipe?.ingredients
-        recipeMethod = recipeState.recipe?.method
 
-        val ingredientsAdapter = recipeIngredients?.let { IngredientsAdapter(it) }
-        val methodAdapter = recipeMethod?.let { MethodAdapter(it, this) }
-        val recyclerIngredientsView: RecyclerView = binding.rvIngredients
-
-        context?.getColor(R.color.line_list_color)
-            ?.let { RecyclerViewItemDecoration(it) }
-            ?.let { recyclerIngredientsView.addItemDecoration(it) }
-
-        val recyclerMethodView: RecyclerView = binding.rvMethod
-        context?.getColor(R.color.line_list_color)
-            ?.let { RecyclerViewItemDecoration(it) }
-            ?.let { recyclerMethodView.addItemDecoration(it) }
-
-        recyclerIngredientsView.adapter = ingredientsAdapter
-        recyclerMethodView.adapter = methodAdapter
-
-        binding.sbPortion.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                binding.tvPortion.text = progress.toString()
-                ingredientsAdapter?.updateIngredients(progress)
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-            }
-
-        })
     }
 
     private fun initUI(recipeState: RecipeState) {
         recipeTitle = recipeState.recipe?.title
+        recipeImageDrawable = recipeState.recipeDrawable
+        portionsCount = recipeState.portionsCount ?: 1
+        recipeIngredients = recipeState.recipe?.ingredients
+        recipeMethod = recipeState.recipe?.method
+
         binding.tvRecipe.text = recipeTitle
 
-        recipeImageDrawable = recipeState.recipeDrawable
         binding.ivRecipe.setImageDrawable(recipeImageDrawable)
+
+        val ingredientsAdapter = recipeIngredients?.let { IngredientsAdapter(it) }
+        val recyclerIngredientsView: RecyclerView = binding.rvIngredients
+        context?.getColor(R.color.line_list_color)
+            ?.let { RecyclerViewItemDecoration(it) }
+            ?.let { recyclerIngredientsView.addItemDecoration(it) }
+        recyclerIngredientsView.adapter = ingredientsAdapter
+
+        ingredientsAdapter?.updateIngredients(portionsCount)
+
+        val methodAdapter = recipeMethod?.let { MethodAdapter(it, this) }
+        val recyclerMethodView: RecyclerView = binding.rvMethod
+        context?.getColor(R.color.line_list_color)
+            ?.let { RecyclerViewItemDecoration(it) }
+            ?.let { recyclerMethodView.addItemDecoration(it) }
+        recyclerMethodView.adapter = methodAdapter
 
         binding.ibFavorite.apply {
             if (recipeState.isFavorite == true) {
@@ -109,5 +99,18 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
                 recipeId?.let { it1 -> viewModel.onFavoritesClicked(it1) }
             }
         }
+
+        binding.sbPortion.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                viewModel.onChangePortions(progress)
+                binding.tvPortion.text = progress.toString()
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            }
+        })
     }
 }
