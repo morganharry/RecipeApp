@@ -53,12 +53,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         viewModel.recipeLiveData.observe(viewLifecycleOwner) {
             Log.i("recipevm", "${it.isFavorite}")
             initUI(it)
-            initRecycler(it)
         }
-    }
-
-    private fun initRecycler(recipeState: RecipeState) {
-
     }
 
     private fun initUI(recipeState: RecipeState) {
