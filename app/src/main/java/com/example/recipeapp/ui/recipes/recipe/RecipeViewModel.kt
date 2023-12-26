@@ -16,7 +16,7 @@ import java.io.InputStream
 
 data class RecipeState(
     var recipe: Recipe? = null,
-    var portionsCount: Int? = null,
+    var portionsCount: Int = 1,
     var isFavorite: Boolean = false,
     var recipeDrawable: Drawable? = null,
 )

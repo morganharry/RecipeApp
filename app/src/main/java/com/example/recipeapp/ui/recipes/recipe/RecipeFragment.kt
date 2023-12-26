@@ -59,7 +59,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     private fun initUI(recipeState: RecipeState) {
         recipeTitle = recipeState.recipe?.title
         recipeImageDrawable = recipeState.recipeDrawable
-        portionsCount = recipeState.portionsCount ?: 1
+        portionsCount = recipeState.portionsCount
         recipeIngredients = recipeState.recipe?.ingredients
         recipeMethod = recipeState.recipe?.method
 
@@ -84,7 +84,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         recyclerMethodView.adapter = methodAdapter
 
         binding.ibFavorite.apply {
-            if (recipeState.isFavorite == true) {
+            if (recipeState.isFavorite) {
                 setBackgroundResource(R.drawable.ic_heart)
             } else {
                 setBackgroundResource(R.drawable.ic_heart_empty)
