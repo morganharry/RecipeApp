@@ -10,7 +10,6 @@ import com.example.recipeapp.model.Ingredient
 
 class IngredientsAdapter(
     private val dataSet: List<Ingredient>,
-    private val fragment: RecipeFragment
 ) : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
 
     private var quantity = 1
@@ -45,6 +44,7 @@ class IngredientsAdapter(
 
     fun updateIngredients(progress: Int) {
         quantity = progress
+        this.notifyDataSetChanged()
     }
 
     private fun checkNumberType(quantityForOnePortion: String): String {

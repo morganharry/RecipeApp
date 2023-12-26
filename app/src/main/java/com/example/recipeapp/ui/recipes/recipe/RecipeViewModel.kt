@@ -35,7 +35,6 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
         val recipe: Recipe = STUB.getRecipeById(recipeId)
         val portionsCount: Int = _recipeLiveData.value?.portionsCount ?: 1
         val isFavorite = getFavorites().contains(recipe.id.toString())
-
         val recipeDrawable: Drawable?
 
         try {
@@ -47,7 +46,6 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
             return
         }
         _recipeLiveData.value = RecipeState(recipe, portionsCount, isFavorite, recipeDrawable)
-
 
         //TODO("load from network")
     }
@@ -84,5 +82,9 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
     override fun onCleared() {
         Log.i("recipevm", "VM cleared")
         super.onCleared()
+    }
+
+    fun onChangePortions(progress: Int) {
+        _recipeLiveData.value = _recipeLiveData.value?.copy(portionsCount = progress)
     }
 }
