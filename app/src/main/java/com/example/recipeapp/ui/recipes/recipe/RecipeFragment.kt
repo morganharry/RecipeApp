@@ -37,11 +37,12 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     private var recipeId: Int? = null
     private var recipeTitle: String? = null
     private var portionsCount: Int = 1
-    private var recipeIngredients: List<Ingredient>? = null
-    private var recipeMethod: List<String>? = null
     private var recipeImageDrawable: Drawable? = null
-    private var ingredientsAdapter = recipeIngredients?.let { IngredientsAdapter(listOf()) }
-    private var methodAdapter = recipeMethod?.let { MethodAdapter(listOf()) }
+    private var recipeIngredients: List<Ingredient> = listOf()
+    private var recipeMethod: List<String> = listOf()
+    private var ingredientsAdapter = IngredientsAdapter(recipeIngredients)
+    private var methodAdapter = MethodAdapter(recipeMethod)
+
     private var _binding: FragmentRecipeBinding? = null
     private val binding
         get() = _binding
@@ -77,14 +78,14 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         recipeTitle = recipeState.recipe?.title
         recipeImageDrawable = recipeState.recipeDrawable
         portionsCount = recipeState.portionsCount
-        recipeIngredients = recipeState.recipe?.ingredients
-        recipeMethod = recipeState.recipe?.method
 
         binding.tvRecipe.text = recipeTitle
         binding.ivRecipe.setImageDrawable(recipeImageDrawable)
 
-        ingredientsAdapter = recipeIngredients?.let { IngredientsAdapter(recipeIngredients!!) }
-        methodAdapter = recipeMethod?.let { MethodAdapter(recipeMethod!!) }
+        recipeIngredients = recipeState.recipe?.ingredients ?: listOf()
+        recipeMethod = recipeState.recipe?.method ?: listOf()
+        ingredientsAdapter = IngredientsAdapter(recipeIngredients)
+        methodAdapter = MethodAdapter(recipeMethod)
 
         val recyclerIngredientsView: RecyclerView = binding.rvIngredients
         context?.getColor(R.color.line_list_color)
@@ -92,7 +93,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
             ?.let { recyclerIngredientsView.addItemDecoration(it) }
         recyclerIngredientsView.adapter = ingredientsAdapter
 
-        ingredientsAdapter?.updateIngredients(portionsCount)
+        ingredientsAdapter.updateIngredients(portionsCount)
 
         val recyclerMethodView: RecyclerView = binding.rvMethod
         context?.getColor(R.color.line_list_color)
