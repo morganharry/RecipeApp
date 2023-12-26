@@ -17,20 +17,6 @@ import com.example.recipeapp.databinding.FragmentRecipeBinding
 import com.example.recipeapp.model.ARG_RECIPE_ID
 import com.example.recipeapp.model.Ingredient
 
-class PortionSeekBarListener(val onChangeIngredients: (Int) -> Unit) :
-    SeekBar.OnSeekBarChangeListener {
-
-    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-        onChangeIngredients(progress)
-    }
-
-    override fun onStartTrackingTouch(seekBar: SeekBar?) {
-    }
-
-    override fun onStopTrackingTouch(seekBar: SeekBar?) {
-    }
-}
-
 class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
     private val viewModel: RecipeViewModel by viewModels()
@@ -117,5 +103,19 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
             viewModel.onChangePortions(it)
             binding.tvPortion.text = it.toString()
         })
+    }
+}
+
+class PortionSeekBarListener(val onChangeIngredients: (Int) -> Unit) :
+    SeekBar.OnSeekBarChangeListener {
+
+    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+        onChangeIngredients(progress)
+    }
+
+    override fun onStartTrackingTouch(seekBar: SeekBar?) {
+    }
+
+    override fun onStopTrackingTouch(seekBar: SeekBar?) {
     }
 }
