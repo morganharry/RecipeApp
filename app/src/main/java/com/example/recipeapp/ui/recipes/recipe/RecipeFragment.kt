@@ -17,6 +17,20 @@ import com.example.recipeapp.databinding.FragmentRecipeBinding
 import com.example.recipeapp.model.ARG_RECIPE_ID
 import com.example.recipeapp.model.Ingredient
 
+class PortionSeekBarListener(val onChangeIngredients: (Int) -> Unit) :
+    SeekBar.OnSeekBarChangeListener {
+
+    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+        onChangeIngredients(progress)
+    }
+
+    override fun onStartTrackingTouch(seekBar: SeekBar?) {
+    }
+
+    override fun onStopTrackingTouch(seekBar: SeekBar?) {
+    }
+}
+
 class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
     private val viewModel: RecipeViewModel by viewModels()
@@ -26,6 +40,8 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     private var recipeIngredients: List<Ingredient>? = null
     private var recipeMethod: List<String>? = null
     private var recipeImageDrawable: Drawable? = null
+    private var ingredientsAdapter = recipeIngredients?.let { IngredientsAdapter(listOf()) }
+    private var methodAdapter = recipeMethod?.let { MethodAdapter(listOf()) }
     private var _binding: FragmentRecipeBinding? = null
     private val binding
         get() = _binding
@@ -46,6 +62,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initObserver()
     }
 
@@ -64,10 +81,11 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         recipeMethod = recipeState.recipe?.method
 
         binding.tvRecipe.text = recipeTitle
-
         binding.ivRecipe.setImageDrawable(recipeImageDrawable)
 
-        val ingredientsAdapter = recipeIngredients?.let { IngredientsAdapter(it) }
+        ingredientsAdapter = recipeIngredients?.let { IngredientsAdapter(recipeIngredients!!) }
+        methodAdapter = recipeMethod?.let { MethodAdapter(recipeMethod!!) }
+
         val recyclerIngredientsView: RecyclerView = binding.rvIngredients
         context?.getColor(R.color.line_list_color)
             ?.let { RecyclerViewItemDecoration(it) }
@@ -76,7 +94,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
         ingredientsAdapter?.updateIngredients(portionsCount)
 
-        val methodAdapter = recipeMethod?.let { MethodAdapter(it, this) }
         val recyclerMethodView: RecyclerView = binding.rvMethod
         context?.getColor(R.color.line_list_color)
             ?.let { RecyclerViewItemDecoration(it) }
@@ -95,17 +112,9 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
             }
         }
 
-        binding.sbPortion.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                viewModel.onChangePortions(progress)
-                binding.tvPortion.text = progress.toString()
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-            }
+        binding.sbPortion.setOnSeekBarChangeListener(PortionSeekBarListener {
+            viewModel.onChangePortions(it)
+            binding.tvPortion.text = it.toString()
         })
     }
 }

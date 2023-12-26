@@ -8,8 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.R
 
 class MethodAdapter(
-    private val dataSet: List<String>,
-    private val fragment: RecipeFragment
+    var dataSet: List<String>,
 ) : RecyclerView.Adapter<MethodAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
