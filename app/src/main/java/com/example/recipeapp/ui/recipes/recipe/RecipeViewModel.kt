@@ -79,12 +79,12 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
         saveFavorites(favSet)
     }
 
+    fun onChangePortions(progress: Int) {
+        _recipeLiveData.value = _recipeLiveData.value?.copy(portionsCount = progress)
+    }
+
     override fun onCleared() {
         Log.i("recipevm", "VM cleared")
         super.onCleared()
-    }
-
-    fun onChangePortions(progress: Int) {
-        _recipeLiveData.value = _recipeLiveData.value?.copy(portionsCount = progress)
     }
 }
