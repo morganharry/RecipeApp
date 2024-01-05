@@ -62,15 +62,11 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         context?.getColor(R.color.line_list_color)
             ?.let { RecyclerViewItemDecoration(it) }
             ?.let { recyclerIngredientsView.addItemDecoration(it) }
-        ingredientsAdapter.dataSet = viewModel.recipeLiveData.value?.recipe?.ingredients ?: listOf()
-        recyclerIngredientsView.adapter = ingredientsAdapter
 
         val recyclerMethodView: RecyclerView = binding.rvMethod
         context?.getColor(R.color.line_list_color)
             ?.let { RecyclerViewItemDecoration(it) }
             ?.let { recyclerMethodView.addItemDecoration(it) }
-        methodAdapter.dataSet = viewModel.recipeLiveData.value?.recipe?.method ?: listOf()
-        recyclerMethodView.adapter = methodAdapter
 
         viewModel.recipeLiveData.observe(viewLifecycleOwner) {
             recipeTitle = it.recipe?.title
@@ -78,7 +74,13 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
             recipeImageDrawable = it.recipeDrawable
             binding.ivRecipe.setImageDrawable(recipeImageDrawable)
             portionsCount = it.portionsCount
+
+            ingredientsAdapter.dataSet = it.recipe?.ingredients ?: listOf()
+            recyclerIngredientsView.adapter = ingredientsAdapter
             ingredientsAdapter.updateIngredients(portionsCount)
+
+            methodAdapter.dataSet = it.recipe?.method ?: listOf()
+            recyclerMethodView.adapter = methodAdapter
 
             binding.ibFavorite.apply {
                 if (it.isFavorite) {
