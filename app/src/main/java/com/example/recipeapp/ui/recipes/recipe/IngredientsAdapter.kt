@@ -9,7 +9,7 @@ import com.example.recipeapp.R
 import com.example.recipeapp.model.Ingredient
 
 class IngredientsAdapter(
-    private val dataSet: List<Ingredient>,
+    var dataSet: List<Ingredient> = listOf(),
 ) : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
 
     private var quantity = 1
