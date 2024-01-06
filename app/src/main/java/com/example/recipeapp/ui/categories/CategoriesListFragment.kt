@@ -1,7 +1,6 @@
 package com.example.recipeapp.ui.categories
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,13 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.R
 import com.example.recipeapp.model.ARG_CATEGORY_ID
 import com.example.recipeapp.databinding.FragmentListCategoriesBinding
-import com.example.recipeapp.model.Category
 import com.example.recipeapp.ui.recipes.recipeslist.RecipesListFragment
 
 class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
     private val viewModel: CategoriesListViewModel by viewModels()
-    private var categoriesList: List<Category> = listOf()
-    private var categoriesAdapter = CategoriesListAdapter(categoriesList, this)
+    private var categoriesAdapter = CategoriesListAdapter(this)
 
     private var _binding: FragmentListCategoriesBinding? = null
     private val binding
@@ -39,28 +36,22 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initObserver()
+        initUI()
     }
 
-    private fun initObserver() {
-        viewModel.categoriesListLiveData.observe(viewLifecycleOwner) {
-            Log.i("categorieslistvm", "${true}")
-            initUI(it)
-        }
-    }
-
-    private fun initUI(categoriesListState: CategoriesListState) {
-        categoriesList = categoriesListState?.categoriesList ?: listOf()
-        categoriesAdapter = CategoriesListAdapter(categoriesList, this)
-        val recyclerView: RecyclerView = binding.rvFavorites
-        recyclerView.adapter = categoriesAdapter
-
+    private fun initUI() {
+        val recyclerView: RecyclerView = binding.rvCategories
         categoriesAdapter.setOnItemClickListener(object :
             CategoriesListAdapter.OnItemClickListener {
             override fun onItemClick(categoryId: Int) {
                 openRecipesByCategoryId(categoryId)
             }
         })
+
+        viewModel.categoriesListLiveData.observe(viewLifecycleOwner) {
+            categoriesAdapter.dataSet = it.categoriesList ?: listOf()
+            recyclerView.adapter = categoriesAdapter
+        }
     }
 
     private fun openRecipesByCategoryId(categoryId: Int) {

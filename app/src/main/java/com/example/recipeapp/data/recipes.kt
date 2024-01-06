@@ -6,17 +6,19 @@ import com.example.recipeapp.model.Recipe
 
 object STUB {
 
-    fun getCategories(): List<Category> = burgerCategories
+    fun getCategories(): List<Category> = categories
 
     fun getRecipesByCategoryId(categoryId: Int): List<Recipe> =
         if (categoryId == 0) burgerRecipes
         else listOf()
 
+    fun getCategoryId(categoryId: Int): Category? = categories.find { it.id == categoryId }
+
     fun getRecipeById(recipeId: Int): Recipe = burgerRecipes.find { it.id == recipeId } ?: burgerRecipes[0]
 
     fun getRecipesByIds(ids: HashSet<String>): List<Recipe> = burgerRecipes.filter { ids.contains(it.id.toString()) }
 
-    private val burgerCategories = listOf(
+    private val categories = listOf(
         Category(0, "Бургеры", "Рецепты всех популярных видов бургеров", "burger.png"),
         Category(1, "Десерты", "Самые вкусные рецепты десертов специально для вас", "dessert.png"),
         Category(2, "Пицца", "Пицца на любой вкус и цвет. Лучшая подборка для тебя", "pizza.png"),

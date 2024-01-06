@@ -16,8 +16,8 @@ import java.io.IOException
 import java.io.InputStream
 
 class RecipesListAdapter(
-    private val dataSet: List<Recipe>,
     private val fragment: Fragment,
+    var dataSet: List<Recipe> = listOf(),
 ) : RecyclerView.Adapter<RecipesListAdapter.ViewHolder>() {
 
     private var itemClickListener: OnItemClickListener? = null

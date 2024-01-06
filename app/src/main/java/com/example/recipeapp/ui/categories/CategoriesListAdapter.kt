@@ -15,8 +15,8 @@ import java.io.IOException
 import java.io.InputStream
 
 class CategoriesListAdapter(
-    val dataSet: List<Category>,
     private val fragment: CategoriesListFragment,
+    var dataSet: List<Category> = listOf(),
 ) : RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
 
     private var itemClickListener: OnItemClickListener? = null

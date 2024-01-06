@@ -22,7 +22,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     private var recipeTitle: String? = null
     private var portionsCount: Int = 1
     private var recipeImageDrawable: Drawable? = null
-
     private var ingredientsAdapter = IngredientsAdapter()
     private var methodAdapter = MethodAdapter()
 
