@@ -248,5 +248,4 @@ object STUB {
             imageUrl = "burger-chili.png"
         )
     )
-
 }
