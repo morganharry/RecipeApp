@@ -1,6 +1,5 @@
 package com.example.recipeapp.ui.recipes.recipeslist
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,29 +8,28 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.R
-import com.example.recipeapp.data.STUB
-import com.example.recipeapp.model.APP_RECIPES
-import com.example.recipeapp.model.APP_RECIPES_SET_STRING
 import com.example.recipeapp.model.ARG_RECIPE_ID
-import com.example.recipeapp.model.Recipe
 import com.example.recipeapp.databinding.FragmentFavoritesBinding
 import com.example.recipeapp.ui.recipes.recipe.RecipeFragment
 
 class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
+    private val viewModel: FavoritesViewModel by viewModels()
+    private var recipesAdapter = RecipesListAdapter(this)
 
     private var _binding: FragmentFavoritesBinding? = null
     private val binding
         get() = _binding
             ?: throw IllegalStateException("Binding for FragmentFavoritesBinding must not be null")
-    private var listRecipes: List<Recipe> = listOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        viewModel.loadRecipesList()
 
         _binding = FragmentFavoritesBinding.inflate(layoutInflater)
         return (binding.root)
@@ -40,16 +38,11 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        listRecipes =
-            STUB.getRecipesByIds (getFavorites())
-
-        initRecycler()
+        initUI()
     }
 
-    private fun initRecycler() {
-        val recipesAdapter = RecipesListAdapter(listRecipes, this)
+    private fun initUI() {
         val recyclerView: RecyclerView = binding.rvFavorites
-        recyclerView.adapter = recipesAdapter
 
         recipesAdapter.setOnItemClickListener(object :
             RecipesListAdapter.OnItemClickListener {
@@ -57,6 +50,11 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
                 openRecipeByRecipeId(recipeId)
             }
         })
+
+        viewModel.favoritesData.observe(viewLifecycleOwner) {
+            recipesAdapter.dataSet = it.recipesList ?: listOf()
+            recyclerView.adapter = recipesAdapter
+        }
     }
 
     private fun openRecipeByRecipeId(recipeId: Int) {
@@ -69,12 +67,5 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
             setReorderingAllowed(true)
             addToBackStack(null)
         }
-    }
-
-    private fun getFavorites(): HashSet<String> {
-        val sharedPrefs = requireContext().getSharedPreferences(APP_RECIPES, Context.MODE_PRIVATE)
-        val fav: Set<String> =
-            sharedPrefs.getStringSet(APP_RECIPES_SET_STRING, emptySet()) ?: emptySet()
-        return HashSet(fav)
     }
 }

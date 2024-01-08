@@ -8,23 +8,21 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.R
-import com.example.recipeapp.data.STUB
 import com.example.recipeapp.model.ARG_CATEGORY_ID
-import com.example.recipeapp.model.ARG_CATEGORY_IMAGE_URL
-import com.example.recipeapp.model.ARG_CATEGORY_NAME
 import com.example.recipeapp.databinding.FragmentListCategoriesBinding
 import com.example.recipeapp.ui.recipes.recipeslist.RecipesListFragment
 
 class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
+    private val viewModel: CategoriesListViewModel by viewModels()
+    private var categoriesAdapter = CategoriesListAdapter(this)
 
     private var _binding: FragmentListCategoriesBinding? = null
     private val binding
         get() = _binding
             ?: throw IllegalStateException("Binding for FragmentListCategoriesBinding must not be null")
-
-    private val listCategories = STUB.getCategories()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,29 +36,27 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initRecycler()
+        initUI()
     }
 
-    private fun initRecycler() {
-        val categoriesAdapter = CategoriesListAdapter(listCategories, this)
-        val recyclerView: RecyclerView = binding.rvFavorites
-        recyclerView.adapter = categoriesAdapter
-
+    private fun initUI() {
+        val recyclerView: RecyclerView = binding.rvCategories
         categoriesAdapter.setOnItemClickListener(object :
             CategoriesListAdapter.OnItemClickListener {
             override fun onItemClick(categoryId: Int) {
                 openRecipesByCategoryId(categoryId)
             }
         })
+
+        viewModel.categoriesListLiveData.observe(viewLifecycleOwner) {
+            categoriesAdapter.dataSet = it.categoriesList ?: listOf()
+            recyclerView.adapter = categoriesAdapter
+        }
     }
 
     private fun openRecipesByCategoryId(categoryId: Int) {
-        val categoryName = listCategories.find { it.id == categoryId }?.title
-        val categoryImageUrl = listCategories.find { it.id == categoryId }?.imageUrl
         val bundle = bundleOf(
             ARG_CATEGORY_ID to categoryId,
-            ARG_CATEGORY_NAME to categoryName,
-            ARG_CATEGORY_IMAGE_URL to categoryImageUrl,
         )
 
         parentFragmentManager.commit {
