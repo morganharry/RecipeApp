@@ -6,14 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.R
 import com.example.recipeapp.model.ARG_CATEGORY_ID
 import com.example.recipeapp.databinding.FragmentListCategoriesBinding
-import com.example.recipeapp.ui.recipes.recipeslist.RecipesListFragment
 
 class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
     private val viewModel: CategoriesListViewModel by viewModels()
@@ -59,10 +57,6 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
             ARG_CATEGORY_ID to categoryId,
         )
 
-        parentFragmentManager.commit {
-            replace<RecipesListFragment>(R.id.nav_host_fragment, args = bundle)
-            setReorderingAllowed(true)
-            addToBackStack(null)
-        }
+        findNavController().navigate(R.id.recipesListFragment, bundle)
     }
 }
