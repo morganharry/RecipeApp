@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -54,14 +55,4 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:$fragment_version")
     implementation ("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation ("androidx.navigation:navigation-ui-ktx:$nav_version")
-}
-
-buildscript {
-    repositories {
-        google()
-    }
-    dependencies {
-        val nav_version = "2.7.6"
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version")
-    }
 }

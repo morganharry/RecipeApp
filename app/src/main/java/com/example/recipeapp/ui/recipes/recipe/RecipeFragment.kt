@@ -10,13 +10,13 @@ import android.widget.SeekBar
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.R
 import com.example.recipeapp.databinding.FragmentRecipeBinding
-import com.example.recipeapp.model.ARG_RECIPE_ID
 
 class RecipeFragment : Fragment(R.layout.fragment_recipe) {
-
+    private val args: RecipeFragmentArgs by navArgs()
     private val viewModel: RecipeViewModel by viewModels()
     private var recipeId: Int? = null
     private var recipeTitle: String? = null
@@ -36,17 +36,17 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        recipeId = arguments?.getInt(ARG_RECIPE_ID)
-        recipeId?.let {
-            viewModel.loadRecipe(it)
-        }
-
         _binding = FragmentRecipeBinding.inflate(layoutInflater)
         return (binding.root)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        recipeId = args.recipeId
+        recipeId?.let {
+            viewModel.loadRecipe(it)
+        }
 
         initUI()
     }
