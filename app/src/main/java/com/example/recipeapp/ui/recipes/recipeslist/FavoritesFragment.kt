@@ -55,7 +55,9 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
     private fun openRecipeByRecipeId(recipeId: Int) {
         findNavController().navigate(
-            FavoritesFragmentDirections.actionFavoritesFragmentToRecipeFragment(recipeId)
+            RecipesListFragmentDirections.actionRecipesListFragmentToRecipeFragment(
+                recipeId
+            )
         )
     }
 }
