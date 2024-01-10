@@ -8,12 +8,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.R
 import com.example.recipeapp.databinding.FragmentListRecipesBinding
-import com.example.recipeapp.model.ARG_CATEGORY_ID
 
 class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
+    private val args: RecipesListFragmentArgs by navArgs()
     private val viewModel: RecipesListViewModel by viewModels()
     private var categoryId: Int? = null
     private var categoryTitle: String? = null
@@ -30,17 +31,16 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        categoryId = arguments?.getInt(ARG_CATEGORY_ID)
-        categoryId?.let {
-            viewModel.loadRecipesList(it)
-        }
-
         _binding = FragmentListRecipesBinding.inflate(layoutInflater)
         return (binding.root)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        categoryId = args.categoryId
+        categoryId?.let {
+            viewModel.loadRecipesList(it)
+        }
 
         initUI()
     }
