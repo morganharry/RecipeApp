@@ -50,9 +50,6 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
         }
     }
 
-
-
-
     private fun openRecipesByCategoryId(categoryId: Int) {
         findNavController().navigate(
             CategoriesListFragmentDirections.actionCategoriesListFragmentToRecipesListFragment(
