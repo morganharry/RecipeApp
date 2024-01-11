@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.R
+import com.example.recipeapp.data.STUB
 import com.example.recipeapp.databinding.FragmentListCategoriesBinding
 
 class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
@@ -51,6 +52,9 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
     }
 
     private fun openRecipesByCategoryId(categoryId: Int) {
+        STUB.getCategoryId(categoryId)
+            ?: throw IllegalStateException("Binding for ActivityMainBinding must not be null")
+
         findNavController().navigate(
             CategoriesListFragmentDirections.actionCategoriesListFragmentToRecipesListFragment(
                 categoryId
