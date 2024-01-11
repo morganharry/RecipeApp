@@ -4,13 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.R
-import com.example.recipeapp.model.ARG_CATEGORY_ID
 import com.example.recipeapp.databinding.FragmentListCategoriesBinding
 
 class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
@@ -53,10 +51,10 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
     }
 
     private fun openRecipesByCategoryId(categoryId: Int) {
-        val bundle = bundleOf(
-            ARG_CATEGORY_ID to categoryId,
+        findNavController().navigate(
+            CategoriesListFragmentDirections.actionCategoriesListFragmentToRecipesListFragment(
+                categoryId
+            )
         )
-
-        findNavController().navigate(R.id.recipesListFragment, bundle)
     }
 }
