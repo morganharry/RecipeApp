@@ -53,7 +53,7 @@ class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
 
     private fun openRecipesByCategoryId(categoryId: Int) {
         STUB.getCategoryId(categoryId)
-            ?: throw IllegalStateException("Binding for ActivityMainBinding must not be null")
+            ?: throw IllegalStateException("Category not found.")
 
         findNavController().navigate(
             CategoriesListFragmentDirections.actionCategoriesListFragmentToRecipesListFragment(
