@@ -26,8 +26,7 @@ class MainActivity : AppCompatActivity() {
 
             Log.i("!!!", "responseCode: ${connection.responseCode}")
             Log.i("!!!", "responseMessage: ${connection.responseMessage}")
-
-            connection.inputStream.bufferedReader().readText()
+            Log.i("!!!", "Body: ${connection.inputStream.bufferedReader().readText()}")
         }
 
         thread.start()
