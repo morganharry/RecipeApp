@@ -6,6 +6,8 @@ import android.util.Log
 import androidx.navigation.findNavController
 import com.example.recipeapp.R
 import com.example.recipeapp.databinding.ActivityMainBinding
+import com.example.recipeapp.model.Category
+import kotlinx.serialization.json.Json
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -18,15 +20,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.i("!!!", "Метод onCreate() выполняется на потоке: ${Thread.currentThread().getName()}")
 
         val thread = Thread {
             val url = URL("https://recipes.androidsprint.ru/api/category")
             val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
             connection.connect()
 
+            Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().getName()}")
             Log.i("!!!", "responseCode: ${connection.responseCode}")
             Log.i("!!!", "responseMessage: ${connection.responseMessage}")
-            Log.i("!!!", "Body: ${connection.inputStream.bufferedReader().readText()}")
+
+            val categoriesString = connection.inputStream.bufferedReader().readText()
+            Log.i("!!!", "Body: $categoriesString")
+            val categories: List<Category> = Json.decodeFromString(categoriesString)
         }
 
         thread.start()
