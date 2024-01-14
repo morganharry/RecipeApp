@@ -10,8 +10,12 @@ import com.example.recipeapp.model.Category
 import kotlinx.serialization.json.Json
 import java.net.HttpURLConnection
 import java.net.URL
+import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity() {
+    private val threadPool = Executors.newFixedThreadPool(10)
+    private var categories: List<Category> = listOf()
+    private var categoriesID: List<Int> = listOf()
 
     private var _binding: ActivityMainBinding? = null
     private val binding
@@ -33,10 +37,29 @@ class MainActivity : AppCompatActivity() {
 
             val categoriesString = connection.inputStream.bufferedReader().readText()
             Log.i("!!!", "Body: $categoriesString")
-            val categories: List<Category> = Json.decodeFromString(categoriesString)
+            categories = Json.decodeFromString(categoriesString)
+            categoriesID = categories.map { it.id }
         }
 
         thread.start()
+
+        categoriesID.forEach {
+            val threadRecipe = Runnable {
+                val categoryID = it.toString()
+                val url = URL("https://recipes.androidsprint.ru/api/category/$categoryID/recipes")
+                val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
+                connection.connect()
+
+                Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
+                Log.i("!!!", "responseCode: ${connection.responseCode}")
+                Log.i("!!!", "responseMessage: ${connection.responseMessage}")
+
+                val recipesString = connection.inputStream.bufferedReader().readText()
+                Log.i("!!!", "Body: $recipesString")
+            }
+            threadPool.execute(threadRecipe)
+        }
+
 
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
