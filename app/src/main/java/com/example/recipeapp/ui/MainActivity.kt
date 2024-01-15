@@ -39,27 +39,28 @@ class MainActivity : AppCompatActivity() {
             Log.i("!!!", "Body: $categoriesString")
             categories = Json.decodeFromString(categoriesString)
             categoriesID = categories.map { it.id }
+
+            categoriesID.forEach {
+                val threadRecipe = Runnable {
+                    val categoryID = it.toString()
+                    val urlRecipes = URL("https://recipes.androidsprint.ru/api/category/$categoryID/recipes")
+                    val connectionRecipes: HttpURLConnection = urlRecipes.openConnection() as HttpURLConnection
+                    connectionRecipes.connect()
+
+                    Log.i("!!!", "Категория ID: $categoryID")
+                    Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
+                    Log.i("!!!", "responseCode: ${connectionRecipes.responseCode}")
+                    Log.i("!!!", "responseMessage: ${connectionRecipes.responseMessage}")
+
+                    val recipesString = connectionRecipes.inputStream.bufferedReader().readText()
+                    Log.i("!!!", "Body: $recipesString")
+                }
+                threadPool.execute(threadRecipe)
+            }
+
         }
 
         thread.start()
-
-        categoriesID.forEach {
-            val threadRecipe = Runnable {
-                val categoryID = it.toString()
-                val url = URL("https://recipes.androidsprint.ru/api/category/$categoryID/recipes")
-                val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
-                connection.connect()
-
-                Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
-                Log.i("!!!", "responseCode: ${connection.responseCode}")
-                Log.i("!!!", "responseMessage: ${connection.responseMessage}")
-
-                val recipesString = connection.inputStream.bufferedReader().readText()
-                Log.i("!!!", "Body: $recipesString")
-            }
-            threadPool.execute(threadRecipe)
-        }
-
 
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
