@@ -1,16 +1,18 @@
 package com.example.recipeapp.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.example.recipeapp.R
 import com.example.recipeapp.databinding.ActivityMainBinding
 import com.example.recipeapp.model.Category
 import kotlinx.serialization.json.Json
-import java.net.HttpURLConnection
-import java.net.URL
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.Executors
+
 
 class MainActivity : AppCompatActivity() {
     private val threadPool = Executors.newFixedThreadPool(10)
@@ -27,37 +29,46 @@ class MainActivity : AppCompatActivity() {
         Log.i("!!!", "Метод onCreate() выполняется на потоке: ${Thread.currentThread().name}")
 
         val thread = Thread {
-            val url = URL("https://recipes.androidsprint.ru/api/category")
-            val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
-            connection.connect()
+            val logging = HttpLoggingInterceptor()
+            logging.level = HttpLoggingInterceptor.Level.BODY
 
-            Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
-            Log.i("!!!", "responseCode: ${connection.responseCode}")
-            Log.i("!!!", "responseMessage: ${connection.responseMessage}")
+            val client = OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .build()
 
-            val categoriesString = connection.inputStream.bufferedReader().readText()
-            Log.i("!!!", "Body: $categoriesString")
-            categories = Json.decodeFromString(categoriesString)
-            categoriesID = categories.map { it.id }
+            val requestCategories: Request = Request.Builder()
+                .url("https://recipes.androidsprint.ru/api/category")
+                .header("User-Agent", "OkHttp Example")
+                .build()
 
-            categoriesID.forEach {
-                val threadRecipe = Runnable {
-                    val categoryID = it.toString()
-                    val urlRecipes = URL("https://recipes.androidsprint.ru/api/category/$categoryID/recipes")
-                    val connectionRecipes: HttpURLConnection = urlRecipes.openConnection() as HttpURLConnection
-                    connectionRecipes.connect()
+            client.newCall(requestCategories).execute().use { response ->
+                Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
 
-                    Log.i("!!!", "Категория ID: $categoryID")
-                    Log.i("!!!", "Выполняю запрос на потоке: ${Thread.currentThread().name}")
-                    Log.i("!!!", "responseCode: ${connectionRecipes.responseCode}")
-                    Log.i("!!!", "responseMessage: ${connectionRecipes.responseMessage}")
+                val categoriesString = response.body?.string()
 
-                    val recipesString = connectionRecipes.inputStream.bufferedReader().readText()
-                    Log.i("!!!", "Body: $recipesString")
+                categories = categoriesString?.let { Json.decodeFromString(it) }
+                    ?: throw IllegalStateException("Categories not found.")
+                categoriesID = categories.map { it.id }
+
+                categoriesID.forEach {
+                    val threadRecipe = Runnable {
+                        val categoryID = it.toString()
+                        val requestRecipes: Request = Request.Builder()
+                            .url("https://recipes.androidsprint.ru/api/category/$categoryID/recipes")
+                            .build()
+
+                        client.newCall(requestRecipes).execute().use { response ->
+                            Log.i(
+                                "!!!",
+                                "Выполняю запрос на потоке: ${Thread.currentThread().name}"
+                            )
+
+                            val recipesString = response.body?.string()
+                        }
+                    }
+                    threadPool.execute(threadRecipe)
                 }
-                threadPool.execute(threadRecipe)
             }
-
         }
 
         thread.start()
