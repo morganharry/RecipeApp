@@ -6,7 +6,7 @@ import com.example.recipeapp.model.Recipe
 
 object STUB {
 
-    fun getCategories(): List<Category> = categories
+    //fun getCategories(): List<Category> = categories
 
     fun getRecipesByCategoryId(categoryId: Int): List<Recipe> =
         if (categoryId == 0) burgerRecipes

@@ -5,22 +5,31 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.recipeapp.data.STUB
+import com.example.recipeapp.data.RecipesRepository
 import com.example.recipeapp.model.Category
 
 data class CategoriesListState(
     var categoriesList: List<Category>? = null,
 )
 
-class CategoriesListViewModel (private val application: Application) : AndroidViewModel(application) {
+class CategoriesListViewModel(application: Application) :
+    AndroidViewModel(application) {
+    private val repository by lazy { RecipesRepository() }
+    private var categories: List<Category>? = listOf()
 
     val categoriesListLiveData: LiveData<CategoriesListState>
         get() = _categoriesListLiveData
     private val _categoriesListLiveData = MutableLiveData<CategoriesListState>()
 
     init {
-        val categoriesList: List<Category> = STUB.getCategories()
-        _categoriesListLiveData.value = CategoriesListState(categoriesList)
+        val thread = Thread {
+            categories = repository.getCategories()
+            Log.i("!!!", "categories: ${categories.toString()}")
+        }
+
+        thread.start()
+
+        _categoriesListLiveData.value = CategoriesListState(categories)
         Log.i("categorieslistvm", "VM created")
     }
 

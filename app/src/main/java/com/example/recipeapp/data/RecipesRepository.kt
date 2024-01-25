@@ -11,7 +11,7 @@ import retrofit2.Retrofit
 
 class RecipesRepository {
 
-    fun getCategories(): List<Category>? {
+    private fun createService(): RecipeApiService {
         val contentType = "application/json".toMediaType()
 
         val retrofit = Retrofit.Builder()
@@ -19,12 +19,28 @@ class RecipesRepository {
             .addConverterFactory(Json.asConverterFactory(contentType))
             .build()
 
-        val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
-
-        val categoriesCall: Call<List<Category>> = service.getCategories()
-        val categoriesResponse: Response<List<Category>> = categoriesCall.execute()
-        return categoriesResponse.body()
+        return retrofit.create(RecipeApiService::class.java)
     }
+
+    fun getCategories(): List<Category>? {
+        return try {
+            val service = createService()
+
+            val categoriesCall: Call<List<Category>> = service.getCategories()
+            val categoriesResponse: Response<List<Category>> = categoriesCall.execute()
+            categoriesResponse.body()
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+/*    fun getRecipeById(recipeId: Int): Recipe {
+        val service = createService()
+
+        val recipeCall: Call<Recipe> = service.getRecipe()
+        val recipeResponse: Response<Recipe> = recipeCall.execute()
+        return recipeResponse.body()
+    }*/
 
 
 }
