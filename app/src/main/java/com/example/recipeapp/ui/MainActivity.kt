@@ -6,9 +6,7 @@ import androidx.navigation.findNavController
 import com.example.recipeapp.R
 import com.example.recipeapp.databinding.ActivityMainBinding
 
-
 class MainActivity : AppCompatActivity() {
-
 
 
     private var _binding: ActivityMainBinding? = null

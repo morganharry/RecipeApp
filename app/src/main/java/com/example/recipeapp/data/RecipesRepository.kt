@@ -34,13 +34,13 @@ class RecipesRepository {
         }
     }
 
-/*    fun getRecipeById(recipeId: Int): Recipe {
-        val service = createService()
+    /*    fun getRecipeById(recipeId: Int): Recipe {
+            val service = createService()
 
-        val recipeCall: Call<Recipe> = service.getRecipe()
-        val recipeResponse: Response<Recipe> = recipeCall.execute()
-        return recipeResponse.body()
-    }*/
+            val recipeCall: Call<Recipe> = service.getRecipe()
+            val recipeResponse: Response<Recipe> = recipeCall.execute()
+            return recipeResponse.body()
+        }*/
 
 
 }
