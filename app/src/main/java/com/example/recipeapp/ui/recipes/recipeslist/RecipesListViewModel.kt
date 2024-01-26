@@ -18,7 +18,7 @@ data class RecipesListState(
 )
 
 class RecipesListViewModel(private val application: Application) : AndroidViewModel(application) {
-    private val repository by lazy { RecipesRepository() }
+    private val repository by lazy { RecipesRepository(application) }
     private var recipesList: List<Recipe>? = listOf()
     private var category: Category? = null
 
