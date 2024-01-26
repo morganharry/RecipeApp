@@ -24,17 +24,17 @@ class CategoriesListViewModel(application: Application) :
     init {
         val thread = Thread {
             categories = repository.getCategories()
+            _categoriesListLiveData.postValue(CategoriesListState(categories))
+
             Log.i("!!!", "categories: ${categories.toString()}")
         }
-
         thread.start()
 
-        _categoriesListLiveData.value = CategoriesListState(categories)
-        Log.i("categorieslistvm", "VM created")
+        Log.i("VM", "CategoriesListVM created")
     }
 
     override fun onCleared() {
-        Log.i("categorieslistvm", "VM cleared")
+        Log.i("VM", "CategoriesListVM cleared")
         super.onCleared()
     }
 }

@@ -2,6 +2,7 @@ package com.example.recipeapp.data
 
 import com.example.recipeapp.RecipeApiService
 import com.example.recipeapp.model.Category
+import com.example.recipeapp.model.Recipe
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -34,13 +35,51 @@ class RecipesRepository {
         }
     }
 
-    /*    fun getRecipeById(recipeId: Int): Recipe {
+    fun getCategory(id: Int): Category? {
+        return try {
             val service = createService()
 
-            val recipeCall: Call<Recipe> = service.getRecipe()
+            val categoryCall: Call<Category> = service.getCategory(id)
+            val categoryResponse: Response<Category> = categoryCall.execute()
+            categoryResponse.body()
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    fun getRecipesByCategory(id: Int): List<Recipe>? {
+        return try {
+            val service = createService()
+
+            val recipesCall: Call<List<Recipe>> = service.getRecipesByCategory(id)
+            val recipesResponse: Response<List<Recipe>> = recipesCall.execute()
+            recipesResponse.body()
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    fun getRecipe(id: Int): Recipe? {
+        return try {
+            val service = createService()
+
+            val recipeCall: Call<Recipe> = service.getRecipe(id)
             val recipeResponse: Response<Recipe> = recipeCall.execute()
-            return recipeResponse.body()
-        }*/
+            recipeResponse.body()
+        } catch (e: Exception) {
+            null
+        }
+    }
 
+    fun getRecipes(ids: String): List<Recipe>? {
+        return try {
+            val service = createService()
 
+            val recipesCall: Call<List<Recipe>> = service.getRecipes(ids)
+            val recipesResponse: Response<List<Recipe>> = recipesCall.execute()
+            recipesResponse.body()
+        } catch (e: Exception) {
+            null
+        }
+    }
 }

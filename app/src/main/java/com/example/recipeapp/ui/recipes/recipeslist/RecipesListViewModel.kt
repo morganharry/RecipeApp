@@ -6,9 +6,9 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.recipeapp.data.STUB
+import com.example.recipeapp.data.RecipesRepository
+import com.example.recipeapp.model.Category
 import com.example.recipeapp.model.Recipe
-import java.io.IOException
 import java.io.InputStream
 
 data class RecipesListState(
@@ -18,36 +18,50 @@ data class RecipesListState(
 )
 
 class RecipesListViewModel(private val application: Application) : AndroidViewModel(application) {
+    private val repository by lazy { RecipesRepository() }
+    private var recipesList: List<Recipe>? = listOf()
+    private var category: Category? = null
 
-    val recipesListData: LiveData<RecipesListState>
-        get() = _recipesListData
-    private val _recipesListData = MutableLiveData<RecipesListState>()
+    val recipesListLiveData: LiveData<RecipesListState>
+        get() = _recipesListLiveData
+    private val _recipesListLiveData = MutableLiveData<RecipesListState>()
 
     init {
-        Log.i("recipeslistvm", "VM created")
+        Log.i("VM", "RecipesListVM created")
     }
 
     fun loadRecipesList(categoryId: Int) {
-        val category = STUB.getCategoryId(categoryId)
-        val categoryTitle = category?.title
-        val categoryDrawable: Drawable?
+        val thread = Thread {
+            category = repository.getCategory(categoryId)
+            val categoryTitle = category?.title
 
-        try {
-            val inputStream: InputStream? =
-                category?.imageUrl.let { it?.let { it1 -> this.application.assets?.open(it1) } }
-            categoryDrawable = Drawable.createFromStream(inputStream, null)
-        } catch (ex: IOException) {
-            Log.e(this.javaClass.simpleName, ex.stackTraceToString())
-            return
+            val categoryDrawable: Drawable? = try {
+                val inputStream: InputStream? =
+                    category?.imageUrl.let { it?.let { it1 -> this.application.assets?.open(it1) } }
+                Drawable.createFromStream(inputStream, null)
+            } catch (ex: Exception) {
+                Log.e(this.javaClass.simpleName, ex.stackTraceToString())
+                null
+            }
+
+            recipesList = repository.getRecipesByCategory(categoryId)
+            _recipesListLiveData.postValue(
+                RecipesListState(
+                    categoryTitle,
+                    categoryDrawable,
+                    recipesList
+                )
+            )
+
+            Log.i("!!!", "category: ${category.toString()}")
+            Log.i("!!!", "recipesList: ${recipesList.toString()}")
         }
 
-        val recipesList: List<Recipe> = STUB.getRecipesByCategoryId(categoryId)
-
-        _recipesListData.value = RecipesListState(categoryTitle, categoryDrawable, recipesList)
+        thread.start()
     }
 
     override fun onCleared() {
-        Log.i("recipeslistvm", "VM cleared")
+        Log.i("VM", "RecipesListVM cleared")
         super.onCleared()
     }
 }

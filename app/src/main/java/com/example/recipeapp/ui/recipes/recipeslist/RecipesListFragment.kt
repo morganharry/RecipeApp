@@ -55,7 +55,7 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
             }
         })
 
-        viewModel.recipesListData.observe(viewLifecycleOwner) {
+        viewModel.recipesListLiveData.observe(viewLifecycleOwner) {
             categoryTitle = it.categoryTitle
             binding.tvCategory.text = categoryTitle
             categoryImageDrawable = it.categoryDrawable

@@ -6,7 +6,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.recipeapp.data.STUB
+import com.example.recipeapp.data.RecipesRepository
 import com.example.recipeapp.model.APP_RECIPES
 import com.example.recipeapp.model.APP_RECIPES_SET_STRING
 import com.example.recipeapp.model.Recipe
@@ -16,20 +16,27 @@ data class FavoritesState(
 )
 
 class FavoritesViewModel(private val application: Application) : AndroidViewModel(application) {
+    private val repository by lazy { RecipesRepository() }
+    private var recipesList: List<Recipe>? = listOf()
 
-    val favoritesData: LiveData<FavoritesState>
-        get() = _favoritesData
-    private val _favoritesData = MutableLiveData<FavoritesState>()
+    val favoritesLiveData: LiveData<FavoritesState>
+        get() = _favoritesLiveData
+    private val _favoritesLiveData = MutableLiveData<FavoritesState>()
 
     init {
-        Log.i("favoritesvm", "VM created")
+        Log.i("VM", "FavoritesViewVM created")
     }
 
     fun loadRecipesList() {
-        val favList = getFavorites()
-        val recipesList: List<Recipe> = STUB.getRecipesByIds(favList)
+        val thread = Thread {
+            val favList = getFavorites()
+            recipesList = repository.getRecipes(favList.joinToString())
+            _favoritesLiveData.postValue(FavoritesState(recipesList))
 
-        _favoritesData.value = FavoritesState(recipesList)
+            Log.i("!!!", "favList: ${recipesList.toString()}")
+        }
+
+        thread.start()
     }
 
     private fun getFavorites(): HashSet<String> {
@@ -40,7 +47,7 @@ class FavoritesViewModel(private val application: Application) : AndroidViewMode
     }
 
     override fun onCleared() {
-        Log.i("favoritesvm", "VM cleared")
+        Log.i("VM", "FavoritesViewVM cleared")
         super.onCleared()
     }
 }

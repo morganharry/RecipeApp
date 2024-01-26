@@ -47,7 +47,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
             }
         })
 
-        viewModel.favoritesData.observe(viewLifecycleOwner) {
+        viewModel.favoritesLiveData.observe(viewLifecycleOwner) {
             recipesAdapter.dataSet = it.recipesList ?: listOf()
             recyclerView.adapter = recipesAdapter
         }

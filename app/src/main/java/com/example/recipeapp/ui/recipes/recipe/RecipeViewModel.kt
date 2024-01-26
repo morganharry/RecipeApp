@@ -7,47 +7,59 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.recipeapp.data.STUB
+import com.example.recipeapp.data.RecipesRepository
 import com.example.recipeapp.model.APP_RECIPES
 import com.example.recipeapp.model.APP_RECIPES_SET_STRING
 import com.example.recipeapp.model.Recipe
-import java.io.IOException
 import java.io.InputStream
 
 data class RecipeState(
     var recipe: Recipe? = null,
+    var recipeDrawable: Drawable? = null,
     var portionsCount: Int = 1,
     var isFavorite: Boolean = false,
-    var recipeDrawable: Drawable? = null,
 )
 
 class RecipeViewModel(private val application: Application) : AndroidViewModel(application) {
-
+    private val repository by lazy { RecipesRepository() }
+    private var recipe: Recipe? = null
     val recipeLiveData: LiveData<RecipeState>
         get() = _recipeLiveData
     private val _recipeLiveData = MutableLiveData<RecipeState>()
 
     init {
-        Log.i("recipevm", "VM created")
+        Log.i("VM", "RecipeViewVM created")
     }
 
     fun loadRecipe(recipeId: Int) {
-        val recipe: Recipe = STUB.getRecipeById(recipeId)
-        val portionsCount: Int = _recipeLiveData.value?.portionsCount ?: 1
-        val isFavorite = getFavorites().contains(recipe.id.toString())
-        val recipeDrawable: Drawable?
+        val thread = Thread {
+            recipe = repository.getRecipe(recipeId)
 
-        try {
-            val inputStream: InputStream? =
-                recipe.imageUrl.let { this.application.assets?.open(it) }
-            recipeDrawable = Drawable.createFromStream(inputStream, null)
-        } catch (ex: IOException) {
-            Log.e(this.javaClass.simpleName, ex.stackTraceToString())
-            return
+            val recipeDrawable: Drawable? = try {
+                val inputStream: InputStream? =
+                    recipe?.imageUrl.let { it?.let { it1 -> this.application.assets?.open(it1) } }
+                Drawable.createFromStream(inputStream, null)
+            } catch (ex: Exception) {
+                Log.e(this.javaClass.simpleName, ex.stackTraceToString())
+                null
+            }
+
+            val portionsCount: Int = _recipeLiveData.value?.portionsCount ?: 1
+            val isFavorite = getFavorites().contains(recipe?.id.toString())
+
+            _recipeLiveData.postValue(
+                RecipeState(
+                    recipe,
+                    recipeDrawable,
+                    portionsCount,
+                    isFavorite,
+                )
+            )
+
+            Log.i("!!!", "recipe: ${recipe.toString()}")
         }
-        _recipeLiveData.value = RecipeState(recipe, portionsCount, isFavorite, recipeDrawable)
 
-        //TODO("load from network")
+        thread.start()
     }
 
     private fun getFavorites(): HashSet<String> {
@@ -80,7 +92,7 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
     }
 
     override fun onCleared() {
-        Log.i("recipevm", "VM cleared")
+        Log.i("VM", "RecipeViewVM cleared")
         super.onCleared()
     }
 
