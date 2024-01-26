@@ -30,7 +30,7 @@ class FavoritesViewModel(private val application: Application) : AndroidViewMode
     fun loadRecipesList() {
         val thread = Thread {
             val favList = getFavorites()
-            recipesList = repository.getRecipes(favList.joinToString())
+            recipesList = repository.getRecipes(favList.joinToString(","))
             _favoritesLiveData.postValue(FavoritesState(recipesList))
 
             Log.i("!!!", "favList: ${recipesList.toString()}")
