@@ -3,6 +3,7 @@ package com.example.recipeapp.ui.recipes.recipeslist
 import android.app.Application
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,7 +17,7 @@ data class FavoritesState(
 )
 
 class FavoritesViewModel(private val application: Application) : AndroidViewModel(application) {
-    private val repository by lazy { RecipesRepository(application) }
+    private val repository by lazy { RecipesRepository() }
     private var recipesList: List<Recipe>? = listOf()
 
     val favoritesLiveData: LiveData<FavoritesState>
@@ -31,6 +32,12 @@ class FavoritesViewModel(private val application: Application) : AndroidViewMode
         val thread = Thread {
             val favList = getFavorites()
             recipesList = repository.getRecipes(favList.joinToString(","))
+            if (recipesList == null) {
+                val text = "Ошибка получения данных"
+                val duration = Toast.LENGTH_LONG
+                Toast.makeText(application, text, duration).show()
+            }
+
             _favoritesLiveData.postValue(FavoritesState(recipesList))
 
             Log.i("!!!", "favList: ${recipesList.toString()}")

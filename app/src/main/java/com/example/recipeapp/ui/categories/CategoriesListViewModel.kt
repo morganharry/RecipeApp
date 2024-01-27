@@ -2,6 +2,7 @@ package com.example.recipeapp.ui.categories
 
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,7 +15,7 @@ data class CategoriesListState(
 
 class CategoriesListViewModel(application: Application) :
     AndroidViewModel(application) {
-    private val repository by lazy { RecipesRepository(application) }
+    private val repository by lazy { RecipesRepository() }
     private var categories: List<Category>? = listOf()
 
     val categoriesListLiveData: LiveData<CategoriesListState>
@@ -24,6 +25,12 @@ class CategoriesListViewModel(application: Application) :
     init {
         val thread = Thread {
             categories = repository.getCategories()
+            if (categories == null) {
+                val text = "Ошибка получения данных"
+                val duration = Toast.LENGTH_LONG
+                Toast.makeText(application, text, duration).show()
+            }
+
             _categoriesListLiveData.postValue(CategoriesListState(categories))
 
             Log.i("!!!", "categories: ${categories.toString()}")

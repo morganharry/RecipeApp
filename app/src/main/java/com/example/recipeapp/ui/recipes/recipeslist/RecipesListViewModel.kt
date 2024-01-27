@@ -3,6 +3,7 @@ package com.example.recipeapp.ui.recipes.recipeslist
 import android.app.Application
 import android.graphics.drawable.Drawable
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,7 +19,7 @@ data class RecipesListState(
 )
 
 class RecipesListViewModel(private val application: Application) : AndroidViewModel(application) {
-    private val repository by lazy { RecipesRepository(application) }
+    private val repository by lazy { RecipesRepository() }
     private var recipesList: List<Recipe>? = listOf()
     private var category: Category? = null
 
@@ -33,6 +34,12 @@ class RecipesListViewModel(private val application: Application) : AndroidViewMo
     fun loadRecipesList(categoryId: Int) {
         val thread = Thread {
             category = repository.getCategory(categoryId)
+            if (category == null) {
+                val text = "Ошибка получения данных"
+                val duration = Toast.LENGTH_LONG
+                Toast.makeText(application, text, duration).show()
+            }
+
             val categoryTitle = category?.title
 
             val categoryDrawable: Drawable? = try {

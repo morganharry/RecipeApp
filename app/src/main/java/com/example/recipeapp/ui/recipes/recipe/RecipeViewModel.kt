@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -21,7 +22,7 @@ data class RecipeState(
 )
 
 class RecipeViewModel(private val application: Application) : AndroidViewModel(application) {
-    private val repository by lazy { RecipesRepository(application) }
+    private val repository by lazy { RecipesRepository() }
     private var recipe: Recipe? = null
     val recipeLiveData: LiveData<RecipeState>
         get() = _recipeLiveData
@@ -34,6 +35,11 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
     fun loadRecipe(recipeId: Int) {
         val thread = Thread {
             recipe = repository.getRecipe(recipeId)
+            if (recipe == null) {
+                val text = "Ошибка получения данных"
+                val duration = Toast.LENGTH_LONG
+                Toast.makeText(application, text, duration).show()
+            }
 
             val recipeDrawable: Drawable? = try {
                 val inputStream: InputStream? =
