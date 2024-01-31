@@ -32,7 +32,7 @@ class RecipesListViewModel(private val application: Application) : AndroidViewMo
     }
 
     fun loadRecipesList(categoryId: Int) {
-        val thread = Thread {
+        Thread {
             category = repository.getCategory(categoryId)
             if (category == null) {
                 val text = "Ошибка получения данных"
@@ -62,9 +62,7 @@ class RecipesListViewModel(private val application: Application) : AndroidViewMo
 
             Log.i("!!!", "category: ${category.toString()}")
             Log.i("!!!", "recipesList: ${recipesList.toString()}")
-        }
-
-        thread.start()
+        }.start()
     }
 
     override fun onCleared() {

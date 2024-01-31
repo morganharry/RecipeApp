@@ -29,21 +29,22 @@ class FavoritesViewModel(private val application: Application) : AndroidViewMode
     }
 
     fun loadRecipesList() {
-        val thread = Thread {
+        Thread {
             val favList = getFavorites()
-            recipesList = repository.getRecipes(favList.joinToString(","))
-            if (recipesList == null) {
-                val text = "Ошибка получения данных"
-                val duration = Toast.LENGTH_LONG
-                Toast.makeText(application, text, duration).show()
+            if (favList.isNotEmpty()) {
+                recipesList = repository.getRecipes(favList.joinToString(","))
+                if (recipesList == null) {
+                    val text = "Ошибка получения данных"
+                    val duration = Toast.LENGTH_LONG
+                    Toast.makeText(application, text, duration).show()
+                }
             }
+            else recipesList = listOf()
 
             _favoritesLiveData.postValue(FavoritesState(recipesList))
 
             Log.i("!!!", "favList: ${recipesList.toString()}")
-        }
-
-        thread.start()
+        }.start()
     }
 
     private fun getFavorites(): HashSet<String> {

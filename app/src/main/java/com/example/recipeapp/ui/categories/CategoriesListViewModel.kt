@@ -23,7 +23,7 @@ class CategoriesListViewModel(application: Application) :
     private val _categoriesListLiveData = MutableLiveData<CategoriesListState>()
 
     init {
-        val thread = Thread {
+        Thread {
             categories = repository.getCategories()
             if (categories == null) {
                 val text = "Ошибка получения данных"
@@ -34,8 +34,7 @@ class CategoriesListViewModel(application: Application) :
             _categoriesListLiveData.postValue(CategoriesListState(categories))
 
             Log.i("!!!", "categories: ${categories.toString()}")
-        }
-        thread.start()
+        }.start()
 
         Log.i("VM", "CategoriesListVM created")
     }

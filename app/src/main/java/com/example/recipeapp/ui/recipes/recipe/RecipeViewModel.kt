@@ -33,7 +33,7 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
     }
 
     fun loadRecipe(recipeId: Int) {
-        val thread = Thread {
+        Thread {
             recipe = repository.getRecipe(recipeId)
             if (recipe == null) {
                 val text = "Ошибка получения данных"
@@ -63,9 +63,7 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
             )
 
             Log.i("!!!", "recipe: ${recipe.toString()}")
-        }
-
-        thread.start()
+        }.start()
     }
 
     private fun getFavorites(): HashSet<String> {
