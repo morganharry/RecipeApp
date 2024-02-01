@@ -1,6 +1,5 @@
 package com.example.recipeapp.ui.recipes.recipeslist
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.recipeapp.R
 import com.example.recipeapp.databinding.FragmentListRecipesBinding
 
@@ -18,7 +18,6 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     private val viewModel: RecipesListViewModel by viewModels()
     private var categoryId: Int? = null
     private var categoryTitle: String? = null
-    private var categoryImageDrawable: Drawable? = null
     private var recipesAdapter = RecipesListAdapter(this)
 
     private var _binding: FragmentListRecipesBinding? = null
@@ -58,8 +57,10 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
         viewModel.recipesListLiveData.observe(viewLifecycleOwner) {
             categoryTitle = it.categoryTitle
             binding.tvCategory.text = categoryTitle
-            categoryImageDrawable = it.categoryDrawable
-            binding.ivCategory.setImageDrawable(categoryImageDrawable)
+
+            Glide.with(this)
+                .load(it.categoryImageUrl)
+                .into(binding.ivCategory)
 
             recipesAdapter.dataSet = it.recipesList ?: listOf()
             recyclerView.adapter = recipesAdapter

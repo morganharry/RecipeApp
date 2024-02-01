@@ -74,8 +74,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
                 .load(it.imageUrl)
                 .into(binding.ivRecipe)
 
-
-
             portionsCount = it.portionsCount
 
             ingredientsAdapter.dataSet = it.recipe?.ingredients ?: listOf()
