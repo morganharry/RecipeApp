@@ -56,6 +56,8 @@ class RecipesListAdapter(
 
         Glide.with(fragment)
             .load(recipeImageUrl)
+            .placeholder(R.drawable.img_placeholder)
+            .error(R.drawable.img_error)
             .into(viewHolder.ivRecipeImage)
 
         viewHolder.cvRecipeFragment.setOnClickListener { itemClickListener?.onItemClick(recipeId) }

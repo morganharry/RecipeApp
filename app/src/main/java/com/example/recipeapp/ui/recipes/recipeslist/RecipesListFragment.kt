@@ -60,6 +60,8 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
 
             Glide.with(this)
                 .load(it.categoryImageUrl)
+                .placeholder(R.drawable.img_placeholder)
+                .error(R.drawable.img_error)
                 .into(binding.ivCategory)
 
             recipesAdapter.dataSet = it.recipesList ?: listOf()

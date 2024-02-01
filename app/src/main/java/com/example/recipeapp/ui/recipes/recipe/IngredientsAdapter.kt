@@ -1,9 +1,11 @@
 package com.example.recipeapp.ui.recipes.recipe
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.text.isDigitsOnly
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.R
 import com.example.recipeapp.model.Ingredient
@@ -42,16 +44,20 @@ class IngredientsAdapter(
 
     override fun getItemCount() = dataSet.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateIngredients(progress: Int) {
         quantity = progress
         this.notifyDataSetChanged()
     }
 
     private fun checkNumberType(quantityForOnePortion: String): String {
-        val num = quantityForOnePortion.toDouble() * quantity
-        return if (Regex("^[0-9]*[.,]0").matches(num.toString()))
-            String.format("%.0f", num)
-        else
-            String.format("%.1f", num)
+        if (quantityForOnePortion.isDigitsOnly()) {
+            val num = quantityForOnePortion.toDouble() * quantity
+            return if (Regex("^[0-9]*[.,]0").matches(num.toString()))
+                String.format("%.0f", num)
+            else
+                String.format("%.1f", num)
+        }
+        return quantityForOnePortion
     }
 }

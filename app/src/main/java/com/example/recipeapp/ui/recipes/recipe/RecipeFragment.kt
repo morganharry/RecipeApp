@@ -72,6 +72,8 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
             Glide.with(this)
                 .load(it.imageUrl)
+                .placeholder(R.drawable.img_placeholder)
+                .error(R.drawable.img_error)
                 .into(binding.ivRecipe)
 
             portionsCount = it.portionsCount
