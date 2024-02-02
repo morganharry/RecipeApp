@@ -1,6 +1,5 @@
 package com.example.recipeapp.ui.recipes.recipe
 
-import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.recipeapp.R
 import com.example.recipeapp.databinding.FragmentRecipeBinding
 
@@ -21,7 +21,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
     private var recipeId: Int? = null
     private var recipeTitle: String? = null
     private var portionsCount: Int = 1
-    private var recipeImageDrawable: Drawable? = null
     private var ingredientsAdapter = IngredientsAdapter()
     private var methodAdapter = MethodAdapter()
 
@@ -56,7 +55,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
             viewModel.onChangePortions(it)
             binding.tvPortion.text = it.toString()
         })
-
         val recyclerIngredientsView: RecyclerView = binding.rvIngredients
         context?.getColor(R.color.line_list_color)
             ?.let { RecyclerViewItemDecoration(it) }
@@ -70,8 +68,13 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
         viewModel.recipeLiveData.observe(viewLifecycleOwner) {
             recipeTitle = it.recipe?.title
             binding.tvRecipe.text = recipeTitle
-            recipeImageDrawable = it.recipeDrawable
-            binding.ivRecipe.setImageDrawable(recipeImageDrawable)
+
+            Glide.with(this)
+                .load(it.imageUrl)
+                .placeholder(R.drawable.img_placeholder)
+                .error(R.drawable.img_error)
+                .into(binding.ivRecipe)
+
             portionsCount = it.portionsCount
 
             ingredientsAdapter.dataSet = it.recipe?.ingredients ?: listOf()
@@ -87,7 +90,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
                 } else {
                     setBackgroundResource(R.drawable.ic_heart_empty)
                 }
-
                 setOnClickListener {
                     recipeId?.let { it1 -> viewModel.onFavoritesClicked(it1) }
                 }
@@ -98,7 +100,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
 class PortionSeekBarListener(val onChangeIngredients: (Int) -> Unit) :
     SeekBar.OnSeekBarChangeListener {
-
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
         onChangeIngredients(progress)
     }

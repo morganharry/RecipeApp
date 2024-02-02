@@ -13,7 +13,7 @@ import com.example.recipeapp.databinding.FragmentListCategoriesBinding
 
 class CategoriesListFragment : Fragment(R.layout.fragment_list_categories) {
     private val viewModel: CategoriesListViewModel by viewModels()
-    private var categoriesAdapter = CategoriesListAdapter(this)
+    private var categoriesAdapter = CategoriesListAdapter()
 
     private var _binding: FragmentListCategoriesBinding? = null
     private val binding

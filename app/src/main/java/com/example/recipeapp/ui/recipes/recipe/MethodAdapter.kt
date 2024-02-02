@@ -10,7 +10,6 @@ import com.example.recipeapp.R
 class MethodAdapter(
     var dataSet: List<String> = listOf(),
 ) : RecyclerView.Adapter<MethodAdapter.ViewHolder>() {
-
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView
 
@@ -27,8 +26,7 @@ class MethodAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
-        viewHolder.textView.text = "${(position.plus(1)).toString()}. ${dataSet[position]}"
+        viewHolder.textView.text = "${(position.plus(1))}. ${dataSet[position]}"
     }
 
     override fun getItemCount() = dataSet.size

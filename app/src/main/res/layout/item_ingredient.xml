@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_half"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvQuantity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/text_description_for_tools" />

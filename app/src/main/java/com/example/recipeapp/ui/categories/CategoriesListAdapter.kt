@@ -1,7 +1,5 @@
 package com.example.recipeapp.ui.categories
 
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +7,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.recipeapp.R
 import com.example.recipeapp.model.Category
-import java.io.IOException
-import java.io.InputStream
+import com.example.recipeapp.model.URL_IMAGES
 
 class CategoriesListAdapter(
-    private val fragment: CategoriesListFragment,
     var dataSet: List<Category> = listOf(),
 ) : RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
 
@@ -56,15 +53,14 @@ class CategoriesListAdapter(
         viewHolder.tvCategoryDescription.text = dataSet[position].description
         val categoryId = dataSet[position].id
 
-        try {
-            val inputStream: InputStream? =
-                fragment.context?.assets?.open(dataSet[position].imageUrl)
-            val drawable = Drawable.createFromStream(inputStream, null)
-            viewHolder.ivCategoryImage.setImageDrawable(drawable)
-        } catch (ex: IOException) {
-            Log.e(this.javaClass.simpleName, ex.stackTraceToString())
-            return
-        }
+        val categoryImageUrl =
+            "$URL_IMAGES${dataSet[position].imageUrl}"
+
+        Glide.with(viewHolder.itemView.context)
+            .load(categoryImageUrl)
+            .placeholder(R.drawable.img_placeholder)
+            .error(R.drawable.img_error)
+            .into(viewHolder.ivCategoryImage)
 
         viewHolder.cvCategoryItem.setOnClickListener { itemClickListener?.onItemClick(categoryId) }
     }

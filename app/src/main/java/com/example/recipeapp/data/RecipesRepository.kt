@@ -1,8 +1,8 @@
 package com.example.recipeapp.data
 
-import com.example.recipeapp.RecipeApiService
 import com.example.recipeapp.model.Category
 import com.example.recipeapp.model.Recipe
+import com.example.recipeapp.model.URL_API
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -25,7 +25,7 @@ class RecipesRepository {
         val contentType = "application/json".toMediaType()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://recipes.androidsprint.ru/api/")
+            .baseUrl(URL_API)
             .client(client)
             .addConverterFactory(Json.asConverterFactory(contentType))
             .build()

@@ -2,7 +2,6 @@ package com.example.recipeapp.ui.recipes.recipe
 
 import android.app.Application
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
@@ -12,11 +11,11 @@ import com.example.recipeapp.data.RecipesRepository
 import com.example.recipeapp.model.APP_RECIPES
 import com.example.recipeapp.model.APP_RECIPES_SET_STRING
 import com.example.recipeapp.model.Recipe
-import java.io.InputStream
+import com.example.recipeapp.model.URL_IMAGES
 
 data class RecipeState(
     var recipe: Recipe? = null,
-    var recipeDrawable: Drawable? = null,
+    var imageUrl: String? = null,
     var portionsCount: Int = 1,
     var isFavorite: Boolean = false,
 )
@@ -41,22 +40,14 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
                 Toast.makeText(application, text, duration).show()
             }
 
-            val recipeDrawable: Drawable? = try {
-                val inputStream: InputStream? =
-                    recipe?.imageUrl.let { it?.let { it1 -> this.application.assets?.open(it1) } }
-                Drawable.createFromStream(inputStream, null)
-            } catch (ex: Exception) {
-                Log.e(this.javaClass.simpleName, ex.stackTraceToString())
-                null
-            }
-
+            val imageUrl = "$URL_IMAGES${recipe?.imageUrl}"
             val portionsCount: Int = _recipeLiveData.value?.portionsCount ?: 1
             val isFavorite = getFavorites().contains(recipe?.id.toString())
 
             _recipeLiveData.postValue(
                 RecipeState(
                     recipe,
-                    recipeDrawable,
+                    imageUrl,
                     portionsCount,
                     isFavorite,
                 )
