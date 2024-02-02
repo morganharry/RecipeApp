@@ -36,7 +36,6 @@ class IngredientsAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
         viewHolder.tvDescription.text = dataSet[position].description
         viewHolder.tvQuantity.text = checkNumberType(dataSet[position].quantity)
         viewHolder.tvUnitOfMeasure.text = dataSet[position].unitOfMeasure

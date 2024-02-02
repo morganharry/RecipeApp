@@ -11,6 +11,7 @@ import com.example.recipeapp.data.RecipesRepository
 import com.example.recipeapp.model.APP_RECIPES
 import com.example.recipeapp.model.APP_RECIPES_SET_STRING
 import com.example.recipeapp.model.Recipe
+import com.example.recipeapp.model.URL_IMAGES
 
 data class RecipeState(
     var recipe: Recipe? = null,
@@ -39,7 +40,7 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
                 Toast.makeText(application, text, duration).show()
             }
 
-            val imageUrl = "https://recipes.androidsprint.ru/api/images/${recipe?.imageUrl}"
+            val imageUrl = "$URL_IMAGES${recipe?.imageUrl}"
             val portionsCount: Int = _recipeLiveData.value?.portionsCount ?: 1
             val isFavorite = getFavorites().contains(recipe?.id.toString())
 

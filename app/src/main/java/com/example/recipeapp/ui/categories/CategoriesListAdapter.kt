@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.recipeapp.R
 import com.example.recipeapp.model.Category
+import com.example.recipeapp.model.URL_IMAGES
 
 class CategoriesListAdapter(
-    private val fragment: CategoriesListFragment,
     var dataSet: List<Category> = listOf(),
 ) : RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
 
@@ -54,9 +54,9 @@ class CategoriesListAdapter(
         val categoryId = dataSet[position].id
 
         val categoryImageUrl =
-            "https://recipes.androidsprint.ru/api/images/${dataSet[position].imageUrl}"
+            "$URL_IMAGES${dataSet[position].imageUrl}"
 
-        Glide.with(fragment)
+        Glide.with(viewHolder.itemView.context)
             .load(categoryImageUrl)
             .placeholder(R.drawable.img_placeholder)
             .error(R.drawable.img_error)

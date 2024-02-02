@@ -13,7 +13,7 @@ import com.example.recipeapp.databinding.FragmentFavoritesBinding
 
 class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     private val viewModel: FavoritesViewModel by viewModels()
-    private var recipesAdapter = RecipesListAdapter(this)
+    private var recipesAdapter = RecipesListAdapter()
 
     private var _binding: FragmentFavoritesBinding? = null
     private val binding

@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.recipeapp.data.RecipesRepository
 import com.example.recipeapp.model.Category
 import com.example.recipeapp.model.Recipe
+import com.example.recipeapp.model.URL_IMAGES
 
 data class RecipesListState(
     var categoryTitle: String? = null,
@@ -37,11 +38,10 @@ class RecipesListViewModel(private val application: Application) : AndroidViewMo
                 val duration = Toast.LENGTH_LONG
                 Toast.makeText(application, text, duration).show()
             }
-
             val categoryTitle = category?.title
 
             val categoryImageUrl =
-                "https://recipes.androidsprint.ru/api/images/${category?.imageUrl}"
+                "$URL_IMAGES${category?.imageUrl}"
 
             recipesList = repository.getRecipesByCategory(categoryId)
             _recipesListLiveData.postValue(
@@ -51,7 +51,6 @@ class RecipesListViewModel(private val application: Application) : AndroidViewMo
                     recipesList
                 )
             )
-
             Log.i("!!!", "category: ${category.toString()}")
             Log.i("!!!", "recipesList: ${recipesList.toString()}")
         }.start()

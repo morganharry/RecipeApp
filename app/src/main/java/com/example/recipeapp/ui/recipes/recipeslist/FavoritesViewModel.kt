@@ -38,8 +38,7 @@ class FavoritesViewModel(private val application: Application) : AndroidViewMode
                     val duration = Toast.LENGTH_LONG
                     Toast.makeText(application, text, duration).show()
                 }
-            }
-            else recipesList = listOf()
+            } else recipesList = listOf()
 
             _favoritesLiveData.postValue(FavoritesState(recipesList))
 

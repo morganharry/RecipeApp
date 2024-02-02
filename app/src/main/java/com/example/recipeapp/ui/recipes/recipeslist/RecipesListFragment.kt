@@ -18,7 +18,7 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
     private val viewModel: RecipesListViewModel by viewModels()
     private var categoryId: Int? = null
     private var categoryTitle: String? = null
-    private var recipesAdapter = RecipesListAdapter(this)
+    private var recipesAdapter = RecipesListAdapter()
 
     private var _binding: FragmentListRecipesBinding? = null
     private val binding
@@ -53,7 +53,6 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
                 openRecipeByRecipeId(recipeId)
             }
         })
-
         viewModel.recipesListLiveData.observe(viewLifecycleOwner) {
             categoryTitle = it.categoryTitle
             binding.tvCategory.text = categoryTitle

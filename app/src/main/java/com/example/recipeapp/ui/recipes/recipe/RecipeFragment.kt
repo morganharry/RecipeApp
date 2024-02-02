@@ -55,7 +55,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
             viewModel.onChangePortions(it)
             binding.tvPortion.text = it.toString()
         })
-
         val recyclerIngredientsView: RecyclerView = binding.rvIngredients
         context?.getColor(R.color.line_list_color)
             ?.let { RecyclerViewItemDecoration(it) }
@@ -91,7 +90,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
                 } else {
                     setBackgroundResource(R.drawable.ic_heart_empty)
                 }
-
                 setOnClickListener {
                     recipeId?.let { it1 -> viewModel.onFavoritesClicked(it1) }
                 }
@@ -102,7 +100,6 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
 
 class PortionSeekBarListener(val onChangeIngredients: (Int) -> Unit) :
     SeekBar.OnSeekBarChangeListener {
-
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
         onChangeIngredients(progress)
     }
