@@ -7,10 +7,12 @@ import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.recipeapp.data.RecipesRepository
 import com.example.recipeapp.model.APP_RECIPES
 import com.example.recipeapp.model.APP_RECIPES_SET_STRING
 import com.example.recipeapp.model.Recipe
+import kotlinx.coroutines.launch
 
 data class FavoritesState(
     var recipesList: List<Recipe>? = null,
@@ -29,7 +31,7 @@ class FavoritesViewModel(private val application: Application) : AndroidViewMode
     }
 
     fun loadRecipesList() {
-        Thread {
+        viewModelScope.launch {
             val favList = getFavorites()
             if (favList.isNotEmpty()) {
                 recipesList = repository.getRecipes(favList.joinToString(","))
@@ -41,9 +43,8 @@ class FavoritesViewModel(private val application: Application) : AndroidViewMode
             } else recipesList = listOf()
 
             _favoritesLiveData.postValue(FavoritesState(recipesList))
-
-            Log.i("!!!", "favList: ${recipesList.toString()}")
-        }.start()
+        }
+        Log.i("!!!", "favList: ${recipesList.toString()}")
     }
 
     private fun getFavorites(): HashSet<String> {

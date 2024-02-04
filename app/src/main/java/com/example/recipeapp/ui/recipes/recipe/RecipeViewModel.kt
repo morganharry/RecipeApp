@@ -7,11 +7,13 @@ import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.recipeapp.data.RecipesRepository
 import com.example.recipeapp.model.APP_RECIPES
 import com.example.recipeapp.model.APP_RECIPES_SET_STRING
 import com.example.recipeapp.model.Recipe
 import com.example.recipeapp.model.URL_IMAGES
+import kotlinx.coroutines.launch
 
 data class RecipeState(
     var recipe: Recipe? = null,
@@ -32,14 +34,13 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
     }
 
     fun loadRecipe(recipeId: Int) {
-        Thread {
+        viewModelScope.launch {
             recipe = repository.getRecipe(recipeId)
             if (recipe == null) {
                 val text = "Ошибка получения данных"
                 val duration = Toast.LENGTH_LONG
                 Toast.makeText(application, text, duration).show()
             }
-
             val imageUrl = "$URL_IMAGES${recipe?.imageUrl}"
             val portionsCount: Int = _recipeLiveData.value?.portionsCount ?: 1
             val isFavorite = getFavorites().contains(recipe?.id.toString())
@@ -52,9 +53,9 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
                     isFavorite,
                 )
             )
+        }
 
-            Log.i("!!!", "recipe: ${recipe.toString()}")
-        }.start()
+        Log.i("!!!", "recipe: ${recipe.toString()}")
     }
 
     private fun getFavorites(): HashSet<String> {

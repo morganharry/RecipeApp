@@ -6,10 +6,12 @@ import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.recipeapp.data.RecipesRepository
 import com.example.recipeapp.model.Category
 import com.example.recipeapp.model.Recipe
 import com.example.recipeapp.model.URL_IMAGES
+import kotlinx.coroutines.launch
 
 data class RecipesListState(
     var categoryTitle: String? = null,
@@ -31,7 +33,7 @@ class RecipesListViewModel(private val application: Application) : AndroidViewMo
     }
 
     fun loadRecipesList(categoryId: Int) {
-        Thread {
+        viewModelScope.launch {
             category = repository.getCategory(categoryId)
             if (category == null) {
                 val text = "Ошибка получения данных"
@@ -44,6 +46,7 @@ class RecipesListViewModel(private val application: Application) : AndroidViewMo
                 "$URL_IMAGES${category?.imageUrl}"
 
             recipesList = repository.getRecipesByCategory(categoryId)
+
             _recipesListLiveData.postValue(
                 RecipesListState(
                     categoryTitle,
@@ -51,9 +54,10 @@ class RecipesListViewModel(private val application: Application) : AndroidViewMo
                     recipesList
                 )
             )
-            Log.i("!!!", "category: ${category.toString()}")
-            Log.i("!!!", "recipesList: ${recipesList.toString()}")
-        }.start()
+        }
+
+        Log.i("!!!", "category: ${category.toString()}")
+        Log.i("!!!", "recipesList: ${recipesList.toString()}")
     }
 
     override fun onCleared() {

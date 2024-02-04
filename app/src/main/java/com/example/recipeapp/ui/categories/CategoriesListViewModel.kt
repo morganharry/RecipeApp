@@ -6,8 +6,10 @@ import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.recipeapp.data.RecipesRepository
 import com.example.recipeapp.model.Category
+import kotlinx.coroutines.launch
 
 data class CategoriesListState(
     var categoriesList: List<Category>? = null,
@@ -23,19 +25,18 @@ class CategoriesListViewModel(application: Application) :
     private val _categoriesListLiveData = MutableLiveData<CategoriesListState>()
 
     init {
-        Thread {
+        viewModelScope.launch {
             categories = repository.getCategories()
+
             if (categories == null) {
                 val text = "Ошибка получения данных"
                 val duration = Toast.LENGTH_LONG
                 Toast.makeText(application, text, duration).show()
             }
-
             _categoriesListLiveData.postValue(CategoriesListState(categories))
+        }
 
-            Log.i("!!!", "categories: ${categories.toString()}")
-        }.start()
-
+        Log.i("!!!", "categories: ${categories.toString()}")
         Log.i("VM", "CategoriesListVM created")
     }
 
