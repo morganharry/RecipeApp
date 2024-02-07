@@ -1,5 +1,7 @@
 package com.example.recipeapp.data
 
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.room.Room
 import com.example.recipeapp.model.Category
 import com.example.recipeapp.model.Recipe
 import com.example.recipeapp.model.URL_API
@@ -15,6 +17,13 @@ import retrofit2.Response
 import retrofit2.Retrofit
 
 class RecipesRepository {
+    val db = Room.databaseBuilder(
+
+
+        requireContext().applicationContext,
+        AppDatabase::class.java,
+        "database-categories"
+    ).build()
 
     private fun createService(): RecipeApiService {
         val logging = HttpLoggingInterceptor()
