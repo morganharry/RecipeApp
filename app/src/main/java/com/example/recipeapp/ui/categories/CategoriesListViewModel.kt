@@ -19,20 +19,25 @@ class CategoriesListViewModel(application: Application) :
     AndroidViewModel(application) {
     private val repository by lazy { RecipesRepository() }
     private var categories: List<Category>? = listOf()
-
     val categoriesListLiveData: LiveData<CategoriesListState>
         get() = _categoriesListLiveData
     private val _categoriesListLiveData = MutableLiveData<CategoriesListState>()
 
     init {
         viewModelScope.launch {
-            categories = repository.getCategories()
+            categories = repository.getCategoriesFromCache()
+
+            repository.getCategories()?.let {
+                categories = it
+                repository.categoriesDao.insert(it)
+            }
 
             if (categories == null) {
                 val text = "Ошибка получения данных"
                 val duration = Toast.LENGTH_LONG
                 Toast.makeText(application, text, duration).show()
             }
+
             _categoriesListLiveData.postValue(CategoriesListState(categories))
         }
 

@@ -17,13 +17,17 @@ import retrofit2.Response
 import retrofit2.Retrofit
 
 class RecipesRepository {
-    val db = Room.databaseBuilder(
 
-
+    private val db = Room.databaseBuilder(
         requireContext().applicationContext,
         AppDatabase::class.java,
         "database-categories"
     ).build()
+    val categoriesDao = db.categoryDao()
+
+    suspend fun getCategoriesFromCache(): List<Category> {
+        return categoriesDao.getAll()
+    }
 
     private fun createService(): RecipeApiService {
         val logging = HttpLoggingInterceptor()
