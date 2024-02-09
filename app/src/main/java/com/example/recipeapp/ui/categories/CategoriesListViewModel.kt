@@ -28,7 +28,6 @@ class CategoriesListViewModel(application: Application) :
             categories = repository.getCategoriesFromCache()
 
             repository.getCategories()?.let {
-                categories = it
                 repository.categoriesDao.insert(it)
             }
 
