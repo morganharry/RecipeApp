@@ -17,7 +17,7 @@ data class CategoriesListState(
 
 class CategoriesListViewModel(application: Application) :
     AndroidViewModel(application) {
-    private val repository by lazy { RecipesRepository() }
+    private val repository by lazy { RecipesRepository(application) }
     private var categories: List<Category>? = listOf()
     val categoriesListLiveData: LiveData<CategoriesListState>
         get() = _categoriesListLiveData

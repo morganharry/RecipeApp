@@ -23,7 +23,7 @@ data class RecipeState(
 )
 
 class RecipeViewModel(private val application: Application) : AndroidViewModel(application) {
-    private val repository by lazy { RecipesRepository() }
+    private val repository by lazy { RecipesRepository(application) }
     private var recipe: Recipe? = null
     val recipeLiveData: LiveData<RecipeState>
         get() = _recipeLiveData

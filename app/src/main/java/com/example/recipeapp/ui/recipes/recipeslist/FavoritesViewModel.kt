@@ -19,7 +19,7 @@ data class FavoritesState(
 )
 
 class FavoritesViewModel(private val application: Application) : AndroidViewModel(application) {
-    private val repository by lazy { RecipesRepository() }
+    private val repository by lazy { RecipesRepository(application) }
     private var recipesList: List<Recipe>? = listOf()
 
     val favoritesLiveData: LiveData<FavoritesState>

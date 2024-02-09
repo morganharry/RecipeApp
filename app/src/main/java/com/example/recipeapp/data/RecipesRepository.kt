@@ -1,6 +1,6 @@
 package com.example.recipeapp.data
 
-import androidx.core.content.ContentProviderCompat.requireContext
+import android.app.Application
 import androidx.room.Room
 import com.example.recipeapp.model.Category
 import com.example.recipeapp.model.Recipe
@@ -16,17 +16,19 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 
-class RecipesRepository {
+class RecipesRepository (application: Application) {
 
     private val db = Room.databaseBuilder(
-        requireContext().applicationContext,
+        application,
         AppDatabase::class.java,
         "database-categories"
     ).build()
     val categoriesDao = db.categoryDao()
 
     suspend fun getCategoriesFromCache(): List<Category> {
-        return categoriesDao.getAll()
+        return withContext(Dispatchers.IO) {
+            categoriesDao.getAll()
+        }
     }
 
     private fun createService(): RecipeApiService {
