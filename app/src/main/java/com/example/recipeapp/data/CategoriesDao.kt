@@ -12,5 +12,5 @@ interface CategoriesDao {
     fun getAll(): List<Category>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg category: List<Category>)
+    fun insert(vararg categories: List<Category>)
 }
