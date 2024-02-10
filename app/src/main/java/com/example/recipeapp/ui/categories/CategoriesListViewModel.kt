@@ -26,7 +26,10 @@ class CategoriesListViewModel(application: Application) :
     init {
         viewModelScope.launch {
             categories = repository.getCategoriesFromCache()
+            _categoriesListLiveData.postValue(CategoriesListState(categories))
+        }
 
+        viewModelScope.launch {
             repository.getCategories()?.let {
                 repository.categoriesDao.insert(it)
             }
