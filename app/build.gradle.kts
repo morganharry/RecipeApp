@@ -3,8 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
-    kotlin("plugin.serialization") version "1.9.20"
-    id("com.google.devtools.ksp") version "1.9.20-1.0.14"
+    kotlin("plugin.serialization") version "1.9.22"
+    id("com.google.devtools.ksp") version "1.9.22-1.0.17"
 }
 
 android {
