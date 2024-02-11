@@ -16,14 +16,20 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 
-class RecipesRepository (application: Application) {
+class RecipesRepository(application: Application) {
 
     private val db = Room.databaseBuilder(
         application,
         AppDatabase::class.java,
         "database-categories"
     ).build()
-    val categoriesDao = db.categoryDao()
+    private val categoriesDao = db.categoryDao()
+
+    suspend fun insertCategories(categories: List<Category>) {
+        withContext(Dispatchers.IO) {
+            categoriesDao.insert(categories)
+        }
+    }
 
     suspend fun getCategoriesFromCache(): List<Category> {
         return withContext(Dispatchers.IO) {

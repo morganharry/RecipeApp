@@ -31,7 +31,8 @@ class CategoriesListViewModel(application: Application) :
 
         viewModelScope.launch {
             repository.getCategories()?.let {
-                repository.categoriesDao.insert(it)
+                categories = it
+                repository.insertCategories(it)
             }
 
             if (categories == null) {
