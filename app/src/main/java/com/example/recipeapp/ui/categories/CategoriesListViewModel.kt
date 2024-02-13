@@ -26,16 +26,11 @@ class CategoriesListViewModel(application: Application) :
     init {
         viewModelScope.launch {
             categories = repository.getCategoriesFromCache()
-            _categoriesListLiveData.postValue(CategoriesListState(categories))
-        }
 
-        viewModelScope.launch {
-            repository.getCategories()?.let {
-                categories = it
-                repository.insertCategories(it)
-            }
-
-            if (categories == null) {
+            try {
+                categories = repository.getCategories()
+                categories?.let { repository.insertCategories(it) }
+            } catch (e: Exception) {
                 val text = "Ошибка получения данных"
                 val duration = Toast.LENGTH_LONG
                 Toast.makeText(application, text, duration).show()
