@@ -1,5 +1,7 @@
 package com.example.recipeapp.data
 
+import android.app.Application
+import androidx.room.Room
 import com.example.recipeapp.model.Category
 import com.example.recipeapp.model.Recipe
 import com.example.recipeapp.model.URL_API
@@ -14,7 +16,26 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 
-class RecipesRepository {
+class RecipesRepository(application: Application) {
+
+    private val db = Room.databaseBuilder(
+        application,
+        AppDatabase::class.java,
+        "database-categories"
+    ).build()
+    private val categoriesDao = db.categoryDao()
+
+    suspend fun insertCategories(categories: List<Category>) {
+        withContext(Dispatchers.IO) {
+            categoriesDao.insert(categories)
+        }
+    }
+
+    suspend fun getCategoriesFromCache(): List<Category> {
+        return withContext(Dispatchers.IO) {
+            categoriesDao.getAll()
+        }
+    }
 
     private fun createService(): RecipeApiService {
         val logging = HttpLoggingInterceptor()

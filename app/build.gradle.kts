@@ -66,4 +66,5 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
+    ksp("androidx.room:room-compiler:$room_version")
 }

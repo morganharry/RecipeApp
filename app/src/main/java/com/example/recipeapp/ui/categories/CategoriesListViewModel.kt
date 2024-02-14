@@ -17,22 +17,26 @@ data class CategoriesListState(
 
 class CategoriesListViewModel(application: Application) :
     AndroidViewModel(application) {
-    private val repository by lazy { RecipesRepository() }
+    private val repository by lazy { RecipesRepository(application) }
     private var categories: List<Category>? = listOf()
-
+    private var categoriesServer: List<Category>? = listOf()
     val categoriesListLiveData: LiveData<CategoriesListState>
         get() = _categoriesListLiveData
     private val _categoriesListLiveData = MutableLiveData<CategoriesListState>()
 
     init {
         viewModelScope.launch {
-            categories = repository.getCategories()
+            categories = repository.getCategoriesFromCache()
+            categoriesServer = repository.getCategories()
 
-            if (categories == null) {
+            if (categoriesServer.isNullOrEmpty()) {
                 val text = "Ошибка получения данных"
                 val duration = Toast.LENGTH_LONG
                 Toast.makeText(application, text, duration).show()
+            } else {
+                categories = categoriesServer
             }
+
             _categoriesListLiveData.postValue(CategoriesListState(categories))
         }
 
