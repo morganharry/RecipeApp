@@ -8,12 +8,11 @@ import com.example.recipeapp.model.Recipe
 
 @Dao
 interface RecipesDao {
-    @Query("SELECT * FROM recipe")
-    fun getAll(): List<Recipe>
 
-    @Query("SELECT * FROM user WHERE uid IN (:userIds)")
-    fun loadAllByIds(userIds: IntArray): List<User>
+    @Query("SELECT * FROM recipe WHERE categoryId IN (:categoryId)")
+    fun loadByCategoryId(categoryId: Int): List<Recipe>
 
+    @Query("SELECT * FROM recipe WHERE categoryId IN (:categoryId)")
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(recipes: List<Recipe>)
+    fun insert(categoryId: Int, recipes: List<Recipe>)
 }

@@ -36,23 +36,14 @@ class RecipesListViewModel(private val application: Application) : AndroidViewMo
     fun loadRecipesList(categoryId: Int) {
 
         viewModelScope.launch {
-            category = repository.getCategory(categoryId)
-            if (category == null) {
-                val text = "Ошибка получения данных"
-                val duration = Toast.LENGTH_LONG
-                Toast.makeText(application, text, duration).show()
-            }
-            val categoryTitle = category?.title
+            category = repository.getCategoryFromCache(categoryId)
 
+            val categoryTitle = category?.title
             val categoryImageUrl =
                 "$URL_IMAGES${category?.imageUrl}"
 
 
-
-
-
-
-            recipesList = repository.getRecipesByCategoryFromCache(categoryId)
+            recipesList = repository.getRecipesListByCategoryFromCache(categoryId)
             recipesListServer = repository.getRecipesByCategory(categoryId)
 
             if (recipesListServer.isNullOrEmpty()) {
@@ -60,7 +51,8 @@ class RecipesListViewModel(private val application: Application) : AndroidViewMo
                 val duration = Toast.LENGTH_LONG
                 Toast.makeText(application, text, duration).show()
             } else {
-                repository.insertRecipesList(recipesListServer!!)
+                recipesListServer!!.forEach { it.categoryId = categoryId }
+                repository.insertRecipesListByCategory(categoryId, recipesListServer!!)
             }
 
             _recipesListLiveData.postValue(
