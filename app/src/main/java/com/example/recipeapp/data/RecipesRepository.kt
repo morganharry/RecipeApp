@@ -21,9 +21,11 @@ class RecipesRepository(application: Application) {
     private val db = Room.databaseBuilder(
         application,
         AppDatabase::class.java,
-        "database-categories"
+        "database"
     ).build()
+
     private val categoriesDao = db.categoryDao()
+    private val recipesDao = db.recipesDao()
 
     suspend fun insertCategories(categories: List<Category>) {
         withContext(Dispatchers.IO) {
@@ -31,9 +33,21 @@ class RecipesRepository(application: Application) {
         }
     }
 
+    suspend fun insertRecipesList(recipes: List<Recipe>) {
+        withContext(Dispatchers.IO) {
+            recipesDao.insert(recipes)
+        }
+    }
+
     suspend fun getCategoriesFromCache(): List<Category> {
         return withContext(Dispatchers.IO) {
             categoriesDao.getAll()
+        }
+    }
+
+    suspend fun getRecipesByCategoryFromCache(categoryId: Int): List<Recipe> {
+        return withContext(Dispatchers.IO) {
+            recipesDao.getAll()
         }
     }
 
@@ -128,4 +142,6 @@ class RecipesRepository(application: Application) {
             null
         }
     }
+
+
 }
