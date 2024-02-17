@@ -33,9 +33,9 @@ class RecipesRepository(application: Application) {
         }
     }
 
-    suspend fun insertRecipesListByCategory(categoryId: Int, recipes: List<Recipe>) {
+    suspend fun insertRecipesListByCategory(recipes: List<Recipe>) {
         withContext(Dispatchers.IO) {
-            recipesDao.insert(categoryId, recipes)
+            recipesDao.insert(recipes)
         }
     }
 

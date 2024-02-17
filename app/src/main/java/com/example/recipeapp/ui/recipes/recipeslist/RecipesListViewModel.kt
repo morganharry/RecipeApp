@@ -52,7 +52,7 @@ class RecipesListViewModel(private val application: Application) : AndroidViewMo
                 Toast.makeText(application, text, duration).show()
             } else {
                 recipesListServer!!.forEach { it.categoryId = categoryId }
-                repository.insertRecipesListByCategory(categoryId, recipesListServer!!)
+                repository.insertRecipesListByCategory(recipesListServer!!)
             }
 
             _recipesListLiveData.postValue(
