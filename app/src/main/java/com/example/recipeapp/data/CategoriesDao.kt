@@ -11,6 +11,9 @@ interface CategoriesDao {
     @Query("SELECT * FROM category")
     fun getAll(): List<Category>
 
+    @Query("SELECT * FROM category WHERE id IN (:categoryId)")
+    fun loadById(categoryId: Int): Category
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(categories: List<Category>)
 }

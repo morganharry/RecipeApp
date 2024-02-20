@@ -21,9 +21,11 @@ class RecipesRepository(application: Application) {
     private val db = Room.databaseBuilder(
         application,
         AppDatabase::class.java,
-        "database-categories"
+        "database"
     ).build()
+
     private val categoriesDao = db.categoryDao()
+    private val recipesDao = db.recipesDao()
 
     suspend fun insertCategories(categories: List<Category>) {
         withContext(Dispatchers.IO) {
@@ -31,9 +33,27 @@ class RecipesRepository(application: Application) {
         }
     }
 
+    suspend fun insertRecipesListByCategory(recipes: List<Recipe>) {
+        withContext(Dispatchers.IO) {
+            recipesDao.insert(recipes)
+        }
+    }
+
     suspend fun getCategoriesFromCache(): List<Category> {
         return withContext(Dispatchers.IO) {
             categoriesDao.getAll()
+        }
+    }
+
+    suspend fun getCategoryFromCache(categoryId: Int): Category {
+        return withContext(Dispatchers.IO) {
+            categoriesDao.loadById(categoryId)
+        }
+    }
+
+    suspend fun getRecipesListByCategoryFromCache(categoryId: Int): List<Recipe> {
+        return withContext(Dispatchers.IO) {
+            recipesDao.loadByCategoryId(categoryId)
         }
     }
 
@@ -71,19 +91,19 @@ class RecipesRepository(application: Application) {
     }
 
 
-    suspend fun getCategory(id: Int): Category? {
-        return try {
-            val service = createService()
+    /*    suspend fun getCategory(id: Int): Category? {
+            return try {
+                val service = createService()
 
-            withContext(Dispatchers.IO) {
-                val categoryCall: Call<Category> = service.getCategory(id)
-                val categoryResponse: Response<Category> = categoryCall.execute()
-                categoryResponse.body()
+                withContext(Dispatchers.IO) {
+                    val categoryCall: Call<Category> = service.getCategory(id)
+                    val categoryResponse: Response<Category> = categoryCall.execute()
+                    categoryResponse.body()
+                }
+            } catch (e: Exception) {
+                null
             }
-        } catch (e: Exception) {
-            null
-        }
-    }
+        }*/
 
     suspend fun getRecipesByCategory(id: Int): List<Recipe>? {
         return try {
@@ -94,6 +114,8 @@ class RecipesRepository(application: Application) {
                 val recipesResponse: Response<List<Recipe>> = recipesCall.execute()
                 recipesResponse.body()
             }
+
+
         } catch (e: Exception) {
             null
         }

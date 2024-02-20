@@ -34,7 +34,7 @@ class CategoriesListViewModel(application: Application) :
                 val duration = Toast.LENGTH_LONG
                 Toast.makeText(application, text, duration).show()
             } else {
-                categories = categoriesServer
+                repository.insertCategories(categoriesServer!!)
             }
 
             _categoriesListLiveData.postValue(CategoriesListState(categories))
