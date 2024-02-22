@@ -3,7 +3,6 @@ package com.example.recipeapp.ui.recipes.recipeslist
 import android.app.Application
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -32,15 +31,8 @@ class FavoritesViewModel(private val application: Application) : AndroidViewMode
 
     fun loadRecipesList() {
         viewModelScope.launch {
-            val favList = getFavorites()
-            if (favList.isNotEmpty()) {
-                recipesList = repository.getRecipes(favList.joinToString(","))
-                if (recipesList == null) {
-                    val text = "Ошибка получения данных"
-                    val duration = Toast.LENGTH_LONG
-                    Toast.makeText(application, text, duration).show()
-                }
-            } else recipesList = listOf()
+            val favList = repository.getFavorites()
+            if (favList.isNullOrEmpty()) recipesList = listOf()
 
             _favoritesLiveData.postValue(FavoritesState(recipesList))
         }

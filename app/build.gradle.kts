@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.recipeapp"
-        minSdk = 26
+        minSdk = 30
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -44,7 +44,7 @@ android {
 
 dependencies {
     val fragment_version = "1.6.2"
-    val nav_version = "2.7.6"
+    val nav_version = "2.7.7"
     val room_version = "2.6.1"
 
     implementation("androidx.room:room-runtime:$room_version")

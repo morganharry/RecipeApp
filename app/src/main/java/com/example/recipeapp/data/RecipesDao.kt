@@ -12,6 +12,9 @@ interface RecipesDao {
     @Query("SELECT * FROM recipe WHERE categoryId IN (:categoryId)")
     fun loadByCategoryId(categoryId: Int): List<Recipe>
 
+    @Query("SELECT * FROM recipe WHERE isFavorite IS true")
+    fun getFavorites(): List<Recipe>?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(recipes: List<Recipe>)
 }
