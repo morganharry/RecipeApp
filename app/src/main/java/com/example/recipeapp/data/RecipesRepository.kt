@@ -22,7 +22,8 @@ class RecipesRepository(application: Application) {
         application,
         AppDatabase::class.java,
         "database"
-    ).build()
+    ).fallbackToDestructiveMigration()
+        .build()
 
     private val categoriesDao = db.categoryDao()
     private val recipesDao = db.recipesDao()

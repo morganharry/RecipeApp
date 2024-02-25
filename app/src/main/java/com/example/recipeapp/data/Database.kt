@@ -7,7 +7,7 @@ import com.example.recipeapp.model.Category
 import com.example.recipeapp.model.Converters
 import com.example.recipeapp.model.Recipe
 
-@Database(entities = [Category::class, Recipe::class], version = 2)
+@Database(entities = [Category::class, Recipe::class], version = 3)
 
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
