@@ -42,7 +42,6 @@ class RecipesListViewModel(private val application: Application) : AndroidViewMo
             val categoryImageUrl =
                 "$URL_IMAGES${category?.imageUrl}"
 
-
             recipesList = repository.getRecipesListByCategoryFromCache(categoryId)
             recipesListServer = repository.getRecipesByCategory(categoryId)
 
@@ -51,7 +50,9 @@ class RecipesListViewModel(private val application: Application) : AndroidViewMo
                 val duration = Toast.LENGTH_LONG
                 Toast.makeText(application, text, duration).show()
             } else {
-                recipesListServer!!.forEach { it.categoryId = categoryId }
+                recipesListServer!!.forEach {
+                    it.categoryId = categoryId
+                }
                 repository.insertRecipesListByCategory(recipesListServer!!)
             }
 

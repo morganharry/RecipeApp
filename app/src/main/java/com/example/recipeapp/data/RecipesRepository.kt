@@ -27,15 +27,29 @@ class RecipesRepository(application: Application) {
     private val categoriesDao = db.categoryDao()
     private val recipesDao = db.recipesDao()
 
-    suspend fun insertCategories(categories: List<Category>) {
+
+    suspend fun insertRecipe(recipe: Recipe) {
         withContext(Dispatchers.IO) {
-            categoriesDao.insert(categories)
+            recipesDao.insertRecipe(recipe)
         }
     }
 
-    suspend fun getFavorites(): List<Recipe>?  {
+    suspend fun getRecipeFromCache(recipeId: Int): Recipe {
         return withContext(Dispatchers.IO) {
-            recipesDao.getFavorites()
+            recipesDao.getRecipe(recipeId)
+        }
+    }
+
+
+    suspend fun getFavoritesFromCache(): List<Recipe> {
+        return withContext(Dispatchers.IO) {
+            recipesDao.getFavorites() ?: emptyList()
+        }
+    }
+
+    suspend fun insertCategories(categories: List<Category>) {
+        withContext(Dispatchers.IO) {
+            categoriesDao.insert(categories)
         }
     }
 

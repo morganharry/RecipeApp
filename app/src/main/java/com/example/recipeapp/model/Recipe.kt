@@ -25,6 +25,5 @@ data class Recipe(
 
     @IgnoredOnParcel
     @Transient
-    @ColumnInfo(name = "isFavorite") var isFavorite: Boolean = false
-
+    @ColumnInfo(name = "isFavorite") var isFavorite: Int = 0
 }
