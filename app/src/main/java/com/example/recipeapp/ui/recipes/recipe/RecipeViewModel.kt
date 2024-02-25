@@ -16,7 +16,7 @@ data class RecipeState(
     var recipe: Recipe? = null,
     var imageUrl: String? = null,
     var portionsCount: Int = 1,
-    var isFavorite: Int? = 0,
+    var isFavorite: Boolean? = false,
 )
 
 class RecipeViewModel(private val application: Application) : AndroidViewModel(application) {
@@ -33,8 +33,6 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
     fun loadRecipe(recipeId: Int) {
         viewModelScope.launch {
             recipe = repository.getRecipeFromCache(recipeId)
-
-
 
             recipe = repository.getRecipe(recipeId)
             if (recipe == null) {
@@ -64,8 +62,8 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
         viewModelScope.launch {
             recipe = repository.getRecipeFromCache(recipeId)
 
-            if (recipe!!.isFavorite == 1) recipe!!.isFavorite = 0
-            else recipe!!.isFavorite = 0
+            if (recipe!!.isFavorite) recipe!!.isFavorite = false
+            else recipe!!.isFavorite = true
 
             repository.insertRecipe(recipe!!)
         }
