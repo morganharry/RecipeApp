@@ -60,16 +60,17 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
 
     fun onFavoritesClicked(recipeId: Int) {
 
+
         viewModelScope.launch {
             recipe = repository.getRecipeFromCache(recipeId)
 
-            if (recipe!!.isFavorite) recipe!!.isFavorite = false
-            else recipe!!.isFavorite = true
+            recipe!!.isFavorite = !recipe!!.isFavorite
 
             repository.insertRecipe(recipe!!)
         }
 
-        _recipeLiveData.value = _recipeLiveData.value?.copy(isFavorite = recipe?.isFavorite)
+        _recipeLiveData.value = _recipeLiveData.value?.copy(isFavorite = recipe?.isFavorite!!)
+
     }
 
     override fun onCleared() {
