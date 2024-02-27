@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.text.isDigitsOnly
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.R
 import com.example.recipeapp.model.Ingredient
@@ -50,7 +49,7 @@ class IngredientsAdapter(
     }
 
     private fun checkNumberType(quantityForOnePortion: String): String {
-        if (quantityForOnePortion.isDigitsOnly()) {
+        if (quantityForOnePortion.matches("""[-+]?[0-9]*\.?[0-9]+""".toRegex())) {
             val num = quantityForOnePortion.toDouble() * quantity
             return if (Regex("^[0-9]*[.,]0").matches(num.toString()))
                 String.format("%.0f", num)
