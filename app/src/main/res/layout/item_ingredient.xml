@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/tvDescription"
-        style="@style/StyleTitle14Black"
+        style="@style/StyleTitle14BlackCaps"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_half"
@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@+id/tvQuantity"
-        style="@style/StyleTitle14Black"
+        style="@style/StyleTitle14BlackCaps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_half"
@@ -31,7 +31,7 @@
 
     <TextView
         android:id="@+id/tvUnitOfMeasure"
-        style="@style/StyleTitle14Black"
+        style="@style/StyleTitle14BlackCaps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_half"
