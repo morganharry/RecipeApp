@@ -2,7 +2,6 @@ package com.example.recipeapp.ui.recipes.recipeslist
 
 import android.app.Application
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,18 +15,19 @@ import kotlinx.coroutines.launch
 data class RecipesListState(
     var categoryTitle: String? = null,
     var categoryImageUrl: String? = null,
-    var recipesList: List<Recipe>? = null,
+    var recipesList: List<Recipe> = listOf(),
+    var isShowError: Boolean = false,
 )
 
 class RecipesListViewModel(private val application: Application) : AndroidViewModel(application) {
     private val repository by lazy { RecipesRepository(application) }
-    private var recipesList: List<Recipe>? = listOf()
+    private var recipesList: List<Recipe> = listOf()
     private var recipesListServer: List<Recipe>? = listOf()
     private var category: Category? = null
 
-    val recipesListLiveData: LiveData<RecipesListState>
-        get() = _recipesListLiveData
+
     private val _recipesListLiveData = MutableLiveData<RecipesListState>()
+    val recipesListLiveData: LiveData<RecipesListState> = _recipesListLiveData
 
     init {
         Log.i("VM", "RecipesListVM created")
@@ -43,18 +43,6 @@ class RecipesListViewModel(private val application: Application) : AndroidViewMo
                 "$URL_IMAGES${category?.imageUrl}"
 
             recipesList = repository.getRecipesListByCategoryFromCache(categoryId)
-            recipesListServer = repository.getRecipesByCategory(categoryId)
-
-            if (recipesListServer.isNullOrEmpty()) {
-                val text = "Ошибка получения данных"
-                val duration = Toast.LENGTH_LONG
-                Toast.makeText(application, text, duration).show()
-            } else {
-                recipesListServer!!.forEach {
-                    it.categoryId = categoryId
-                }
-                repository.insertRecipesListByCategory(recipesListServer!!)
-            }
 
             _recipesListLiveData.postValue(
                 RecipesListState(
@@ -63,10 +51,29 @@ class RecipesListViewModel(private val application: Application) : AndroidViewMo
                     recipesList
                 )
             )
+
+            recipesListServer = repository.getRecipesByCategory(categoryId)
+
+            if (recipesListServer.isNullOrEmpty()) {
+                _recipesListLiveData.postValue(RecipesListState(isShowError = true))
+            } else {
+                recipesListServer?.forEach {
+                    it.categoryId = categoryId
+                }
+                recipesListServer?.let { repository.insertRecipesListByCategory(it) }
+
+                _recipesListLiveData.postValue(recipesListServer?.let {
+                    RecipesListState(
+                        categoryTitle,
+                        categoryImageUrl,
+                        recipesList = it
+                    )
+                })
+            }
         }
 
         Log.i("!!!", "category: ${category.toString()}")
-        Log.i("!!!", "recipesList: ${recipesList.toString()}")
+        Log.i("!!!", "recipesList: ${recipesList}")
     }
 
     override fun onCleared() {

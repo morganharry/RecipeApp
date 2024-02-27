@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -54,6 +55,7 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
             }
         })
         viewModel.recipesListLiveData.observe(viewLifecycleOwner) {
+            if (it.isShowError) toastText()
             categoryTitle = it.categoryTitle
             binding.tvCategory.text = categoryTitle
 
@@ -63,7 +65,7 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
                 .error(R.drawable.img_error)
                 .into(binding.ivCategory)
 
-            recipesAdapter.dataSet = it.recipesList ?: listOf()
+            recipesAdapter.dataSet = it.recipesList
             recyclerView.adapter = recipesAdapter
         }
     }
@@ -72,5 +74,11 @@ class RecipesListFragment : Fragment(R.layout.fragment_list_recipes) {
         findNavController().navigate(
             RecipesListFragmentDirections.actionRecipesListFragmentToRecipeFragment(recipeId)
         )
+    }
+
+    private fun toastText() {
+        val text = "Ошибка получения данных"
+        val duration = Toast.LENGTH_LONG
+        Toast.makeText(context, text, duration).show()
     }
 }
