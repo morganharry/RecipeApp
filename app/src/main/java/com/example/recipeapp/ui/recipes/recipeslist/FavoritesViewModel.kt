@@ -27,11 +27,21 @@ class FavoritesViewModel(private val application: Application) : AndroidViewMode
     }
 
     fun loadRecipesList() {
+
+
+
+
         viewModelScope.launch {
             favList = repository.getFavoritesFromCache()
 
             _favoritesLiveData.postValue(FavoritesState(favList))
         }
+
+
+
+
+
+
         Log.i("!!!", "favList: ${favList.toString()}")
     }
 

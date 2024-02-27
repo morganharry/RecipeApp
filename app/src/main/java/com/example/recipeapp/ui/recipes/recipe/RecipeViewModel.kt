@@ -2,7 +2,6 @@ package com.example.recipeapp.ui.recipes.recipe
 
 import android.app.Application
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,7 +15,8 @@ data class RecipeState(
     var recipe: Recipe? = null,
     var imageUrl: String? = null,
     var portionsCount: Int = 1,
-    var isFavorite: Boolean? = false,
+    var isFavorite: Boolean = false,
+    var isShowError: Boolean = false,
 )
 
 class RecipeViewModel(private val application: Application) : AndroidViewModel(application) {
@@ -34,27 +34,21 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
         viewModelScope.launch {
             recipe = repository.getRecipeFromCache(recipeId)
 
-            recipe = repository.getRecipe(recipeId)
-            if (recipe == null) {
-                val text = "Ошибка получения данных"
-                val duration = Toast.LENGTH_LONG
-                Toast.makeText(application, text, duration).show()
-            }
-
             val imageUrl = "$URL_IMAGES${recipe?.imageUrl}"
             val portionsCount: Int = _recipeLiveData.value?.portionsCount ?: 1
             val isFavorite = recipe?.isFavorite
 
             _recipeLiveData.postValue(
-                RecipeState(
-                    recipe,
-                    imageUrl,
-                    portionsCount,
-                    isFavorite,
-                )
+                isFavorite?.let {
+                    RecipeState(
+                        recipe,
+                        imageUrl,
+                        portionsCount,
+                        it,
+                    )
+                }
             )
         }
-
         Log.i("!!!", "recipe: ${recipe.toString()}")
     }
 
@@ -65,8 +59,9 @@ class RecipeViewModel(private val application: Application) : AndroidViewModel(a
             recipe!!.isFavorite = !recipe!!.isFavorite
 
             repository.insertRecipe(recipe!!)
+
+            _recipeLiveData.value = _recipeLiveData.value?.copy(isFavorite = recipe?.isFavorite!!)
         }
-        _recipeLiveData.value = _recipeLiveData.value?.copy(isFavorite = recipe?.isFavorite!!)
     }
 
     override fun onCleared() {
