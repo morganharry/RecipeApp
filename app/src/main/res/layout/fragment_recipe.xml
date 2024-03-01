@@ -69,7 +69,7 @@
             android:orientation="vertical">
 
             <TextView
-                style="@style/StyleTitle20Black"
+                style="@style/StyleTitle20Violet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/space_half"
@@ -111,7 +111,7 @@
                 android:id="@+id/rvIngredients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/space_standard"
+                android:layout_marginHorizontal="@dimen/space_half"
                 android:layout_marginVertical="@dimen/space_half"
                 android:background="@drawable/shape_rounded_list"
                 android:padding="4dp"
@@ -120,7 +120,7 @@
                 tools:listitem="@layout/item_ingredient" />
 
             <TextView
-                style="@style/StyleTitle20Black"
+                style="@style/StyleTitle20Violet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/space_half"
@@ -130,7 +130,7 @@
                 android:id="@+id/rvMethod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/space_standard"
+                android:layout_marginHorizontal="@dimen/space_half"
                 android:layout_marginVertical="@dimen/space_half"
                 android:background="@drawable/shape_rounded_list"
                 android:padding="4dp"

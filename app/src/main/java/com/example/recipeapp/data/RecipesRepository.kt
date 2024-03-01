@@ -22,10 +22,31 @@ class RecipesRepository(application: Application) {
         application,
         AppDatabase::class.java,
         "database"
-    ).build()
+    ).fallbackToDestructiveMigration()
+        .build()
 
     private val categoriesDao = db.categoryDao()
     private val recipesDao = db.recipesDao()
+
+
+    suspend fun insertRecipe(recipe: Recipe) {
+        withContext(Dispatchers.IO) {
+            recipesDao.insertRecipe(recipe)
+        }
+    }
+
+    suspend fun getRecipeFromCache(recipeId: Int): Recipe {
+        return withContext(Dispatchers.IO) {
+            recipesDao.getRecipe(recipeId)
+        }
+    }
+
+
+    suspend fun getFavoritesFromCache(): List<Recipe> {
+        return withContext(Dispatchers.IO) {
+            recipesDao.getFavorites() ?: emptyList()
+        }
+    }
 
     suspend fun insertCategories(categories: List<Category>) {
         withContext(Dispatchers.IO) {
@@ -90,21 +111,6 @@ class RecipesRepository(application: Application) {
         }
     }
 
-
-    /*    suspend fun getCategory(id: Int): Category? {
-            return try {
-                val service = createService()
-
-                withContext(Dispatchers.IO) {
-                    val categoryCall: Call<Category> = service.getCategory(id)
-                    val categoryResponse: Response<Category> = categoryCall.execute()
-                    categoryResponse.body()
-                }
-            } catch (e: Exception) {
-                null
-            }
-        }*/
-
     suspend fun getRecipesByCategory(id: Int): List<Recipe>? {
         return try {
             val service = createService()
@@ -129,22 +135,6 @@ class RecipesRepository(application: Application) {
                 val recipeCall: Call<Recipe> = service.getRecipe(id)
                 val recipeResponse: Response<Recipe> = recipeCall.execute()
                 recipeResponse.body()
-            }
-        } catch (e: Exception) {
-            null
-        }
-    }
-
-    suspend fun getRecipes(ids: String): List<Recipe>? {
-
-
-        return try {
-            val service = createService()
-
-            withContext(Dispatchers.IO) {
-                val recipesCall: Call<List<Recipe>> = service.getRecipes(ids)
-                val recipesResponse: Response<List<Recipe>> = recipesCall.execute()
-                recipesResponse.body()
             }
         } catch (e: Exception) {
             null

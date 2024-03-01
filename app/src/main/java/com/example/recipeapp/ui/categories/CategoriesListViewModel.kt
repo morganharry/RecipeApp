@@ -2,7 +2,6 @@ package com.example.recipeapp.ui.categories
 
 import android.app.Application
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,35 +11,36 @@ import com.example.recipeapp.model.Category
 import kotlinx.coroutines.launch
 
 data class CategoriesListState(
-    var categoriesList: List<Category>? = null,
+    var categoriesList: List<Category> = listOf(),
+    var isShowError: Boolean = false,
 )
 
 class CategoriesListViewModel(application: Application) :
     AndroidViewModel(application) {
     private val repository by lazy { RecipesRepository(application) }
-    private var categories: List<Category>? = listOf()
+    private var categories: List<Category> = listOf()
     private var categoriesServer: List<Category>? = listOf()
-    val categoriesListLiveData: LiveData<CategoriesListState>
-        get() = _categoriesListLiveData
+
     private val _categoriesListLiveData = MutableLiveData<CategoriesListState>()
+    val categoriesListLiveData: LiveData<CategoriesListState> = _categoriesListLiveData
 
     init {
         viewModelScope.launch {
             categories = repository.getCategoriesFromCache()
+
+            _categoriesListLiveData.postValue(CategoriesListState(categories))
+
             categoriesServer = repository.getCategories()
 
             if (categoriesServer.isNullOrEmpty()) {
-                val text = "Ошибка получения данных"
-                val duration = Toast.LENGTH_LONG
-                Toast.makeText(application, text, duration).show()
+                _categoriesListLiveData.postValue(CategoriesListState(isShowError = true))
             } else {
-                repository.insertCategories(categoriesServer!!)
+                categoriesServer?.let { repository.insertCategories(it) }
+                _categoriesListLiveData.postValue(categoriesServer?.let { CategoriesListState(it) })
             }
-
-            _categoriesListLiveData.postValue(CategoriesListState(categories))
         }
 
-        Log.i("!!!", "categories: ${categories.toString()}")
+        Log.i("!!!", "categories: ${categories}")
         Log.i("VM", "CategoriesListVM created")
     }
 

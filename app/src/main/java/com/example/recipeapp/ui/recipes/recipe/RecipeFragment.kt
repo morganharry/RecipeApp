@@ -85,7 +85,7 @@ class RecipeFragment : Fragment(R.layout.fragment_recipe) {
             recyclerMethodView.adapter = methodAdapter
 
             binding.ibFavorite.apply {
-                if (it.isFavorite) {
+                if (it.isFavorite == true) {
                     setBackgroundResource(R.drawable.ic_heart)
                 } else {
                     setBackgroundResource(R.drawable.ic_heart_empty)

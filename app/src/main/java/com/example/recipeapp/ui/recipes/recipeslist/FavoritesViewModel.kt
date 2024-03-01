@@ -1,16 +1,12 @@
 package com.example.recipeapp.ui.recipes.recipeslist
 
 import android.app.Application
-import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.recipeapp.data.RecipesRepository
-import com.example.recipeapp.model.APP_RECIPES
-import com.example.recipeapp.model.APP_RECIPES_SET_STRING
 import com.example.recipeapp.model.Recipe
 import kotlinx.coroutines.launch
 
@@ -20,7 +16,7 @@ data class FavoritesState(
 
 class FavoritesViewModel(private val application: Application) : AndroidViewModel(application) {
     private val repository by lazy { RecipesRepository(application) }
-    private var recipesList: List<Recipe>? = listOf()
+    private var favList: List<Recipe>? = listOf()
 
     val favoritesLiveData: LiveData<FavoritesState>
         get() = _favoritesLiveData
@@ -31,27 +27,22 @@ class FavoritesViewModel(private val application: Application) : AndroidViewMode
     }
 
     fun loadRecipesList() {
+
+
+
+
         viewModelScope.launch {
-            val favList = getFavorites()
-            if (favList.isNotEmpty()) {
-                recipesList = repository.getRecipes(favList.joinToString(","))
-                if (recipesList == null) {
-                    val text = "Ошибка получения данных"
-                    val duration = Toast.LENGTH_LONG
-                    Toast.makeText(application, text, duration).show()
-                }
-            } else recipesList = listOf()
+            favList = repository.getFavoritesFromCache()
 
-            _favoritesLiveData.postValue(FavoritesState(recipesList))
+            _favoritesLiveData.postValue(FavoritesState(favList))
         }
-        Log.i("!!!", "favList: ${recipesList.toString()}")
-    }
 
-    private fun getFavorites(): HashSet<String> {
-        val sharedPrefs = application.getSharedPreferences(APP_RECIPES, Context.MODE_PRIVATE)
-        val fav: Set<String> =
-            sharedPrefs.getStringSet(APP_RECIPES_SET_STRING, emptySet()) ?: emptySet()
-        return HashSet(fav)
+
+
+
+
+
+        Log.i("!!!", "favList: ${favList.toString()}")
     }
 
     override fun onCleared() {
