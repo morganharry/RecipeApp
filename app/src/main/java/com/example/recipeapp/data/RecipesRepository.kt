@@ -126,18 +126,4 @@ class RecipesRepository(application: Application) {
             null
         }
     }
-
-    suspend fun getRecipe(id: Int): Recipe? {
-        return try {
-            val service = createService()
-
-            withContext(Dispatchers.IO) {
-                val recipeCall: Call<Recipe> = service.getRecipe(id)
-                val recipeResponse: Response<Recipe> = recipeCall.execute()
-                recipeResponse.body()
-            }
-        } catch (e: Exception) {
-            null
-        }
-    }
 }
